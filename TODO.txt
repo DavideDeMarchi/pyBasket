@@ -92,8 +92,6 @@
   - Sistemare dimensionamento dialog play-by-play (OK)
   - Sistemare dimensionamento dialog Throws Map (OK)
        
-  - Controllare la disattivazione del button di salvataggio del game (appena carico una partita si disattiva)
-  
   - Ottimizzare dimensionamenti per il cellulare:
      - Iniziare a scala 0.8 (OK)
      - Diminuire dimensione pulsanti (load, save, ecc...) (OK)
@@ -103,6 +101,10 @@
      - Line chart dialog mostra due scrollbar (OK)
      - Aggiunta di nuovi giocatori per una specifica partita (OK)
      - Editazione opponents (OK)
+     
+     
+ - ScoreSheet: eliminare lo 0 nei punti segnati dai giocatori della squadra (OK)
+ - Visualizzare il pulsante "Salva" durante la raccolta degli eventi (controllare la disattivazione del button di salvataggio del game: appena carico una partita si disattiva)
        
   
 - Generale

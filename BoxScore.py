@@ -539,8 +539,11 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     po = []
     for player_name in game.players_by_number:
         if game.players_info[player_name]['time_on_field'] <= 0.0: pt.append('%s ne'%player_name)
-        else:                                                      pt.append('%s %d'%(player_name, Stats.points(df, player_name)))
-        
+        else:
+            ps = Stats.points(df, player_name)
+            if ps > 0:  pt.append('%s %d'%(player_name, ps))
+            else:       pt.append(player_name)
+                
     for player_name in game.opponents_by_number:
         points = Stats.points(df, player_name, team=Config.OPPO)
         if points > 0: po.append('%s %d'%(player_name,points))
