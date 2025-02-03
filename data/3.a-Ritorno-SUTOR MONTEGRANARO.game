@@ -1,0 +1,182 @@
+{
+    "date": "02/02/2025",
+    "time": "18:00",
+    "season": "Stagione 2024/2025",
+    "championship": "Campionato Serie C - Girone M",
+    "phase": "Ritorno",
+    "round": 3,
+    "home": true,
+    "opponents": "SUTOR MONTEGRANARO",
+    "abbreviation": "MON",
+    "referee1": "LISOTTA MARCO di PESARO (PU)",
+    "referee2": "SISI MATTIA di PORTO SAN GIORGIO (FM)",
+    "location": "PALESTRA - Via Molinello - SANT'ANGELO IN VADO",
+    "trainer": "",
+    "opponents_info": {
+        "Foresi": {
+            "name": "Foresi",
+            "number": "2",
+            "year": "2006",
+            "fouls": 0,
+            "points": 0
+        },
+        "Spernanzoni": {
+            "name": "Spernanzoni",
+            "number": "3",
+            "year": "2003",
+            "fouls": 0,
+            "points": 0
+        },
+        "Savelli": {
+            "name": "Savelli",
+            "number": "4",
+            "year": "1994",
+            "fouls": 0,
+            "points": 0
+        },
+        "Dichiara": {
+            "name": "Dichiara",
+            "number": "7",
+            "year": "2005",
+            "fouls": 0,
+            "points": 0
+        },
+        "Passarini": {
+            "name": "Passarini",
+            "number": "8",
+            "year": "2001",
+            "fouls": 0,
+            "points": 0
+        },
+        "Kanturek": {
+            "name": "Kanturek",
+            "number": "9",
+            "year": "1998",
+            "fouls": 0,
+            "points": 0
+        },
+        "Carpineti": {
+            "name": "Carpineti",
+            "number": "11",
+            "year": "2003",
+            "fouls": 0,
+            "points": 0
+        },
+        "Felicioni": {
+            "name": "Felicioni",
+            "number": "13",
+            "year": "1996",
+            "fouls": 0,
+            "points": 0
+        },
+        "Abbate": {
+            "name": "Abbate",
+            "number": "16",
+            "year": "2005",
+            "fouls": 0,
+            "points": 0
+        },
+        "Razzoli": {
+            "name": "Razzoli",
+            "number": "22",
+            "year": "1998",
+            "fouls": 0,
+            "points": 0
+        },
+        "Errera": {
+            "name": "Errera",
+            "number": "34",
+            "year": "1997",
+            "fouls": 0,
+            "points": 0
+        }
+    },
+    "unavailable_players": [],
+    "status": {
+        "quarter": 1,
+        "seconds": 600.0,
+        "gameover": false,
+        "points1": 0,
+        "points2": 0,
+        "fouls1": 0,
+        "fouls2": 0,
+        "timeouts1": 0,
+        "timeouts2": 0
+    },
+    "events": [],
+    "on_field": [
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
+    "players_info": {
+        "Lulaj": {
+            "name": "Lulaj",
+            "number": "1",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Aloi": {
+            "name": "Aloi",
+            "number": "2",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Baldassarri": {
+            "name": "Baldassarri",
+            "number": "4",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Di Francesco": {
+            "name": "Di Francesco",
+            "number": "5",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Colotti": {
+            "name": "Colotti",
+            "number": "8",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Pentucci": {
+            "name": "Pentucci",
+            "number": "9",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Perez Da Rold": {
+            "name": "Perez Da Rold",
+            "number": "10",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Manna": {
+            "name": "Manna",
+            "number": "13",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Diana": {
+            "name": "Diana",
+            "number": "14",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Campana": {
+            "name": "Campana",
+            "number": "21",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Marcantognini": {
+            "name": "Marcantognini",
+            "number": "34",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        }
+    }
+}

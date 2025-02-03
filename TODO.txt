@@ -1,0 +1,109 @@
+- Gestione del tempo sul TimeBoard (multithread)
+  - click su una delle cifre: start e stop del timer (OK)
+
+- Click sul PointsBoard  (OK)
+
+- Tabellone completo
+  - Aggiungere numero time-out (OK)
+  - Aggiungere numero del quarto corrente (OK)
+  
+- Gestione degli eventi
+  - Display card eventi (OK)
+  - Gestire entrata e uscita dei giocatori in campo (OK)
+  - Memorizzazione dei secondi trascorsi in campo (OK)
+  - Gestire gli eventi che modificano il punteggio (OK)
+  - Gestire gli eventi che modificano il numero dei falli (OK)
+  - Lettura posizione eventi di tiro (OK)
+  - Scrittura resoconto (Team o Player) sopra la ThrowMap (OK)
+  - Gestione degli avversari (numero maglia, nome, punti, falli, anno nascita) (OK)
+  - Aggiungere costante per "Team" e "Opponents" (OK)
+  - Aggiungere l'evento time-out e scriverlo nel Pandas DataFrame degli eventi (Team + Opponents) (OK)
+  - Trasformare Players in una classe (OK)
+  - Visualizzare la percentuale ai tiri liberi (per il giocatore e per la squadra) (OK)
+  - Lettura informazioni sulla partita da un file (OK)
+  - Salvataggio completo della partita su file con memorizzazione di tutti i dati (tempo di gara, punteggio, falli, tempo in campo dei players, falli e punti degli opponents, lista degli eventi) (OK)
+  - Rilettura di una partita da file mantenendo lo stato corrente (OK)
+  - Display minuti in campo per ogni giocatore (OK)
+  - Aggiornare i minuti in campo dei 5 giocatori (OK)
+  - Visualizzare alla partenza le percentuali di squadra nella ThrowMap (OK)
+  - Pulsanti per scegliere Minuti, Punti o Valutazione da visualizzare sotto ogni giocatore in campo (OK)
+  - Scrittura dei risultati dei quarti nella parte bassa della throw-map (OK)
+  - Gestire la fine di un quarto (OK)
+  - Gestione del flow della partita (finale di un quarto, passaggio al quarto successivo con azzeramento dei time-out, dei falli di squadra, ecc...) (OK)
+  - Compensare il tempo in campo per ciascun giocatore ad ogni stop del cronometro (OK)
+  - Scaling dinamico (aggiungere property R/W scale ed evitare tutti i metodi draw con derivazione da VBox o HBox!!!) (OK)
+ 
+  - Aggiungere i file .game per tutte le partite del girone di ritorno (OK)
+  - Ordinare le partite per round crescente in SelectGame (OK)
+  - COnsentire il salvataggio su altra partita cambiando round, phase e opponents (OK)
+
+- Visualizzazioni aggiuntive
+  - Aggiungere iconButtons sotto la ThrowMap di background (OK)
+  - Calcolare plus/minus dei giocatori in campo (OK)
+  - Implementare il calcolo delle valutazioni dei giocatori (lega, +/-, ecc...) (OK)
+  
+  - Generare il tabellino in formato SVG con esportazione per download e condivisione (OK)
+        - Risultati dei quarti nella parte alta del tabellino (OK)
+        - Sintesi dei punteggi nelle due righe finali (OK)
+        - Giocatori entrati nel quintetto (OK)
+        - Aprire dialog-box con il BoxScore ed il pulsante per farne il download (OK)
+        - Salvataggio in formato HTML (OK)
+        - TODO: Generate the .html file inside the github repo and then view it like: https://html-preview.github.io/?url=https://github.com/DavideDeMarchi/voici-demo/blob/main/ScoreSheet.html
+        
+  - Generare il chart del punteggio (line-chart di come si evolvono i punteggi delle squadre durante la partita in plotly) (OK)
+        - Output con sfondo nero (OK)
+        - Impostare il titolo del chart (OK)
+        - Fare funzione di download (OK)
+        
+  - Visualizzazione ThrowMap in dialog-box (OK)
+        - Visualizzazione (OK)
+        - Selezione del giocatore o del team (OK)
+        - Fare funzione di download (OK)
+        
+  - Visualizzare la sintesi BasketMarche della partita (OK)
+  
+  - Visualizzare il play-by-play (OK)
+        - Generare cronaca in formato HTML (OK)
+        
+  - Gestione degli highlights video
+        - Aggiungere pulsante "Start recording" che memorizza data e ora di inizio del video (OK)
+        - Aggiungere a tutti gli eventi la data e ora corrente (OK)
+        - Aggiungere il pulsante "view highlight" nell'ultima colonna a destra della visualizzazione play-by-play
+        - Comprare adattatore microSD --> USB per poter ancora utilizzare la telecamera (OK)
+        - Salvare i filmati con nome e posizione standard
+  
+  - Implementare salvataggio automatico della partita ogni volta che il timer si ferma (OK)
+  - Aggiungere automaticamente gli eventi di uscita del campo alla fine di ogni quarto e di entrata in campo all'inizio (OK)
+  - Gestire il gameover della partita in salvataggio e rilettura della partita (OK)
+  - Visualizzare i totali del team quando nessun player è selezionato (OK)
+
+   - Aggiungere pulsanti per caricare e salvare la partita (OK)
+   - List delle partite per fase (andata e ritorno) (OK)
+   - Gestire l'assenza di un Game (OK)
+   
+   - Fare dialog-box di inserimento/modifica dei giocatori avversari (OK)
+  
+
+- Generare gli eventi completi di una partita reale (URB-FOR)
+  - Controllare tutte le dimensioni, al variare della size e delle dimensioni e del fattore di forma della finestra del browser, in particolare: (OK)
+       - ThrowMap (background e selezione punto di tiro) (OK)
+       - Score Sheet (OK)
+
+  - Sistemare dimensionamento dialog play-by-play (OK)
+  - Sistemare dimensionamento dialog Throws Map (OK)
+       
+  - Controllare la disattivazione del button di salvataggio del game (appena carico una partita si disattiva)
+  
+  - Ottimizzare dimensionamenti per il cellulare:
+     - Iniziare a scala 0.8 (OK)
+     - Diminuire dimensione pulsanti (load, save, ecc...) (OK)
+     - Diminuire altezza pulsanti "Score sheet", ecc... (OK)
+     - Salvataggio in locale della partita con pulsante "Save" (OK)
+     - Solo il primo timeout è visibile sul cellulare (OK)
+     - Line chart dialog mostra due scrollbar (OK)
+     - Aggiunta di nuovi giocatori per una specifica partita (OK)
+     - Editazione opponents (OK)
+       
+  
+- Generale
+  - Fare repository in github

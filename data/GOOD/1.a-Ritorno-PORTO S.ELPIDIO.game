@@ -1,0 +1,115 @@
+{
+    "date": "19/01/2025",
+    "time": "18:00",
+    "season": "Stagione 2024/2025",
+    "championship": "Campionato Serie C - Girone M",
+    "phase": "Ritorno",
+    "round": 1,
+    "home": true,
+    "opponents": "PORTO S.ELPIDIO",
+    "abbreviation": "PSE",
+    "referee1": "",
+    "referee2": "",
+    "location": "PALESTRA - Via Molinello - SANT'ANGELO IN VADO",
+    "trainer": "",
+    "opponents_info": {},
+    "unavailable_players": [
+        "Di Francesco",
+        "Dusels",
+        "Matteucci"
+    ],
+    "status": {
+        "quarter": 1,
+        "seconds": 600.0,
+        "gameover": false,
+        "points1": 0,
+        "points2": 0,
+        "fouls1": 0,
+        "fouls2": 0,
+        "timeouts1": 0,
+        "timeouts2": 0
+    },
+    "events": [],
+    "players_info": {
+        "Lulaj": {
+            "name": "Lulaj",
+            "number": "1",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Aloi": {
+            "name": "Aloi",
+            "number": "2",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Baldassarri": {
+            "name": "Baldassarri",
+            "number": "4",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Di Francesco": {
+            "name": "Di Francesco",
+            "number": "5",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Colotti": {
+            "name": "Colotti",
+            "number": "8",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Pentucci": {
+            "name": "Pentucci",
+            "number": "9",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Dusels": {
+            "name": "Dusels",
+            "number": "10",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Manna": {
+            "name": "Manna",
+            "number": "13",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Diana": {
+            "name": "Diana",
+            "number": "14",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Matteucci": {
+            "name": "Matteucci",
+            "number": "16",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Campana": {
+            "name": "Campana",
+            "number": "21",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Marcantognini": {
+            "name": "Marcantognini",
+            "number": "34",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        }
+    },
+    "on_field": [
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
+    "start_recording": "2025-01-31 11:06:21"
+}

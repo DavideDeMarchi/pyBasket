@@ -1,0 +1,229 @@
+{
+    "date": "22/12/2024",
+    "time": "18:00",
+    "season": "Stagione 2024/2025",
+    "championship": "Campionato Serie C - Girone M",
+    "phase": "andata",
+    "round": 12,
+    "home": true,
+    "opponents": "Baskers Forlimpopoli",
+    "abbreviation": "FOR",
+    "referee1": "BELTRAMI FRANCESCO DI FABRIANO (AN)",
+    "referee2": "GIORGI FRANCESCO DI VALLEFOGLIA (AN)",
+    "location": "Palazzetto dello Sport, Sant'Angelo In Vado",
+    "trainer": "Tumidei",
+    "opponents_info": {
+        "Bocchini": {
+            "name": "Bocchini",
+            "number": "0",
+            "year": 2005,
+            "fouls": 0,
+            "points": 0
+        },
+        "Galletti": {
+            "name": "Galletti",
+            "number": "3",
+            "year": 2005,
+            "fouls": 0,
+            "points": 0
+        },
+        "Ruscelli": {
+            "name": "Ruscelli",
+            "number": "4",
+            "year": 2005,
+            "fouls": 0,
+            "points": 0
+        },
+        "Sampieri": {
+            "name": "Sampieri",
+            "number": "5",
+            "year": 2003,
+            "fouls": 0,
+            "points": 0
+        },
+        "Rossi": {
+            "name": "Rossi",
+            "number": "6",
+            "year": 1999,
+            "fouls": 0,
+            "points": 0
+        },
+        "Grassi": {
+            "name": "Grassi",
+            "number": "7",
+            "year": 1995,
+            "fouls": 0,
+            "points": 0
+        },
+        "Baldisserri": {
+            "name": "Baldisserri",
+            "number": "9",
+            "year": 2005,
+            "fouls": 0,
+            "points": 0
+        },
+        "Brighi L.": {
+            "name": "Brighi L.",
+            "number": "10",
+            "year": 1994,
+            "fouls": 0,
+            "points": 0
+        },
+        "Fin": {
+            "name": "Fin",
+            "number": "11",
+            "year": 1990,
+            "fouls": 0,
+            "points": 0
+        },
+        "Bracci M.": {
+            "name": "Bracci M.",
+            "number": "12",
+            "year": 1995,
+            "fouls": 0,
+            "points": 0
+        },
+        "Bracci J.": {
+            "name": "Bracci J.",
+            "number": "14",
+            "year": 1996,
+            "fouls": 0,
+            "points": 0
+        }
+    },
+    "players_info": {
+        "Lulaj": {
+            "name": "Lulaj",
+            "number": "1",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Aloi": {
+            "name": "Aloi",
+            "number": "2",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Baldassarri": {
+            "name": "Baldassarri",
+            "number": "4",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Di Francesco": {
+            "name": "Di Francesco",
+            "number": "5",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Colotti": {
+            "name": "Colotti",
+            "number": "8",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Pentucci": {
+            "name": "Pentucci",
+            "number": "9",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Dusels": {
+            "name": "Dusels",
+            "number": "10",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Manna": {
+            "name": "Manna",
+            "number": "13",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Diana": {
+            "name": "Diana",
+            "number": "14",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Matteucci": {
+            "name": "Matteucci",
+            "number": "16",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Campana": {
+            "name": "Campana",
+            "number": "21",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Marcantognini": {
+            "name": "Marcantognini",
+            "number": "34",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        }
+    },
+    "status": {
+        "quarter": 1,
+        "seconds": 600.0,
+        "gameover": false,
+        "points1": 0,
+        "points2": 0,
+        "fouls1": 0,
+        "fouls2": 0,
+        "timeouts1": 0,
+        "timeouts2": 0
+    },
+    "events": [
+        {
+            "team": "Team",
+            "player": "Aloi",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0,
+            "y": 0,
+            "time": "2025-01-16 07:49:42"
+        },
+        {
+            "team": "Team",
+            "player": "Baldassarri",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0,
+            "y": 0,
+            "time": "2025-01-16 07:49:46"
+        },
+        {
+            "team": "Team",
+            "player": "Diana",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0,
+            "y": 0,
+            "time": "2025-01-16 07:49:49"
+        },
+        {
+            "team": "Team",
+            "player": "Pentucci",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0,
+            "y": 0,
+            "time": "2025-01-16 07:49:53"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "name": "PALLACANESTRO URBANIA",
+    "short": "Pall. Urbania",
+    "abbreviation": "URB",
+    "logo": "Logo.png",
+    
+    "trainer": "Francesco Donati",
+    "assistant": "Matteo Violini",
+
+    "players": {
+        "Lulaj":         {"name": "Lulaj",         "number": "1"},
+        "Aloi":          {"name": "Aloi",          "number": "2"},
+        "Baldassarri":   {"name": "Baldassarri",   "number": "4"},
+        "Di Francesco":  {"name": "Di Francesco",  "number": "5"},
+        "Colotti":       {"name": "Colotti",       "number": "8"},
+        "Pentucci":      {"name": "Pentucci",      "number": "9"},
+        "Perez Da Rold": {"name": "Perez Da Rold", "number": "10"},
+        "Manna":         {"name": "Manna",         "number": "13"},
+        "Diana":         {"name": "Diana",         "number": "14"},
+        "Campana":       {"name": "Campana",       "number": "21"},
+        "Marcantognini": {"name": "Marcantognini", "number": "34"}
+    }
+}
