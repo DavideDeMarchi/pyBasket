@@ -108,4 +108,4 @@
        
   
 - Generale
-  - Fare repository in github
+  - Fare repository in github (OK)
