@@ -5,7 +5,7 @@ Basketball statistics in Python and Voilà
 ## Screenshot
 ![plot](./screenshots/pyBasket_main.png)
 
-## Ouput produced by pyBasket
+## Outputs produced by pyBasket
 
 ### Score Sheet
 ![plot](./screenshots/pyBasket_scoresheet.png)
