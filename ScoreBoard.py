@@ -183,20 +183,42 @@ class ScoreBoard(widgets.VBox):
         self.iTShoot = iconButton.iconButton(width=wi, onclick=self.showTShoot, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-alpha-s', tooltip='Display True Shooting Percentage')
         self.iconButtons = [self.iPoints, self.iTime, self.iValue, self.iOER, self.iVIR, self.iPlusM, self.iTShoot]
         
-        wi = '%fvw'%(self.infow/3)
-        self.iSmall  = iconButton.iconButton(width=wiscale, onclick=self.scaleSmall,  small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-square-small',  tooltip='Scale to small size')
-        self.iMedium = iconButton.iconButton(width=wiscale, onclick=self.scaleMedium, small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-square-medium', tooltip='Scale to medium size')
-        self.iLarge  = iconButton.iconButton(width=wiscale, onclick=self.scaleLarge,  small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-square',        tooltip='Scale to large size')
-        self.iXLarge = iconButton.iconButton(width=wiscale, onclick=self.scaleXLarge, small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-plus-box',      tooltip='Scale to extra large size')
+        self.iPoints.btn.tile = True
+        self.iTime.btn.tile   = True
+        self.iValue.btn.tile  = True
+        self.iOER.btn.tile    = True
+        self.iVIR.btn.tile    = True
+        self.iPlusM.btn.tile  = True
+        self.iTShoot.btn.tile = True
         
+        wi = '%fvw'%(self.infow/4)
+        self.iSmall  = iconButton.iconButton(width=wi, onclick=self.scaleSmall,  small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-square-small',  tooltip='Scale to small size')
+        self.iMedium = iconButton.iconButton(width=wi, onclick=self.scaleMedium, small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-square-medium', tooltip='Scale to medium size')
+        self.iLarge  = iconButton.iconButton(width=wi, onclick=self.scaleLarge,  small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-square',        tooltip='Scale to large size')
+        self.iXLarge = iconButton.iconButton(width=wi, onclick=self.scaleXLarge, small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-plus-box',      tooltip='Scale to extra large size')
+        
+        self.iSmall.btn.tile  = True
+        self.iMedium.btn.tile = True
+        self.iLarge.btn.tile  = True
+        self.iXLarge.btn.tile = True
+        
+        wi = '%fvw'%(self.infow/3)
         self.iLoadGame       = iconButton.iconButton(width=wi, onclick=self.loadGame,       small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-folder-open',  tooltip='Load a game from file')
         self.iSaveGame       = iconButton.iconButton(width=wi, onclick=self.saveGame,       small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-content-save', tooltip='Save current game to file', disabled=self.game.game_file is None)
         self.iStartRecording = iconButton.iconButton(width=wi, onclick=self.startRecording, small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-movie-open',   tooltip='Set start recording time', disabled=self.game.game_file is None)
         
+        self.iLoadGame.btn.tile       = True
+        self.iSaveGame.btn.tile       = True
+        self.iStartRecording.btn.tile = True
+        
+        self.iSettings  = iconButton.iconButton(width=wi, onclick=self.gameSettings,   small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-cogs',             tooltip='Edit game settings')
         self.iPlayers   = iconButton.iconButton(width=wi, onclick=self.editPlayers,    small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-account-heart',    tooltip='Edit the list of team players', disabled=self.game.game_file is None)
         self.iOpponents = iconButton.iconButton(width=wi, onclick=self.editOpponents,  small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-account-question', tooltip='Edit the list of opponents team players', disabled=self.game.game_file is None)
-        self.iSettings  = iconButton.iconButton(width=wi, onclick=self.gameSettings,   small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-cogs',             tooltip='Edit game settings')
 
+        self.iSettings.btn.tile  = True
+        self.iPlayers.btn.tile   = True
+        self.iOpponents.btn.tile = True
+        
         h = 'calc(%fvw - 4px)'%(self.width/5)
         self.cbuttons = v.Card(flat=True, tile=True, color=self.tb.color_back, width='%fvw'%(self.infow*1.048), height=h, style_='overflow: hidden;',
                                children=[v.Row(align='center', justify='space-around', no_gutters=True,
@@ -275,8 +297,8 @@ class ScoreBoard(widgets.VBox):
         
     # Called by Events after a game file is loaded
     def after_game_loaded(self):
+        self.iSaveGame.disabled = self.game.game_file is None
         disabled = (self.game.game_file is None) or (self.quarter > 1) or (self.tb.seconds < 600.0)
-        self.iSaveGame.disabled       = disabled
         self.iStartRecording.disabled = disabled
         self.iPlayers.disabled        = disabled
         self.iOpponents.disabled      = disabled

@@ -104,7 +104,7 @@
      
      
  - ScoreSheet: eliminare lo 0 nei punti segnati dai giocatori della squadra (OK)
- - Visualizzare il pulsante "Salva" durante la raccolta degli eventi (controllare la disattivazione del button di salvataggio del game: appena carico una partita si disattiva)
+ - Visualizzare il pulsante "Salva" durante la raccolta degli eventi (controllare la disattivazione del button di salvataggio del game: appena carico una partita si disattiva) (OK)
        
   
 - Generale
