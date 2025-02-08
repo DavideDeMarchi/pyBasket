@@ -32,7 +32,7 @@
             "number": "4",
             "year": "1994",
             "fouls": 0,
-            "points": 0
+            "points": 2
         },
         "Dichiara": {
             "name": "Dichiara",
@@ -67,13 +67,13 @@
             "number": "13",
             "year": "1996",
             "fouls": 0,
-            "points": 0
+            "points": 3
         },
         "Abbate": {
             "name": "Abbate",
             "number": "16",
             "year": "2005",
-            "fouls": 0,
+            "fouls": 1,
             "points": 0
         },
         "Razzoli": {
@@ -87,29 +87,378 @@
             "name": "Errera",
             "number": "34",
             "year": "1997",
-            "fouls": 0,
+            "fouls": 1,
             "points": 0
         }
     },
     "unavailable_players": [],
     "status": {
         "quarter": 1,
-        "seconds": 600.0,
+        "seconds": 487.7,
         "gameover": false,
-        "points1": 0,
-        "points2": 0,
-        "fouls1": 0,
-        "fouls2": 0,
+        "points1": 8,
+        "points2": 5,
+        "fouls1": 2,
+        "fouls2": 2,
         "timeouts1": 0,
         "timeouts2": 0
     },
-    "events": [],
+    "events": [
+        {
+            "team": "Team",
+            "player": "Aloi",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:34"
+        },
+        {
+            "team": "Team",
+            "player": "Campana",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:40"
+        },
+        {
+            "team": "Team",
+            "player": "Marcantognini",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:44"
+        },
+        {
+            "team": "Team",
+            "player": "Colotti",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:48"
+        },
+        {
+            "team": "Team",
+            "player": "Perez Da Rold",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:51"
+        },
+        {
+            "team": "Team",
+            "player": "Aloi",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:55"
+        },
+        {
+            "team": "Team",
+            "player": "Campana",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:55"
+        },
+        {
+            "team": "Team",
+            "player": "Marcantognini",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:55"
+        },
+        {
+            "team": "Team",
+            "player": "Colotti",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:55"
+        },
+        {
+            "team": "Team",
+            "player": "Perez Da Rold",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 600.0,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:12:55"
+        },
+        {
+            "team": "Team",
+            "player": "Perez Da Rold",
+            "event": 2,
+            "event_name": "T2ok",
+            "event_description": "Tiro da 2 centrato",
+            "quarter": 1,
+            "seconds": 592.2,
+            "x": 29.0274935536,
+            "y": 52.4192172625,
+            "time": "2025-02-03 16:13:03"
+        },
+        {
+            "team": "Team",
+            "player": "Marcantognini",
+            "event": 7,
+            "event_name": "RDif",
+            "event_description": "Rimbalzo difensivo",
+            "quarter": 1,
+            "seconds": 586.2,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:13:09"
+        },
+        {
+            "team": "Opponents",
+            "player": "Savelli",
+            "event": 2,
+            "event_name": "T2ok",
+            "event_description": "Tiro da 2 centrato",
+            "quarter": 1,
+            "seconds": 579.7,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:13:47"
+        },
+        {
+            "team": "Team",
+            "player": "Campana",
+            "event": 4,
+            "event_name": "T3ok",
+            "event_description": "Tiro da 3 centrato",
+            "quarter": 1,
+            "seconds": 570.9,
+            "x": 57.7174581125,
+            "y": 81.7244489605,
+            "time": "2025-02-03 16:13:56"
+        },
+        {
+            "team": "Team",
+            "player": "Campana",
+            "event": 13,
+            "event_name": "FCom",
+            "event_description": "Fallo commesso",
+            "quarter": 1,
+            "seconds": 565.5,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:14:02"
+        },
+        {
+            "team": "Opponents",
+            "player": "Errera",
+            "event": 13,
+            "event_name": "FCom",
+            "event_description": "Fallo commesso",
+            "quarter": 1,
+            "seconds": 558.1,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:14:09"
+        },
+        {
+            "team": "Team",
+            "player": "Colotti",
+            "event": 15,
+            "event_name": "FSub",
+            "event_description": "Fallo subito",
+            "quarter": 1,
+            "seconds": 558.1,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:14:09"
+        },
+        {
+            "team": "Team",
+            "player": "Perez Da Rold",
+            "event": 3,
+            "event_name": "T2err",
+            "event_description": "Tiro da 2 sbagliato",
+            "quarter": 1,
+            "seconds": 547.6,
+            "x": 19.4079172016,
+            "y": 59.98629587,
+            "time": "2025-02-03 16:14:19"
+        },
+        {
+            "team": "Team",
+            "player": "Aloi",
+            "event": 8,
+            "event_name": "PRec",
+            "event_description": "Palla recuperata",
+            "quarter": 1,
+            "seconds": 544.2,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:14:23"
+        },
+        {
+            "team": "Opponents",
+            "player": "Felicioni",
+            "event": 4,
+            "event_name": "T3ok",
+            "event_description": "Tiro da 3 centrato",
+            "quarter": 1,
+            "seconds": 534.7,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:17:00"
+        },
+        {
+            "team": "Team",
+            "player": "Marcantognini",
+            "event": 5,
+            "event_name": "T3err",
+            "event_description": "Tiro da 3 sbagliato",
+            "quarter": 1,
+            "seconds": 526.3,
+            "x": 51.6419362059,
+            "y": 85.9895296301,
+            "time": "2025-02-03 16:17:08"
+        },
+        {
+            "team": "Team",
+            "player": "Aloi",
+            "event": 9,
+            "event_name": "PPer",
+            "event_description": "Palla Persa",
+            "quarter": 1,
+            "seconds": 518.5,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:17:16"
+        },
+        {
+            "team": "Team",
+            "player": "Perez Da Rold",
+            "event": 7,
+            "event_name": "RDif",
+            "event_description": "Rimbalzo difensivo",
+            "quarter": 1,
+            "seconds": 514.5,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:17:20"
+        },
+        {
+            "team": "Team",
+            "player": "Perez Da Rold",
+            "event": 4,
+            "event_name": "T3ok",
+            "event_description": "Tiro da 3 centrato",
+            "quarter": 1,
+            "seconds": 510.1,
+            "x": 44.5538273149,
+            "y": 88.6036113309,
+            "time": "2025-02-03 16:17:24"
+        },
+        {
+            "team": "Team",
+            "player": "Colotti",
+            "event": 13,
+            "event_name": "FCom",
+            "event_description": "Fallo commesso",
+            "quarter": 1,
+            "seconds": 503.6,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:17:37"
+        },
+        {
+            "team": "Team",
+            "player": "Marcantognini",
+            "event": 19,
+            "event_name": "Usci",
+            "event_description": "Uscita dal campo",
+            "quarter": 1,
+            "seconds": 493.8,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:23:48"
+        },
+        {
+            "team": "Team",
+            "player": "Diana",
+            "event": 18,
+            "event_name": "Entr",
+            "event_description": "Entrata in campo",
+            "quarter": 1,
+            "seconds": 493.8,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:23:51"
+        },
+        {
+            "team": "Opponents",
+            "player": "Abbate",
+            "event": 13,
+            "event_name": "FCom",
+            "event_description": "Fallo commesso",
+            "quarter": 1,
+            "seconds": 487.7,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:24:09"
+        },
+        {
+            "team": "Team",
+            "player": "Diana",
+            "event": 15,
+            "event_name": "FSub",
+            "event_description": "Fallo subito",
+            "quarter": 1,
+            "seconds": 487.7,
+            "x": 0.0,
+            "y": 0.0,
+            "time": "2025-02-03 16:24:09"
+        }
+    ],
     "on_field": [
-        "",
-        "",
-        "",
-        "",
-        ""
+        "Aloi",
+        "Campana",
+        "Diana",
+        "Colotti",
+        "Perez Da Rold"
     ],
     "players_info": {
         "Lulaj": {
@@ -121,8 +470,8 @@
         "Aloi": {
             "name": "Aloi",
             "number": "2",
-            "time_on_field": 0.0,
-            "plusminus": 0
+            "time_on_field": 112.3,
+            "plusminus": 3
         },
         "Baldassarri": {
             "name": "Baldassarri",
@@ -139,8 +488,8 @@
         "Colotti": {
             "name": "Colotti",
             "number": "8",
-            "time_on_field": 0.0,
-            "plusminus": 0
+            "time_on_field": 112.3,
+            "plusminus": 3
         },
         "Pentucci": {
             "name": "Pentucci",
@@ -151,8 +500,8 @@
         "Perez Da Rold": {
             "name": "Perez Da Rold",
             "number": "10",
-            "time_on_field": 0.0,
-            "plusminus": 0
+            "time_on_field": 112.3,
+            "plusminus": 3
         },
         "Manna": {
             "name": "Manna",
@@ -163,20 +512,20 @@
         "Diana": {
             "name": "Diana",
             "number": "14",
-            "time_on_field": 0.0,
+            "time_on_field": 6.082114808048584,
             "plusminus": 0
         },
         "Campana": {
             "name": "Campana",
             "number": "21",
-            "time_on_field": 0.0,
-            "plusminus": 0
+            "time_on_field": 112.3,
+            "plusminus": 3
         },
         "Marcantognini": {
             "name": "Marcantognini",
             "number": "34",
-            "time_on_field": 0.0,
-            "plusminus": 0
+            "time_on_field": 106.21788519195142,
+            "plusminus": 3
         }
     }
 }

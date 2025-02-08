@@ -8,11 +8,96 @@
     "home": true,
     "opponents": "GIOVANE ROBUR OSIMO",
     "abbreviation": "OSI",
-    "referee1": "",
-    "referee2": "",
+    "referee1": "VIRGILI FRANCESCO di PORTO SANT'ELPIDIO (FM)",
+    "referee2": "ONOFRI FILIPPO di FORLI' (FC)",
     "location": "PALESTRA - Via Molinello - SANT'ANGELO IN VADO",
     "trainer": "",
-    "opponents_info": {},
+    "opponents_info": {
+        "Ortenzi": {
+            "name": "Ortenzi",
+            "number": "1",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Strappato": {
+            "name": "Strappato",
+            "number": "2",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Carancini": {
+            "name": "Carancini",
+            "number": "3",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Scabini": {
+            "name": "Scabini",
+            "number": "4",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Mentonelli": {
+            "name": "Mentonelli",
+            "number": "5",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Catana": {
+            "name": "Catana",
+            "number": "6",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Vallemani": {
+            "name": "Vallemani",
+            "number": "7",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Vignoni": {
+            "name": "Vignoni",
+            "number": "8",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Bini": {
+            "name": "Bini",
+            "number": "9",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Cagnacci": {
+            "name": "Cagnacci",
+            "number": "10",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Quinzi": {
+            "name": "Quinzi",
+            "number": "11",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        },
+        "Tamulis": {
+            "name": "Tamulis",
+            "number": "12",
+            "year": "2000",
+            "fouls": 0,
+            "points": 0
+        }
+    },
     "unavailable_players": [],
     "status": {
         "quarter": 1,
@@ -26,4 +111,79 @@
         "timeouts2": 0
     },
     "events": [],
+    "players_info": {
+        "Lulaj": {
+            "name": "Lulaj",
+            "number": "1",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Aloi": {
+            "name": "Aloi",
+            "number": "2",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Baldassarri": {
+            "name": "Baldassarri",
+            "number": "4",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Di Francesco": {
+            "name": "Di Francesco",
+            "number": "5",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Colotti": {
+            "name": "Colotti",
+            "number": "8",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Pentucci": {
+            "name": "Pentucci",
+            "number": "9",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Perez Da Rold": {
+            "name": "Perez Da Rold",
+            "number": "10",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Manna": {
+            "name": "Manna",
+            "number": "13",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Diana": {
+            "name": "Diana",
+            "number": "14",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Campana": {
+            "name": "Campana",
+            "number": "21",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Marcantognini": {
+            "name": "Marcantognini",
+            "number": "34",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        }
+    },
+    "on_field": [
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
 }
