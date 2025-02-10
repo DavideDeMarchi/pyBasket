@@ -244,13 +244,13 @@ class ThrowMap(widgets.VBox):
                 if self.current_player is not None: name = self.current_player
 
                 if self.field_left:
-                    x1 = (w*2)//3 - 20
-                    x2 = x1 + 40
-                    x3 = x2 + 60
+                    x1 = (w*2)//3 - 26
+                    x2 = x1 + 36
+                    x3 = x2 + 74
                 else:
                     x1 = 10
                     x2 = x1 + 40
-                    x3 = x2 + 60
+                    x3 = x2 + 74
                     
                 y = 10
                 dy = 30

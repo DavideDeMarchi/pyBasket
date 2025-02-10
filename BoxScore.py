@@ -686,6 +686,7 @@ def pointsChart(df, game, height_in_pixels=450):
 
     tt = 0
     to = 0
+    previous_total_seconds = 0
     for index, row in df[df['event'].isin([0,2,4])].iterrows():
         quarter = row['quarter']
         seconds = row['seconds']
@@ -706,12 +707,18 @@ def pointsChart(df, game, height_in_pixels=450):
             git.append(row['player'] + ' %dP'%p)
             if tt > to:
                 if p == 1:
-                    post.append('middle right')
+                    if total_seconds - previous_total_seconds > 40:
+                        post.append('middle right')
+                    else:
+                        post.append('top right')
                 else:
                     post.append('top center')
             else:
                 if p == 1:
-                    post.append('middle right')
+                    if total_seconds - previous_total_seconds > 40:
+                        post.append('middle right')
+                    else:
+                        post.append('bottom right')
                 else:
                     post.append('bottom center')
         else:
@@ -721,14 +728,22 @@ def pointsChart(df, game, height_in_pixels=450):
             gio.append(row['player'] + ' %dP'%p)
             if to > tt:
                 if p == 1:
-                    poso.append('middle left')
+                    if total_seconds - previous_total_seconds > 40:
+                        poso.append('middle left')
+                    else:
+                        poso.append('top left')
                 else:
                     poso.append('top center')
             else:
                 if p == 1:
-                    poso.append('middle left')
+                    if total_seconds - previous_total_seconds > 40:
+                        poso.append('middle left')
+                    else:
+                        poso.append('bottom left')
                 else:
                     poso.append('bottom center')
+                    
+        previous_total_seconds = total_seconds
 
     pointsTeam = Stats.points(df)
     pointsOppo = Stats.points(df, team=Config.OPPO)
@@ -743,10 +758,14 @@ def pointsChart(df, game, height_in_pixels=450):
     
     fig.for_each_trace(lambda t: t.update(textfont_color=t.marker.color))
 
+    title = "<span style='font-size:22px; font-weight: 700;'>"
+    
     if game.game_data['home']:
-        title = game.team_data['name'] + ' - ' + game.game_data['opponents']
+        title += game.team_data['name'] + ' - ' + game.game_data['opponents']
     else:
-        title = game.game_data['opponents'] + ' - ' + game.team_data['name']
+        title += game.game_data['opponents'] + ' - ' + game.team_data['name']
+        
+    title +=  '&nbsp;&nbsp;&nbsp;&nbsp;' + str(game.board.pb1.points) + ' - ' + str(game.board.pb2.points) + '</span>'
 
     # Write the minutes on the xaxis
     mmax = max(max(mt),max(mo)) / 60.0
@@ -755,16 +774,73 @@ def pointsChart(df, game, height_in_pixels=450):
     dmin = dates_array[0]  - datetime.timedelta(seconds=6)
     dmax = dates_array[-1] + datetime.timedelta(seconds=6)
     
-    fig.update_layout(title=dict(text=title,y=0.97,x=0.02,xanchor='left',yanchor='top'),
+    annotations = []
+    
+    ppq = game.pointsPerQuarter(showTotals=True)
+    
+    line_color = 'rgb(90,90,90)'
+    pmax = max(tt,to) + 8
+    if mmax >= 10:
+        xt = datetime.datetime(d.year, d.month, d.day, 0, 5, 0)
+        x  = datetime.datetime(d.year, d.month, d.day, 0, 10, 0)
+        fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+        if len(ppq) > 0: annotations.append(dict(x=xt, y=pmax, text=ppq[0], showarrow=False))
+    
+    if mmax >= 20:
+        xt = datetime.datetime(d.year, d.month, d.day, 0, 15, 0)
+        x  = datetime.datetime(d.year, d.month, d.day, 0, 20, 0)
+        fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+        if len(ppq) > 1: annotations.append(dict(x=xt, y=pmax, text=ppq[1], showarrow=False))
+        
+    if mmax >= 30:
+        xt = datetime.datetime(d.year, d.month, d.day, 0, 25, 0)
+        x  = datetime.datetime(d.year, d.month, d.day, 0, 30, 0)
+        fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+        if len(ppq) > 2: annotations.append(dict(x=xt, y=pmax, text=ppq[2], showarrow=False))
+        
+    if mmax >= 40 or game.board.tb.gameover:
+        xt = datetime.datetime(d.year, d.month, d.day, 0, 35, 0)
+        x  = datetime.datetime(d.year, d.month, d.day, 0, 40, 0)
+        fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+        if len(ppq) > 3: annotations.append(dict(x=xt, y=pmax, text=ppq[3], showarrow=False))
+        
+    if mmax >= 45 or game.board.tb.gameover:
+        xt = datetime.datetime(d.year, d.month, d.day, 0, 42, 30)
+        x  = datetime.datetime(d.year, d.month, d.day, 0, 45, 0)
+        fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+        if len(ppq) > 4: annotations.append(dict(x=xt, y=pmax, text=ppq[4], showarrow=False))
+        
+    if mmax >= 50 or game.board.tb.gameover:
+        xt = datetime.datetime(d.year, d.month, d.day, 0, 47, 30)
+        x  = datetime.datetime(d.year, d.month, d.day, 0, 50, 0)
+        fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+        if len(ppq) > 5: annotations.append(dict(x=xt, y=pmax, text=ppq[5], showarrow=False))
+        
+    if mmax >= 55 or game.board.tb.gameover:
+        xt = datetime.datetime(d.year, d.month, d.day, 0, 52, 30)
+        x  = datetime.datetime(d.year, d.month, d.day, 0, 55, 0)
+        fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+        if len(ppq) > 6: annotations.append(dict(x=xt, y=pmax, text=ppq[6], showarrow=False))
+        
+    if mmax >= 60 or game.board.tb.gameover:
+        xt = datetime.datetime(d.year, d.month, d.day, 0, 57, 30)
+        x  = datetime.datetime(d.year, d.month, d.day, 1,  0, 0)
+        fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+        if len(ppq) > 7: annotations.append(dict(x=xt, y=pmax, text=ppq[7], showarrow=False))
+    
+    fig.update_layout(title=dict(text=title,y=0.94,x=0.02,xanchor='left',yanchor='top'),
                       template='plotly_dark',
                       height=height_in_pixels,
                       font_family="Arial",
-                      font_size=12,
+                      font_size=13,
                       title_font_family="Arial",
                       xaxis_title='Minuti',
                       yaxis_title='Punti',
-                      xaxis = dict(range=[dmin,dmax], tickmode='array', tickvals=dates_array, ticktext=['%d\''%x.minute for x in dates_array]),
-                      margin=dict(l=20,r=10,b=30,t=30,pad=0))
+                      annotations=annotations,
+                      xaxis=dict(range=[dmin,dmax], tickmode='array', tickvals=dates_array, ticktext=['%d\''%x.minute for x in dates_array]),
+                      yaxis=dict(range=[0,pmax+2]),
+                      margin=dict(l=26,r=10,b=30,t=30,pad=0),
+                      legend=dict(orientation="v", yanchor="top", y=1.2, xanchor="right", x=1.0))
 
     return fig
 

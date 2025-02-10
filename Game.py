@@ -254,7 +254,7 @@ class Game():
     ###########################################################################################################################################################################
     # Display info on top of throwmap background: points per quarter. Returns an array of strings
     ###########################################################################################################################################################################
-    def pointsPerQuarter(self):
+    def pointsPerQuarter(self, showTotals=False):
         
         def qpoints(quarter):
             if quarter <= 4: name = 'Q%d'%quarter
@@ -273,11 +273,31 @@ class Game():
             T2ok = Stats.count(dfoppo,'T2ok')
             T3ok = Stats.count(dfoppo,'T3ok')
             pOppo = T1ok + T2ok*2 + T3ok*3
+            
+            if showTotals and quarter > 1:
+                df = self.events_df[self.events_df['quarter']<=quarter]
+                dfteam = df[df['team']==Config.TEAM]
+                dfoppo = df[df['team']==Config.OPPO]
 
-            if self.board.home_game:
-                return '%s: %d - %d'%(name,pTeam,pOppo)
+                T1ok = Stats.count(dfteam,'T1ok')
+                T2ok = Stats.count(dfteam,'T2ok')
+                T3ok = Stats.count(dfteam,'T3ok')
+                pTeamTotal = T1ok + T2ok*2 + T3ok*3
+
+                T1ok = Stats.count(dfoppo,'T1ok')
+                T2ok = Stats.count(dfoppo,'T2ok')
+                T3ok = Stats.count(dfoppo,'T3ok')
+                pOppoTotal = T1ok + T2ok*2 + T3ok*3
+                
+                if self.board.home_game:
+                    return '%s: %d - %d (%d - %d)'%(name,pTeam,pOppo,pTeamTotal,pOppoTotal)
+                else:
+                    return '%s: %d - %d (%d - %d)'%(name,pOppo,pTeam,pOppoTotal,pTeamTotal)
             else:
-                return '%s: %d - %d'%(name,pOppo,pTeam)
+                if self.board.home_game:
+                    return '%s: %d - %d'%(name,pTeam,pOppo)
+                else:
+                    return '%s: %d - %d'%(name,pOppo,pTeam)
                     
         
         quarters = list(self.events_df['quarter'].unique())
