@@ -466,7 +466,8 @@ class PointsBoard(widgets.HBox):
         # Create a darker color for the initial 0 figures
         rgb = colors.hex2rgb(self.color_on)
         dark = colors.monochromaticColor(rgb, -0.8)
-        self.color_zero = colors.rgb2hex(dark)
+        #self.color_zero = colors.rgb2hex(dark)
+        self.color_zero = self.color_off
 
         self.svgwidth  = 70.0
         self.svgheight = 44.0
