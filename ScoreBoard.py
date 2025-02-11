@@ -191,6 +191,7 @@ class ScoreBoard(widgets.VBox):
         self.iPlusM.btn.tile  = True
         self.iTShoot.btn.tile = True
         
+        large = False
         wi = '%fvw'%(self.infow/4)
         self.iSmall  = iconButton.iconButton(width=wi, onclick=self.scaleSmall,  small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-square-small',  tooltip='Scale to small size')
         self.iMedium = iconButton.iconButton(width=wi, onclick=self.scaleMedium, small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-square-medium', tooltip='Scale to medium size')
@@ -202,6 +203,7 @@ class ScoreBoard(widgets.VBox):
         self.iLarge.btn.tile  = True
         self.iXLarge.btn.tile = True
         
+        large = False
         wi = '%fvw'%(self.infow/3)
         self.iLoadGame       = iconButton.iconButton(width=wi, onclick=self.loadGame,       small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-folder-open',  tooltip='Load a game from file')
         self.iSaveGame       = iconButton.iconButton(width=wi, onclick=self.saveGame,       small=small, large=large, x_large=x_large, outlined=False, rounded=False, icon='mdi-content-save', tooltip='Save current game to file', disabled=self.game.game_file is None)
@@ -704,7 +706,7 @@ class ScoreBoard(widgets.VBox):
             
     def scaleXLarge(self):
         if self.on_scaling is not None:
-            self.on_scaling(0.85)
+            self.on_scaling(0.88)
             
             
     ###########################################################################################################################################################################

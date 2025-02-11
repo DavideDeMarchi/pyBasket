@@ -283,7 +283,7 @@ class Events(widgets.VBox):
         self.board.tb.stop()
         
         def on_download():
-            bbb = self.fig.to_image('png', width=2000, height=500)
+            bbb = self.fig.to_image('png', width=3000, height=1000)
 
             filename = '%s-%s_PointsChart'%(self.board.team1_abbr,self.board.team2_abbr)
             if not self.board.tb.gameover:
@@ -309,7 +309,7 @@ class Events(widgets.VBox):
         self.waitClose()
 
         dlg = dialogGeneric.dialogGeneric(title='Points Chart', text='', titleheight=26, dark=False,
-                                          show=True, addclosebuttons=True, width='calc(%fvw + 8px)'%w,
+                                          show=True, addclosebuttons=True, width='calc(%fvw + 50px)'%w,
                                           custom_icon='mdi-download', custom_tooltip='Click to download the Points Chart', custom_icon_onclick=on_download,
                                           fullscreen=False, content=[out], output=self.board.output)
         dlg.dialog.children[0].color = 'black'
