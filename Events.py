@@ -283,7 +283,7 @@ class Events(widgets.VBox):
         self.board.tb.stop()
         
         def on_download():
-            bbb = self.fig.to_image('png', width=3000, height=1000)
+            bbb = self.fig.to_image('png', width=4000, height=1400)
 
             filename = '%s-%s_PointsChart'%(self.board.team1_abbr,self.board.team2_abbr)
             if not self.board.tb.gameover:
