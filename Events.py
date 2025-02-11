@@ -154,7 +154,7 @@ class Events(widgets.VBox):
         self.cbuttons = v.Card(flat=True, tile=True, color=self.board.tb.color_back, width='%fvw'%cwidth, height='calc(%fvw + 8px)'%(2*hcards), class_='pa-2', style_='overflow: hidden;')
 
         bw = 'calc(%fvw - 16px)'%cwidth
-        bh = self.board.scale * 100 / 2.65
+        bh = 'calc(calc(%fvw / 2.8) - 4px)'%hcards
         small   = False
         x_small = False
         large   = False
