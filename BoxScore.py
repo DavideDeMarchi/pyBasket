@@ -72,7 +72,7 @@ XNOME      =  0.90
 XSTARTERS  =  3.00
 
 XMINUTI    =  3.80
-XPUNTI     =  4.68
+XPUNTI     =  4.65
 X2P        =  5.87
 X2P_PERC   =  6.50
 X3P        =  7.76
@@ -237,7 +237,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
             else:
                 if q == 1:
                     svg += text(x, YSQUADRA1+hParziali,   str(pqo), dim=dimParziali, align='middle')
-                    svg += text(x, YSQUADRA2+2*hParziali, str(pqt), dim=dimParziali, align='middle')
+                    svg += text(x, YSQUADRA1+2*hParziali, str(pqt), dim=dimParziali, align='middle')
                 else:
                     svg += text(x, YSQUADRA1+hParziali,   '%d (%d)'%(pqo,pto), dim=dimParziali, align='middle')
                     svg += text(x, YSQUADRA1+2*hParziali, '%d (%d)'%(pqt,ptt), dim=dimParziali, align='middle')
@@ -290,7 +290,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     # Players texts
     y1 = YRIGA0 + 0.2
     hRiga = 0.4
-    ysum = y1+13*hRiga-0.03
+    ysum = y1+13*hRiga-0.01
     
     # Numero maglia
     y = y1
@@ -329,10 +329,10 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     for player_name in game.players_by_number:
         points = Stats.points(df, player_name)
         if points > 0:
-            svg += text(XPUNTI, y, str(points), align='middle')
+            svg += text(XPUNTI, y, str(points), align='middle', w=700)
         y += hRiga
     t = Stats.points(df)
-    if t > 0: svg += text(XPUNTI, ysum, str(t), align='middle', color='white')
+    if t > 0: svg += text(XPUNTI, ysum, str(t), align='middle', color='white', w=700)
         
     # T2
     y = y1
@@ -472,7 +472,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
             svg += text(XVAL, y, str(Stats.value(df, player_name)), align='middle')
         y += hRiga
     t = Stats.value(df)
-    if t > 0: svg += text(XVAL, ysum, str(t), align='middle', color='white')
+    svg += text(XVAL, ysum, str(t), align='middle', color='white')
         
     # Valutazione OER
     y = y1
@@ -499,7 +499,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
             svg += text(XPLUSMIN, y, str(Stats.plusminus(player_name, game.players_info)), align='middle')
         y += hRiga
     t = Stats.plusminus(players_info=game.players_info)
-    if t > 0: svg += text(XPLUSMIN, ysum, str(t), align='middle', color='white')
+    svg += text(XPLUSMIN, ysum, str(t), align='middle', color='white')
         
     # Valutazione TrueShooting
     y = y1
@@ -522,7 +522,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     svg += text(XPUNTI, y2-0.06, 'Assistente: ' + game.team_data['assistant'])
     
     dimNote = 0.14
-    svg += text(XRIGHT, y2-0.06, 'Rilevazioni statistiche realizzate con Basket Score', dim=dimNote, align='end')
+    svg += text(XRIGHT, y2-0.06, 'Rilevazioni statistiche realizzate con pyBasket', dim=dimNote, align='end')
     
     svg += text(XLEFT, yNote + 1.75*hRigaNote, 'Note sulle valutazioni:', dim=dimNote)
     svg += text(XLEFT, yNote + 2.75*hRigaNote, 'Valutazione di Lega = (TL+) - (TL-) + [(T2+) x 2 - (T2-)] + [(T3+) x 3) - (T3-)] + PR - PP + RO + RD + AS - FF + FS + SD - SS', dim=dimNote)
@@ -547,7 +547,11 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     for player_name in game.opponents_by_number:
         points = Stats.points(df, player_name, team=Config.OPPO)
         if points > 0: po.append('%s %d'%(player_name,points))
-        else:          po.append(player_name)
+        else:
+            if player_name in game.game_data['opponents_info']:
+                points = game.game_data['opponents_info'][player_name]['points']
+                if points > 0: po.append('%s %d'%(player_name,points))
+                else:          po.append(player_name)
     
     if g['home']:
         svg += text(XLEFT, yNote + 8.1*hRigaNote,     game.team_data['name'].upper() + ': ', dim=dimSintesi)
@@ -1039,8 +1043,15 @@ def play_by_play(df, game):
     else:
         title = game.game_data['opponents'] + ' - ' + game.team_data['name']
 
-    maxplusminus1 = 'Massimo vantaggio:&nbsp;&nbsp;   +%d punti sul punteggio di %s (%s)'%(maxplus_team, maxpts_team, maxtime_team)
-    maxplusminus2 = 'Massimo svantaggio:\t  -%d punti sul punteggio di %s (%s)'%(maxplus_oppo, maxpts_oppo, maxtime_oppo)
+    if maxplus_team > 0:
+        maxplusminus1 = 'Massimo vantaggio:&nbsp;&nbsp;   +%d punti sul punteggio di %s (%s)'%(maxplus_team, maxpts_team, maxtime_team)
+    else:
+        maxplusminus1 = ''
+        
+    if maxplus_oppo > 0:
+        maxplusminus2 = 'Massimo svantaggio:\t  -%d punti sul punteggio di %s (%s)'%(maxplus_oppo, maxpts_oppo, maxtime_oppo)
+    else:
+        maxplusminus2 = ''
 
     html = '''
 <head>

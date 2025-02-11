@@ -177,6 +177,12 @@ class Game():
         else:
             self.game_data['players_info'] = self.players_info
 
+        # Players sorted alphabetically by name
+        self.players_by_name = sorted(self.players_info.keys())
+
+        # Players sorted by number
+        self.players_by_number = [x[0] for x in sorted([[x[1]['name'],x[1]['number']] for x in self.players_info.items()], key=lambda x: int(x[1]))]
+        self.players_numbers   = [x[1] for x in sorted([[x[1]['name'],x[1]['number']] for x in self.players_info.items()], key=lambda x: int(x[1]))]
 
         # Add 'fouls' and 'points' to opponents players (if not already present)
         for name,player in self.opponents_info.items():
@@ -431,10 +437,11 @@ class Game():
         players_widgets = []
         players_card    = []
 
-        wplayer = self.board.width/5
-       
         if w is None:
+            wplayer = self.board.width/5
             w = 'calc(%fvw - 4px)'%wplayer
+        else:
+            wplayer = self.board.width/6.5
             
         spacer = v.Html(tag='div',children=[' '], style_='width: 5px; height: %s; background-color: %s;'%(w, self.board.tb.color_back))
         style_text = 'color: white; text-shadow: 2px 2px black; background-color: #00000000; font-size: %fvw; line-height: %fvw; font-family: "%s", serif; vertical-align: baseline;'%(self.board.text_height*0.22, 

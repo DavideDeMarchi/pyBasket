@@ -13,7 +13,7 @@
     "location": "Paladimension Vending - Via del Tulipano 11 - FORLIMPOPOLI",
     "trainer": "",
     "opponents_info": {},
-    "unavailable_players": [],
+    "unavailable_players": ["Dusels", "Matteucci"],
     "status": {
         "quarter": 1,
         "seconds": 600.0,

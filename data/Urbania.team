@@ -15,8 +15,10 @@
         "Colotti":       {"name": "Colotti",       "number": "8"},
         "Pentucci":      {"name": "Pentucci",      "number": "9"},
         "Perez Da Rold": {"name": "Perez Da Rold", "number": "10"},
+        "Dusels":        {"name": "Dusels",        "number": "12"},
         "Manna":         {"name": "Manna",         "number": "13"},
         "Diana":         {"name": "Diana",         "number": "14"},
+        "Matteucci":     {"name": "Matteucci",     "number": "16"},
         "Campana":       {"name": "Campana",       "number": "21"},
         "Marcantognini": {"name": "Marcantognini", "number": "34"}
     }

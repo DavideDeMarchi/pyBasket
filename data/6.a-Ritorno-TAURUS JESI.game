@@ -13,7 +13,7 @@
     "location": "PALATRICCOLI - Via Tabano - JESI (AN)",
     "trainer": "",
     "opponents_info": {},
-    "unavailable_players": [],
+    "unavailable_players": ["Dusels", "Matteucci"],
     "status": {
         "quarter": 1,
         "seconds": 600.0,

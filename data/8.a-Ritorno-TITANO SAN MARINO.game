@@ -13,7 +13,7 @@
     "location": "MULTIEVENTI SPORT DOMUS - Via Rancaglia 22 - RSM",
     "trainer": "",
     "opponents_info": {},
-    "unavailable_players": [],
+    "unavailable_players": ["Dusels", "Matteucci"],
     "status": {
         "quarter": 1,
         "seconds": 600.0,

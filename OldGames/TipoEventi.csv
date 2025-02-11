@@ -1,0 +1,21 @@
+ID,Nome,Punteggio,Descrizione
+0,T1ok,1,Tiro libero centrato
+1,T1err,-1,Tiro libero sbagliato
+2,T2ok,2,Tiro da 2 punti centrato
+3,T2err,-1,Tiro da 2 punti sbagliato
+4,T3ok,3,Tiro da 3 punti centrato
+5,T3err,-1,Tiro da 3 punti sbagliato
+6,ROff,1,Rimbalzo offensivo
+7,RDif,1,Rimbalzo difensivo
+8,PRec,1,Palla recuperata
+9,PPer,-1,Palla Persa
+10,Ass,1,Assist
+11,SDat,1,Stoppata data
+12,SSub,-1,Stoppata subita
+13,FCom,-1,Fallo commesso
+14,FTec,-1,Fallo tecnico
+15,FSub,1,Fallo subito
+16,Espu,-1,Espulsione
+17,Info,0,Infortunio
+18,Entr,0,Entrata in campo
+19,Usci,0,Uscita dal campo

@@ -128,14 +128,14 @@ class Events(widgets.VBox):
                 self.plus_buttons[event['id']] = plus
                 minus = iconButton.iconButton(onclick=self.click_minus, argument=event['id'], icon='mdi-minus', color='red', disabled=True)
                 self.minus_buttons[event['id']] = minus
-                action = v.CardActions(children=[plus.draw(), value, minus.draw()], class_='mt-auto justify-center')
+                action = v.CardActions(children=[plus.draw(), value, minus.draw()], class_='mt-auto justify-center mb-2')
                 c = v.Card(flat=True, tile=True, outlined=True, color=self.board.tb.color_back, ripple=False, children=[title, action], width='%fvw'%w, height='calc(%fvw + 4px)'%hcards, class_='pa-0 pt-2 noselect d-flex flex-column',
                            style_='border-width: 1px; border-color: #BBBBBB !important; overflow: hidden;')
             else:
                 if event['id'] == 18: icon = 'mdi-arrow-left-bold'
                 else:                 icon = 'mdi-arrow-right-bold'
                 fire = iconButton.iconButton(onclick=self.click_fire,  argument=event['id'], icon=icon, x_large=True, width='%fvw'%(w*0.9), color='yellow')
-                action = v.CardActions(children=[fire.draw()], class_='mt-auto justify-center')
+                action = v.CardActions(children=[fire.draw()], class_='mt-auto justify-center mb-2')
                 c = v.Card(flat=True, tile=True, outlined=True, color=self.board.tb.color_back, ripple=False, children=[title, action], width='%fvw'%w, height='calc(%fvw + 4px)'%hcards, class_='pa-0 pt-2 noselect d-flex flex-column',
                            style_='border-width: 1px; border-color: #BBBBBB !important; overflow: hidden;')
                 self.event_card_not_countable.append(c)
@@ -309,7 +309,7 @@ class Events(widgets.VBox):
         self.waitClose()
 
         dlg = dialogGeneric.dialogGeneric(title='Points Chart', text='', titleheight=26, dark=False,
-                                          show=True, addclosebuttons=True, width='calc(%fvw + 50px)'%w,
+                                          show=True, addclosebuttons=True, width='calc(%fvw + 5px)'%w,
                                           custom_icon='mdi-download', custom_tooltip='Click to download the Points Chart', custom_icon_onclick=on_download,
                                           fullscreen=False, content=[out], output=self.board.output)
         dlg.dialog.children[0].color = 'black'
@@ -351,7 +351,7 @@ class Events(widgets.VBox):
                 
         playerw = 'calc(%fvw - 43px)'%(self.board.width/5)
         if self.board.scale < 0.5:   playerw = 'calc(%fvw - 34px)'%(self.board.width/5)
-        elif self.board.scale > 0.7: playerw = 'calc(%fvw - 25px)'%(self.board.width/6)
+        elif self.board.scale > 0.7: playerw = 'calc(%fvw - 26px)'%(self.board.width/6.2)
         widget1,cards1 = self.board.game.playersList(self.board.game.players_by_number[:6], onclick=on_selected, single_line=False, show_info=True, one_line_if_less_than=0, w=playerw)
         widget2,cards2 = self.board.game.playersList(self.board.game.players_by_number[6:], onclick=on_selected, single_line=False, show_info=True, one_line_if_less_than=4, w=playerw, initial_id=len(cards1))
 
@@ -365,8 +365,8 @@ class Events(widgets.VBox):
             scale = 1.168
             wscale = 0.844
         else:
-            scale = 1.41
-            wscale = 0.81
+            scale = 1.38
+            wscale = 0.775
         
         m = ThrowMap.ThrowMap(board=self.board, scale=scale, field_left=True, output=self.board.output)
         m.updateThrows(self.board.game.events_df)
