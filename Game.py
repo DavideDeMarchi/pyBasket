@@ -441,7 +441,7 @@ class Game():
             wplayer = self.board.width/5
             w = 'calc(%fvw - 4px)'%wplayer
         else:
-            wplayer = self.board.width/6.5
+            wplayer = self.board.width/6
             
         spacer = v.Html(tag='div',children=[' '], style_='width: 5px; height: %s; background-color: %s;'%(w, self.board.tb.color_back))
         style_text = 'color: white; text-shadow: 2px 2px black; background-color: #00000000; font-size: %fvw; line-height: %fvw; font-family: "%s", serif; vertical-align: baseline;'%(self.board.text_height*0.22, 

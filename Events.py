@@ -351,7 +351,7 @@ class Events(widgets.VBox):
                 
         playerw = 'calc(%fvw - 43px)'%(self.board.width/5)
         if self.board.scale < 0.5:   playerw = 'calc(%fvw - 34px)'%(self.board.width/5)
-        elif self.board.scale > 0.7: playerw = 'calc(%fvw - 26px)'%(self.board.width/6.2)
+        elif self.board.scale > 0.7: playerw = 'calc(%fvw - 26px)'%(self.board.width/6)
         widget1,cards1 = self.board.game.playersList(self.board.game.players_by_number[:6], onclick=on_selected, single_line=False, show_info=True, one_line_if_less_than=0, w=playerw)
         widget2,cards2 = self.board.game.playersList(self.board.game.players_by_number[6:], onclick=on_selected, single_line=False, show_info=True, one_line_if_less_than=4, w=playerw, initial_id=len(cards1))
 
