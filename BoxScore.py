@@ -184,14 +184,14 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         
         d = datetime.datetime.strptime(g['date'], "%d/%m/%Y")
         day = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'][d.weekday()]
-        svg += text(XSQUADRE, YLUOGO,                day + ' ' + g['date'] + ' Ore ' + g['time']);
-        svg += text(X3P,      YLUOGO,                g['location']);
-        svg += text(XSQUADRE, YLUOGO + hRigaTestata, 'Arbitri: ' + g['referee1'] + ',  ' + g['referee2']);
+        svg += text(XSQUADRE, YLUOGO,                day + ' ' + g['date'] + ' Ore ' + g['time'])
+        svg += text(X3P,      YLUOGO,                g['location'])
+        svg += text(XSQUADRE, YLUOGO + hRigaTestata, 'Arbitri: ' + g['referee1'] + ',  ' + g['referee2'])
         
-        svg += text(XRIGHT, YLUOGO,                g['season'], align='end');
-        svg += text(XRIGHT, YLUOGO+1*hRigaTestata, g['championship'], align='end');
-        svg += text(XRIGHT, YLUOGO+2*hRigaTestata, 'Girone ' + g['phase'], align='end');
-        svg += text(XRIGHT, YLUOGO+3*hRigaTestata, str(g['round']) + '.a Giornata', align='end');
+        svg += text(XRIGHT, YLUOGO,                g['season'], align='end')
+        svg += text(XRIGHT, YLUOGO+1*hRigaTestata, g['championship'], align='end')
+        svg += text(XRIGHT, YLUOGO+2*hRigaTestata, 'Girone ' + g['phase'], align='end')
+        svg += text(XRIGHT, YLUOGO+3*hRigaTestata, str(g['round']) + '.a Giornata', align='end')
         
         # Current score of the two teams
         pt = Stats.points(df)
@@ -573,6 +573,613 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
 ###########################################################################################################################################################################
 def html(df, game, team_logo_img=None):
     return '<html><body><div style="text-align:center;">%s</div></body></html>'%svg(df, game=game, team_logo_img=team_logo_img, width=90.0)
+
+
+
+
+###########################################################################################################################################################################
+# Returns the overall BoxScore in svg format
+###########################################################################################################################################################################
+def totalsvg(df, game, players_info, average=False, team_logo_img=None, width=80):   # Dimensioning in vw/vh
+    
+    # Add number of games played to all players
+    for player_name, info in players_info.items():
+        info['games'] = len(df[(df['player']==player_name)&(df['event']==18)]['game_number'].unique())
+    
+    players_by_number = [x[0] for x in sorted([[x[1]['name'],x[1]['number']] for x in players_info.items() if x[1]['games'] > 0], key=lambda x: int(x[1]))]
+    players_numbers   = [x[1] for x in sorted([[x[1]['name'],x[1]['number']] for x in players_info.items() if x[1]['games'] > 0], key=lambda x: int(x[1]))]
+        
+    height = 2.005*FORM_FACTOR*width    # 2 means that 1vw = 2vh in general screens
+    
+    svgwidth  = IMAGE_WIDTH_IN_PIXELS  / 100.0    # 21.30
+    svgheight = IMAGE_HEIGHT_IN_PIXELS / 100.0    # 10.90
+    
+    preserve = 'xMidYMid meet'    # Center the chart in the parent
+    svg = '''<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+viewBox="0 0 %f %f"
+preserveAspectRatio="%s"
+width="%fvw"
+height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
+
+    svg += '''
+    <style type="text/css">
+       @import url('%s');
+    </style>
+    ''' % font_url
+    
+    # Fill modes
+    white   = 'fill="white"'
+    black   = 'fill="black"'
+    darkred = 'fill="#9c0000"'
+    red     = 'fill="#c00000"'
+    grey    = 'fill="#dcdcdc"'
+
+    # Stroke modes
+    none   = 'stroke-width="0"'
+    xsmall = 'stroke="black" stroke-width="0.001"'
+    small  = 'stroke="black" stroke-width="0.012"'
+    medium = 'stroke="black" stroke-width="0.038"'
+    
+    
+    # Background
+    svg += '<rect x="0" y="0" width="%f" height="%f" %s %s></rect>' % (svgwidth,svgheight, white, none)
+    
+    #svg += '<text x="10.0" y="5.0" fill="black" stroke="none" font-size="2.0" font-weight="400" font-family="Roboto">prova</text>'
+    #svg += '</svg>'
+    #return svg
+
+
+    # Background image
+    backimg = Image.open('./resources/BoxScore.png')
+    backimgbase64 = colors.image2Base64(backimg)
+    svg += '<image x="0.0" y="0.0" width="%f" height="%f" href="%s" preserveAspectRatio="xMidYMid meet"></image>'%(svgwidth, svgheight, backimgbase64)
+    
+    #svg += '<rect x="5.0" y="4.0" width="12.0" height="2.0" %s %s></rect>' % (red, small)
+    #svg += '<rect x="5.0" y="1.0" width="12.0" height="2.0" %s %s></rect>' % (darkred, medium)
+    
+    # Team logo
+    imgbase64 = None
+    if game is not None:
+        imgbase64 = colors.image2Base64(game.team_logo_img)
+    else:
+        if team_logo_img is not None :
+            imgbase64 = colors.image2Base64(team_logo_img)
+            
+    if imgbase64 is not None:
+        svg += '<image x="0.55" y="-0.1" width="1.9" height="2.5" href="%s" preserveAspectRatio="xMidYMid meet"></image>'%imgbase64
+
+        
+    # DrawText internal function
+    def text(x, y, s, dim=0.25, w=500, align='start', color='black'):
+        return '<text x="%f" y="%f" fill="%s" stroke="none" font-size="%f" font-weight="%d" font-family="%s" text-anchor="%s" alignment-baseline="hanging">%s</text>' % (x, y, color, dim, w, font_name, align, s)
+        
+        
+    # Top texts
+    if game is not None:
+        #svg += '<line x1="2" y1="%f" x2="20" y2="%f" stroke="black" stroke-width="0.001"/>' % (YLUOGO, YLUOGO)
+
+        hRigaTestata = 0.30
+        dimSquadre   = 0.52
+        dimParziali  = 0.25
+        
+        tot_win = 0
+        tot_los = 0
+        tot_pt  = 0
+        tot_po  = 0
+        home_win = 0
+        home_los = 0
+        home_pt  = 0
+        home_po  = 0
+        home_win_pt = 0
+        home_win_po = 0
+        home_los_pt = 0
+        home_los_po = 0
+        away_win = 0
+        away_los = 0
+        away_pt  = 0
+        away_po  = 0
+        away_win_pt = 0
+        away_win_po = 0
+        away_los_pt = 0
+        away_los_po = 0
+        for n in df['game_number'].unique():
+            dg = df[df['game_number']==n]
+            pt = Stats.points(dg)
+            po = Stats.points(dg, team=Config.OPPO)
+            tot_pt += pt
+            tot_po += po
+            home = list(dg.head(1)['home'])[0]
+
+            if home:
+                home_pt += pt
+                home_po += po
+            else:
+                away_pt += pt
+                away_po += po
+            
+            if pt > po:
+                tot_win += 1
+                if home:
+                    home_win += 1
+                    home_win_pt += pt
+                    home_win_po += po
+                else:
+                    away_win += 1
+                    away_win_pt += pt
+                    away_win_po += po
+            else:
+                tot_los += 1
+                if home:
+                    home_los += 1
+                    home_los_pt += pt
+                    home_los_po += po
+                else:
+                    away_los += 1
+                    away_los_pt += pt
+                    away_los_po += po
+        
+        tot_games  = tot_win  + tot_los
+        home_games = home_win + home_los
+        away_games = away_win + away_los
+        
+        svg += text(XSQUADRE,     YLUOGO, 'Dati complessivi dopo %d partite giocate:'%(len(df['game_number'].unique())), dim=dimParziali)
+        svg += text(X3P_PERC-0.3, YLUOGO, '%d vinte'%tot_win, dim=dimParziali)
+        svg += text(XTOTTIRI-0.2, YLUOGO, '%d perse'%tot_los, dim=dimParziali)
+        svg += text(X1P-0.9,      YLUOGO, '%.2f%% vittorie'%(100.0*tot_win/tot_games), dim=dimParziali)
+        svg += text(XSQUADRE,     YLUOGO + 1*hRigaTestata, 'N. %d partite giocate in casa:'%len(df[df['home']==True]['game_number'].unique()),       dim=dimParziali)
+        svg += text(X3P_PERC-0.3, YLUOGO + 1*hRigaTestata, '%d vinte'%home_win, dim=dimParziali)
+        svg += text(XTOTTIRI-0.2, YLUOGO + 1*hRigaTestata, '%d perse'%home_los, dim=dimParziali)
+        svg += text(X1P-0.9,      YLUOGO + 1*hRigaTestata, '%.2f%% vittorie'%(100.0*home_win/home_games), dim=dimParziali)
+        svg += text(XSQUADRE,     YLUOGO + 2*hRigaTestata, 'N. %d partite giocate in trasferta:'%len(df[df['home']==False]['game_number'].unique()), dim=dimParziali)
+        svg += text(X3P_PERC-0.3, YLUOGO + 2*hRigaTestata, '%d vinte'%away_win, dim=dimParziali)
+        svg += text(XTOTTIRI-0.2, YLUOGO + 2*hRigaTestata, '%d perse'%away_los, dim=dimParziali)
+        svg += text(X1P-0.9,      YLUOGO + 2*hRigaTestata, '%.2f%% vittorie'%(100.0*away_win/away_games), dim=dimParziali)
+        
+        svg += text(XRIGHT, YLUOGO,                game.game_data['season'], align='end')
+        svg += text(XRIGHT, YLUOGO+1*hRigaTestata, game.game_data['championship'], align='end')
+        svg += text(XRIGHT, YLUOGO+2*hRigaTestata, 'Dati complessivi', align='end')
+        
+        # Total points scored
+        pt = Stats.points(df)
+        po = Stats.points(df, team=Config.OPPO)
+
+        svg += text(XSQUADRE, YSQUADRA1+0.7*hRigaTestata, game.team_data['name'].upper(), dim=dimSquadre, w=700)
+        svg += text(XSQUADRE, YSQUADRA2+0.7*hRigaTestata, 'Squadre avversarie',           dim=dimSquadre, w=700)
+
+        svg += text(X1P-1.5, YSQUADRA1+0.7*hRigaTestata, '%.2f'%(pt/tot_games), dim=dimSquadre, w=700)
+        svg += text(X1P-1.5, YSQUADRA2+0.7*hRigaTestata, '%.2f'%(po/tot_games), dim=dimSquadre, w=700)
+        
+        svg += text(XASSIST-1.25, YSQUADRA1+0.7*hRigaTestata, '(%d p.segnati)'%pt, dim=dimSquadre, color='#777777')
+        svg += text(XASSIST-1.25, YSQUADRA2+0.7*hRigaTestata, '(%d p.subiti)'%po,  dim=dimSquadre, color='#777777')
+
+        
+        # Punti segnati e subiti in casa/trasferta nelle vittorie e nelle sconfitte
+        x = XSTOPPATE-1.5
+        hParziali = dimParziali*1.45
+        dx = 1.0
+
+        svg += text(x,        YSQUADRA1+0.3, 'CASA',   dim=dimParziali, align='middle')
+        svg += text(x+1*dx,   YSQUADRA1+0.3, 'W',      dim=dimParziali, align='middle')
+        svg += text(x+2*dx,   YSQUADRA1+0.3, 'L',      dim=dimParziali, align='middle')
+        svg += text(x+3.5*dx, YSQUADRA1+0.3, 'TRASF.', dim=dimParziali, align='middle')
+        svg += text(x+4.5*dx, YSQUADRA1+0.3, 'W',      dim=dimParziali, align='middle')
+        svg += text(x+5.5*dx, YSQUADRA1+0.3, 'L',      dim=dimParziali, align='middle')
+        
+        svg += text(x, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_pt/home_games), dim=dimParziali, align='middle')
+        svg += text(x, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_po/home_games), dim=dimParziali, align='middle')
+
+        svg += text(x+1*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_win_pt/home_win), dim=dimParziali, align='middle')
+        svg += text(x+1*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_win_po/home_win), dim=dimParziali, align='middle')
+        
+        svg += text(x+2*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_los_pt/home_los), dim=dimParziali, align='middle')
+        svg += text(x+2*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_los_po/home_los), dim=dimParziali, align='middle')
+        
+        svg += text(x+3.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_pt/away_games), dim=dimParziali, align='middle')
+        svg += text(x+3.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_po/away_games), dim=dimParziali, align='middle')
+        
+        svg += text(x+4.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_win_pt/away_win), dim=dimParziali, align='middle')
+        svg += text(x+4.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_win_po/away_win), dim=dimParziali, align='middle')
+
+        svg += text(x+5.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_los_pt/away_los), dim=dimParziali, align='middle')
+        svg += text(x+5.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_los_po/away_los), dim=dimParziali, align='middle')
+        
+        
+    # Grid headers
+    y1 = YRIGA0 - 0.55
+    hRiga = 0.36
+    y2 = y1 + 1.0*hRiga
+    svg += text(XSQUADRA, y1+0.4*hRiga, game.team_data['short'].upper(), w=700, dim=0.32, color='white', align='middle')
+    
+    svg += text(XMINUTI,   y2, 'Minuti',      w=700, color='white', align='middle')
+    svg += text(XPUNTI,    y2, 'Pt',          w=700, color='white', align='middle')
+    svg += text(X2P,       y1, 'Tiri 2P',     w=700, color='white', align='middle')
+    svg += text(X2P_PERC,  y2, '%',           w=700, color='white', align='middle')
+    svg += text(X3P,       y1, 'Tiri 3P',     w=700, color='white', align='middle')
+    svg += text(X3P_PERC,  y2, '%',           w=700, color='white', align='middle')
+    svg += text(XTOTTIRI,  y1, 'Tot. Tiri',   w=700, color='white', align='middle')
+    svg += text(XTOT_PERC, y2, '%',           w=700, color='white', align='middle')
+    svg += text(X1P,       y1, 'Tiri liberi', w=700, color='white', align='middle')
+    svg += text(X1P_PERC,  y2, '%',           w=700, color='white', align='middle')
+    svg += text(XASSIST,   y2, 'Ass',         w=700, color='white', align='middle')
+    svg += text(XRIMBALZI, y1, 'Rimbalzi',    w=700, color='white', align='middle')
+    svg += text(XRDIF,     y2, 'Dif',         w=700, color='white', align='middle')
+    svg += text(XROFF,     y2, 'Off',         w=700, color='white', align='middle')
+    svg += text(XRTOT,     y2, 'Tot',         w=700, color='white', align='middle')
+    svg += text(XFALLI,    y1, 'Falli',       w=700, color='white', align='middle')
+    svg += text(XFATTI,    y2, 'Fa',          w=700, color='white', align='middle')
+    svg += text(XSUBITI,   y2, 'Su',          w=700, color='white', align='middle')
+    svg += text(XPALLE,    y1, 'Palle',       w=700, color='white', align='middle')
+    svg += text(XPREC,     y2, 'PR',          w=700, color='white', align='middle')
+    svg += text(XPPER,     y2, 'PP',          w=700, color='white', align='middle')
+    svg += text(XSTOPPATE, y1, 'Stopp.',      w=700, color='white', align='middle')
+    svg += text(XSTOFA,    y2, 'Fa',          w=700, color='white', align='middle')
+    svg += text(XSTOSU,    y2, 'Su',          w=700, color='white', align='middle')
+    svg += text(XVAL,      y1, 'Val',         w=700, color='white', align='middle')
+    svg += text(XVAL,      y2, 'Leg',         w=700, color='white', align='middle')
+    svg += text(XOER,      y1, 'Val',         w=700, color='white', align='middle')
+    svg += text(XOER,      y2, 'Oer',         w=700, color='white', align='middle')
+    svg += text(XVIR,      y1, 'Val',         w=700, color='white', align='middle')
+    svg += text(XVIR,      y2, 'VIR',         w=700, color='white', align='middle')
+    svg += text(XPLUSMIN,  y1, 'Val',         w=700, color='white', align='middle')
+    svg += text(XPLUSMIN,  y2, '+/-',         w=700, color='white', align='middle')
+    svg += text(XTRUE,     y1, 'TS',          w=700, color='white', align='middle')
+    svg += text(XTRUE,     y2, '%',           w=700, color='white', align='middle')
+
+    
+    # Players texts
+    y1 = YRIGA0 + 0.2
+    hRiga = 0.4
+    ysum = y1+13*hRiga+0.02
+    
+    # Numero maglia
+    y = y1
+    for number in players_numbers:
+        svg += text(XNUMERO, y, str(number), color='white')
+        y += hRiga
+        
+    # Nome
+    y = y1
+    for player_name in players_by_number:
+        svg += text(XNOME, y, player_name, color='white')
+        y += hRiga
+    svg += text(XNOME, ysum, 'SQUADRA', color='white')
+    
+    # Number of games played
+    for player_name in players_by_number:
+        ngames = players_info[player_name]['games']
+        pos = players_by_number.index(player_name)
+        y = y1 + pos*hRiga
+        svg += text(XSTARTERS+0.19, y+0.05, '%d p.'%ngames, align='end', color='white', dim=0.23, w=300)
+        
+    # Minuti in campo
+    y = y1
+    total_seconds = 0.0
+    for player_name in players_by_number:
+        seconds = players_info[player_name]['time_on_field']
+        total_seconds += seconds
+        if average: seconds /= players_info[player_name]['games']
+        if seconds > 0:
+            svg += text(XMINUTI, y, '%d\'%02d"'%(seconds//60, int(seconds%60)), align='middle')
+        y += hRiga
+    if total_seconds > 0.0:
+        if average: total_seconds /= tot_games
+        svg += text(XMINUTI, ysum, '%d\'%02d"'%(total_seconds//60, int(total_seconds%60)), align='middle', color='white')
+    
+    # Punti realizzati
+    y = y1
+    for player_name in players_by_number:
+        points = Stats.points(df, player_name)
+        if points > 0:
+            if average:
+                points /= players_info[player_name]['games']
+                svg += text(XPUNTI, y, '%.1f'%points, align='middle', w=700, dim=0.24)
+            else:
+                svg += text(XPUNTI, y, str(points), align='middle', w=700)
+        y += hRiga
+    t = Stats.points(df)
+    if t > 0:
+        if average:
+            t /= tot_games
+            svg += text(XPUNTI, y, '%.1f'%t, align='middle', color='white', w=700, dim=0.23)
+        else:
+            svg += text(XPUNTI, ysum, str(t), align='middle', color='white', w=700, dim=0.23)
+        
+    # T2
+    y = y1
+    for player_name in players_by_number:
+        s,p = Stats.tperc(df, player_name, throw=2)
+        if len(s) > 0:
+            svg += text(X2P-0.7, y, s)
+            svg += text(X2P_PERC+0.15, y, p, align='end')
+        y += hRiga
+    s,p = Stats.tperc(df, throw=2)
+    if len(s) > 0:
+        svg += text(X2P-0.8, ysum, s, color='white', dim=0.23)
+        svg += text(X2P_PERC+0.15, ysum, p, align='end', color='white', dim=0.23)
+    
+    # T3
+    y = y1
+    for player_name in players_by_number:
+        s,p = Stats.tperc(df, player_name, throw=3)
+        if len(s) > 0:
+            svg += text(X3P-0.7, y, s)
+            svg += text(X3P_PERC+0.15, y, p, align='end')
+        y += hRiga
+    s,p = Stats.tperc(df, throw=3)
+    if len(s) > 0:
+        svg += text(X3P-0.85, ysum, s, color='white', dim=0.23)
+        svg += text(X3P_PERC+0.15, ysum, p, align='end', color='white', dim=0.23)
+        
+    # T2 + T3
+    y = y1
+    for player_name in players_by_number:
+        s,p = Stats.tperc(df, player_name, throw=0)
+        if len(s) > 0:
+            svg += text(XTOTTIRI-0.7, y, s)
+            svg += text(XTOT_PERC+0.15, y, p, align='end')
+        y += hRiga
+    s,p = Stats.tperc(df, throw=0)
+    if len(s) > 0:
+        svg += text(XTOTTIRI-0.8, ysum, s, color='white', dim=0.23)
+        svg += text(XTOT_PERC+0.15, ysum, p, align='end', color='white', dim=0.23)
+    
+    # T1
+    y = y1
+    for player_name in players_by_number:
+        s,p = Stats.tperc(df, player_name, throw=1)
+        if len(s) > 0:
+            svg += text(X1P-0.7, y, s)
+            svg += text(X1P_PERC+0.15, y, p, align='end')
+        y += hRiga
+    s,p = Stats.tperc(df, throw=1)
+    if len(s) > 0:
+        svg += text(X1P-0.85, ysum, s, color='white', dim=0.23)
+        svg += text(X1P_PERC+0.15, ysum, p, align='end', color='white', dim=0.23)
+        
+
+    # ASSIST
+    y = y1
+    for player_name in players_by_number:
+        v = Stats.countforplayer(df,player_name,'Ass')
+        if v > 0:
+            if average:
+                v /= players_info[player_name]['games']
+                svg += text(XASSIST, y, '%.1f'%v, align='middle')
+            else:
+                svg += text(XASSIST, y, str(v), align='middle')
+        y += hRiga
+    t = Stats.countforteam(df,'Ass')
+    if t > 0:
+        if average:
+            t /= tot_games
+            svg += text(XASSIST, ysum, '%.1f'%t, align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XASSIST, ysum, str(t), align='middle', color='white', dim=0.23)
+        
+    # RIMBALZI
+    y = y1
+    for player_name in players_by_number:
+        vo = Stats.countforplayer(df,player_name,'ROff')
+        if vo > 0: 
+            if average:
+                svg += text(XROFF, y, '%.1f'%(vo/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XROFF, y, str(vo), align='middle')
+        
+        vd = Stats.countforplayer(df,player_name,'RDif')
+        if vd > 0:
+            if average:
+                svg += text(XRDIF, y, '%.1f'%(vd/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XRDIF, y, str(vd), align='middle')
+        
+        if (vd+vo) > 0: 
+            if average:
+                vt = (vd+vo) / players_info[player_name]['games']
+                svg += text(XRTOT, y, '%.1f'%vt, align='middle')
+            else:
+                svg += text(XRTOT, y, str(vd+vo), align='middle')
+        
+        y += hRiga
+    to = Stats.countforteam(df,'ROff')
+    if to > 0:
+        if average:
+            svg += text(XROFF, ysum, '%.1f'%(to/tot_games), align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XROFF, ysum, str(to), align='middle', color='white', dim=0.23)
+        
+    td = Stats.countforteam(df,'RDif')
+    if to > 0:
+        if average:
+            svg += text(XRDIF, ysum, '%.1f'%(td/tot_games), align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XRDIF, ysum, str(td), align='middle', color='white', dim=0.23)
+    
+    if (to+td) > 0:
+        if average:
+            tt = (to+td) / tot_games
+            svg += text(XRTOT, ysum, '%.1f'%tt, align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XRTOT, ysum, str(to+td), align='middle', color='white', dim=0.23)
+
+    
+    # FALLI
+    y = y1
+    for player_name in players_by_number:
+        v = Stats.countforplayer(df,player_name,'FCom')
+        if v > 0:
+            if average:
+                svg += text(XFATTI, y, '%.1f'%(v/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XFATTI, y, str(v), align='middle')
+        
+        v = Stats.countforplayer(df,player_name,'FSub')
+        if v > 0:
+            if average:
+                svg += text(XSUBITI, y, '%.1f'%(v/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XSUBITI, y, str(v), align='middle')
+        
+        y += hRiga
+    
+    t = Stats.countforteam(df,'FCom')
+    if t > 0:
+        if average:
+            svg += text(XFATTI-0.05, ysum, '%.1f'%(t/tot_games), align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XFATTI-0.05, ysum, str(t), align='middle', color='white', dim=0.23)
+    
+    t = Stats.countforteam(df,'FSub')
+    if t > 0:
+        if average:
+            svg += text(XSUBITI+0.02, ysum, '%.1f'%(t/tot_games), align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XSUBITI+0.02, ysum, str(t), align='middle', color='white', dim=0.23)
+
+    
+    # PALLE PERSE E RECUPERATE
+    y = y1
+    for player_name in players_by_number:
+        v = Stats.countforplayer(df,player_name,'PRec')
+        if v > 0:
+            if average:
+                svg += text(XPREC, y, '%.1f'%(v/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XPREC, y, str(v), align='middle')
+        
+        v = Stats.countforplayer(df,player_name,'PPer')
+        if v > 0:
+            if average:
+                svg += text(XPPER, y, '%.1f'%(v/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XPPER, y, str(v), align='middle')
+        
+        y += hRiga
+    
+    t = Stats.countforteam(df,'PRec')
+    if t > 0:
+        if average:
+            svg += text(XPREC-0.05, ysum, '%.1f'%(t/tot_games), align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XPREC-0.05, ysum, str(t), align='middle', color='white', dim=0.23)
+        
+    t = Stats.countforteam(df,'PPer')
+    if t > 0:
+        if average:
+            svg += text(XPPER+0.02, ysum, '%.1f'%(t/tot_games), align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XPPER+0.02, ysum, str(t), align='middle', color='white', dim=0.23)
+
+    
+    # STOPPATE
+    y = y1
+    for player_name in players_by_number:
+        v = Stats.countforplayer(df,player_name,'SDat')
+        if v > 0:
+            if average:
+                svg += text(XSTOFA, y, '%.1f'%(v/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XSTOFA, y, str(v), align='middle')
+        
+        v = Stats.countforplayer(df,player_name,'SSub')
+        if v > 0:
+            if average:
+                svg += text(XSTOSU+0.02, y, '%.1f'%(v/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XSTOSU+0.02, y, str(v), align='middle')
+        
+        y += hRiga
+    
+    t = Stats.countforteam(df,'SDat')
+    if t > 0:
+        if average:
+            svg += text(XSTOFA-0.02, ysum, '%.1f'%(t/tot_games), align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XSTOFA-0.02, ysum, str(t), align='middle', color='white', dim=0.23)
+        
+    t = Stats.countforteam(df,'SSub')
+    if t > 0:
+        if average:
+            svg += text(XSTOSU+0.02, ysum, '%.1f'%(t/tot_games), align='middle', color='white', dim=0.23)
+        else:
+            svg += text(XSTOSU+0.02, ysum, str(t), align='middle', color='white', dim=0.23)
+    
+    
+    # Valutazione di lega
+    y = y1
+    for player_name in players_by_number:
+        if players_info[player_name]['time_on_field'] > 0:
+            v = Stats.value(df, player_name)
+            if average:
+                svg += text(XVAL, y, '%.1f'%(v/players_info[player_name]['games']), align='middle')
+            else:
+                svg += text(XVAL, y, str(v), align='middle')
+        y += hRiga
+    t = Stats.value(df)
+    if average:
+        svg += text(XVAL, ysum, '%.1f'%(t/tot_games), align='middle', color='white', dim=0.23)        
+    else:
+        svg += text(XVAL, ysum, str(t), align='middle', color='white', dim=0.23)        
+        
+    # Valutazione OER
+    y = y1
+    for player_name in players_by_number:
+        if players_info[player_name]['time_on_field'] > 0:
+            svg += text(XOER, y, '%.2f'%Stats.oer(df, player_name), align='middle')
+        y += hRiga
+    t = Stats.oer(df)
+    if t > 0: svg += text(XOER, ysum, '%.2f'%t, align='middle', color='white', dim=0.23)
+        
+    # Valutazione VIR
+    y = y1
+    for player_name in players_by_number:
+        if players_info[player_name]['time_on_field'] > 0:
+            svg += text(XVIR, y, '%.2f'%Stats.vir(df, player_name, players_info), align='middle')
+        y += hRiga
+    t = Stats.vir(df, players_info=players_info)
+    if t > 0: svg += text(XVIR, ysum, '%.2f'%t, align='middle', color='white', dim=0.23)
+
+    # Valutazione PlusMinus
+    y = y1
+    for player_name in players_by_number:
+        if players_info[player_name]['time_on_field'] > 0:
+            svg += text(XPLUSMIN, y, str(Stats.plusminus(player_name, players_info)), align='middle')
+        y += hRiga
+    t = Stats.plusminus(players_info=players_info)
+    svg += text(XPLUSMIN, ysum, str(t), align='middle', color='white', dim=0.23)
+        
+    # Valutazione TrueShooting
+    y = y1
+    for player_name in players_by_number:
+        if players_info[player_name]['time_on_field'] > 0:
+            svg += text(XTRUE, y, '%.1f'%Stats.trueshooting(df, player_name), align='middle')
+        y += hRiga
+    t = Stats.trueshooting(df)
+    if t > 0: svg += text(XTRUE, ysum, '%.1f'%t, align='middle', color='white', dim=0.23)
+        
+    
+    # Bottom texts
+    y1 = YRIGA0
+    hRiga = 0.36
+    hRigaNote = 3*hRiga/5
+    yNote = y1 + 16*hRiga
+    y2 = yNote + 0.3*hRigaNote
+    
+    svg += text(XLEFT,  y2-0.06, 'Allenatore: ' + game.team_data['trainer'])
+    svg += text(XPUNTI, y2-0.06, 'Assistente: ' + game.team_data['assistant'])
+    
+    dimNote = 0.14
+    svg += text(XRIGHT, y2-0.06, 'Rilevazioni statistiche realizzate con pyBasket', dim=dimNote, align='end')
+    
+    svg += text(XLEFT, yNote + 1.75*hRigaNote, 'Note sulle valutazioni:', dim=dimNote)
+    svg += text(XLEFT, yNote + 2.75*hRigaNote, 'Valutazione di Lega = (TL+) - (TL-) + [(T2+) x 2 - (T2-)] + [(T3+) x 3) - (T3-)] + PR - PP + RO + RD + AS - FF + FS + SD - SS', dim=dimNote)
+    svg += text(XLEFT, yNote + 3.75*hRigaNote, 'Valutazione OER = Coefficiente di Efficacia Offensiva =  Punti realizzati / Possessi      dove Possessi = T2 + T3 + (TL/2) + PP', dim=dimNote)
+    svg += text(XLEFT, yNote + 4.75*hRigaNote, 'Valutazione VIR = Value Index Rating = [(Punti fatti + AS x 1,5 + PR + SD x 0,75 + RO x 1,25 + RD x 0,75 + T3+/2 + FS/2 - FF/2 - ((T3-) + (T2-)) x 0,75 - PP - (TL-)/2) / Minuti giocati]', dim=dimNote)
+    svg += text(XLEFT, yNote + 5.75*hRigaNote, 'Valutazione +/- = + Punti segnati dalla squadra - Punti segnati dagli avversari quando il giocatore è in campo', dim=dimNote)
+    svg += text(XLEFT, yNote + 6.75*hRigaNote, 'Valutazione TS% = Punti / 2*(NumeroTiriCampo + 0.44*NumeroTiriLiberi) - True Shooting Percentage', dim=dimNote)
+    
+    svg += '</svg>'
+    return svg
 
 
 ###########################################################################################################################################################################
