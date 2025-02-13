@@ -245,8 +245,8 @@ class ThrowMap(widgets.VBox):
 
                 if self.field_left:
                     x1 = (w*2)//3 - 26
-                    x2 = x1 + 36
-                    x3 = x2 + 74
+                    x2 = x1 + 32
+                    x3 = x2 + 70
                 else:
                     x1 = 10
                     x2 = x1 + 40
@@ -296,6 +296,11 @@ class ThrowMap(widgets.VBox):
                     
                 draw.text((x2,y+9*dy), 'TS:', textcolor, font=fontNormal)
                 draw.text((x3,y+9*dy), '%.0f%%'%Stats.trueshooting(self.current_df, self.current_player), textcolor, font=fontNormal)
+
+                if self.current_player is not None and self.current_player in self.game.players_info:
+                    draw.text((x2,y+10*dy), 'Min:', textcolor, font=fontNormal)
+                    seconds = self.game.players_info[self.current_player]['time_on_field']
+                    draw.text((x3,y+10*dy), '%d\'%02d"'%(seconds//60, int(seconds%60)), textcolor, font=fontNormal)
                     
                     
                 # Display points per quarters

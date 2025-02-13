@@ -585,7 +585,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     pt = []
     po = []
     for player_name in game.players_by_number:
-        if player_name not in seconds_on_field.keys(): pt.append('%s ne'%player_name)
+        if player_name not in seconds_on_field.keys() or seconds_on_field[player_name]==0: pt.append('%s ne'%player_name)
         else:
             ps = Stats.points(df, player_name)
             if ps > 0:  pt.append('%s %d'%(player_name, ps))
