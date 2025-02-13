@@ -18,6 +18,7 @@
 # See the Licence for the specific language governing permissions and
 # limitations under the Licence.
 import pandas as pd
+import numpy as np
 import datetime
 from PIL import Image
 import plotly.graph_objects as go
@@ -106,14 +107,47 @@ XTRUE      = 21.28
 ###########################################################################################################################################################################
 # Returns the BoxScore in svg format
 ###########################################################################################################################################################################
-def svg(df, game, team_logo_img=None, width=80):   # Dimensioning in vw/vh
+def svg(df, game, team_logo_img=None, width=80, quarter=None):   # Dimensioning in vw/vh
+    
+    # Read seconds on field from the game if the overall sheet has to be produced
+    if quarter is None:
+        seconds_on_field = {x: game.players_info[x]['time_on_field'] for x in game.players_info.keys()}
+        
+    # Filter events of a single quarter
+    else:
+        df = df[df['quarter']==quarter].copy()
+    
+        # Calculates time on field for all the players
+        df2 = df[(df['team']==Config.TEAM)&(df['event'].isin([18,19]))]
+        seconds_on_field = {x: 0.0 for x in df2['player']}
+        on_field = {}
+        for index, row in df2.iterrows():
+            event   = row['event']
+            quarter = row['quarter']
+            seconds = row['seconds']
+            player  = row['player']
+
+            if event == 18:
+                on_field[player] = seconds
+
+            if event == 19:
+                if player in on_field.keys():
+                    s = on_field[player] - seconds
+                    del on_field[player]
+                    seconds_on_field[player] += s
+
+        for player in on_field.keys():
+            s = on_field[player]
+            seconds_on_field[player] += s
+            
+            
     
     height = 2.005*FORM_FACTOR*width    # 2 means that 1vw = 2vh in general screens
     
     svgwidth  = IMAGE_WIDTH_IN_PIXELS  / 100.0    # 21.30
     svgheight = IMAGE_HEIGHT_IN_PIXELS / 100.0    # 10.90
     
-    preserve = 'xMidYMid meet'    # Center the chart in the parent
+    preserve = 'xMidYMin meet'    # Center the chart in the parent
     svg = '''<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
 viewBox="0 0 %f %f"
 preserveAspectRatio="%s"
@@ -186,7 +220,9 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         day = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'][d.weekday()]
         svg += text(XSQUADRE, YLUOGO,                day + ' ' + g['date'] + ' Ore ' + g['time'])
         svg += text(X3P,      YLUOGO,                g['location'])
-        svg += text(XSQUADRE, YLUOGO + hRigaTestata, 'Arbitri: ' + g['referee1'] + ',  ' + g['referee2'])
+        
+        if (g['referee1'] != 'nan' and g['referee1'] != '') or (g['referee2'] != 'nan' and g['referee2'] != ''):
+            svg += text(XSQUADRE, YLUOGO + hRigaTestata, 'Arbitri: ' + g['referee1'] + ',  ' + g['referee2'])
         
         svg += text(XRIGHT, YLUOGO,                g['season'], align='end')
         svg += text(XRIGHT, YLUOGO+1*hRigaTestata, g['championship'], align='end')
@@ -220,27 +256,32 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         for q in sorted(df['quarter'].unique()):
             if q < 5: name = 'Q%d'%q
             else:     name = 'S%d'%(q-4)
-            dfq = df[df['quarter']==q]
-            pqt = Stats.points(dfq)
-            pqo = Stats.points(dfq, team=Config.OPPO)
-            ptt += pqt
-            pto += pqo
             
-            svg += text(x, YSQUADRA1, name, dim=dimParziali, align='middle')
-            if g['home']:
-                if q == 1:
-                    svg += text(x, YSQUADRA1+hParziali,   str(pqt), dim=dimParziali, align='middle')
-                    svg += text(x, YSQUADRA1+2*hParziali, str(pqo), dim=dimParziali, align='middle')
+            if quarter is None:
+                svg += text(x, YSQUADRA1, name, dim=dimParziali, align='middle')
+                dfq = df[df['quarter']==q]
+                pqt = Stats.points(dfq)
+                pqo = Stats.points(dfq, team=Config.OPPO)
+                ptt += pqt
+                pto += pqo
+
+                if g['home']:
+                    if q == 1:
+                        svg += text(x, YSQUADRA1+hParziali,   str(pqt), dim=dimParziali, align='middle')
+                        svg += text(x, YSQUADRA1+2*hParziali, str(pqo), dim=dimParziali, align='middle')
+                    else:
+                        svg += text(x, YSQUADRA1+hParziali,   '%d (%d)'%(pqt,ptt), dim=dimParziali, align='middle')
+                        svg += text(x, YSQUADRA1+2*hParziali, '%d (%d)'%(pqo,pto), dim=dimParziali, align='middle')
                 else:
-                    svg += text(x, YSQUADRA1+hParziali,   '%d (%d)'%(pqt,ptt), dim=dimParziali, align='middle')
-                    svg += text(x, YSQUADRA1+2*hParziali, '%d (%d)'%(pqo,pto), dim=dimParziali, align='middle')
+                    if q == 1:
+                        svg += text(x, YSQUADRA1+hParziali,   str(pqo), dim=dimParziali, align='middle')
+                        svg += text(x, YSQUADRA1+2*hParziali, str(pqt), dim=dimParziali, align='middle')
+                    else:
+                        svg += text(x, YSQUADRA1+hParziali,   '%d (%d)'%(pqo,pto), dim=dimParziali, align='middle')
+                        svg += text(x, YSQUADRA1+2*hParziali, '%d (%d)'%(pqt,ptt), dim=dimParziali, align='middle')
             else:
-                if q == 1:
-                    svg += text(x, YSQUADRA1+hParziali,   str(pqo), dim=dimParziali, align='middle')
-                    svg += text(x, YSQUADRA1+2*hParziali, str(pqt), dim=dimParziali, align='middle')
-                else:
-                    svg += text(x, YSQUADRA1+hParziali,   '%d (%d)'%(pqo,pto), dim=dimParziali, align='middle')
-                    svg += text(x, YSQUADRA1+2*hParziali, '%d (%d)'%(pqt,ptt), dim=dimParziali, align='middle')
+                svg += text(x, YSQUADRA1+0.25, name, dim=dimSquadre, align='middle', w=700)
+
                     
             x += XPARZIALID
 
@@ -298,7 +339,6 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         svg += text(XNUMERO, y, str(number), color='white')
         y += hRiga
         
-        
     # Nome
     y = y1
     for player_name in game.players_by_number:
@@ -317,7 +357,10 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     y = y1
     total_seconds = 0.0
     for player_name in game.players_by_number:
-        seconds = game.players_info[player_name]['time_on_field']
+        if player_name in seconds_on_field.keys():
+            seconds = seconds_on_field[player_name]
+        else:
+            seconds = 0.0
         total_seconds += seconds
         if seconds > 0:
             svg += text(XMINUTI, y, '%d\'%02d"'%(seconds//60, int(seconds%60)), align='middle')
@@ -468,8 +511,9 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     # Valutazione di lega
     y = y1
     for player_name in game.players_by_number:
-        if game.players_info[player_name]['time_on_field'] > 0:
-            svg += text(XVAL, y, str(Stats.value(df, player_name)), align='middle')
+        v = Stats.value(df, player_name)
+        if player_name in seconds_on_field.keys() and v > 0:
+            svg += text(XVAL, y, str(v), align='middle')
         y += hRiga
     t = Stats.value(df)
     svg += text(XVAL, ysum, str(t), align='middle', color='white')
@@ -477,8 +521,9 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     # Valutazione OER
     y = y1
     for player_name in game.players_by_number:
-        if game.players_info[player_name]['time_on_field'] > 0:
-            svg += text(XOER, y, '%.2f'%Stats.oer(df, player_name), align='middle')
+        v = Stats.oer(df, player_name)
+        if player_name in seconds_on_field.keys() and v >0:
+            svg += text(XOER, y, '%.2f'%v, align='middle')
         y += hRiga
     t = Stats.oer(df)
     if t > 0: svg += text(XOER, ysum, '%.2f'%t, align='middle', color='white')
@@ -486,8 +531,9 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     # Valutazione VIR
     y = y1
     for player_name in game.players_by_number:
-        if game.players_info[player_name]['time_on_field'] > 0:
-            svg += text(XVIR, y, '%.2f'%Stats.vir(df, player_name, game.players_info), align='middle')
+        v = Stats.vir(df, player_name, game.players_info)
+        if player_name in seconds_on_field.keys() and v > 0:
+            svg += text(XVIR, y, '%.2f'%v, align='middle')
         y += hRiga
     t = Stats.vir(df, players_info=game.players_info)
     if t > 0: svg += text(XVIR, ysum, '%.2f'%t, align='middle', color='white')
@@ -495,8 +541,9 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     # Valutazione PlusMinus
     y = y1
     for player_name in game.players_by_number:
-        if game.players_info[player_name]['time_on_field'] > 0:
-            svg += text(XPLUSMIN, y, str(Stats.plusminus(player_name, game.players_info)), align='middle')
+        v = Stats.plusminus(player_name, game.players_info)
+        if player_name in seconds_on_field.keys() and v > 0:
+            svg += text(XPLUSMIN, y, str(v), align='middle')
         y += hRiga
     t = Stats.plusminus(players_info=game.players_info)
     svg += text(XPLUSMIN, ysum, str(t), align='middle', color='white')
@@ -504,7 +551,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     # Valutazione TrueShooting
     y = y1
     for player_name in game.players_by_number:
-        if game.players_info[player_name]['time_on_field'] > 0:
+        if player_name in seconds_on_field.keys():
             svg += text(XTRUE, y, '%.1f'%Stats.trueshooting(df, player_name), align='middle')
         y += hRiga
     t = Stats.trueshooting(df)
@@ -538,7 +585,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     pt = []
     po = []
     for player_name in game.players_by_number:
-        if game.players_info[player_name]['time_on_field'] <= 0.0: pt.append('%s ne'%player_name)
+        if player_name not in seconds_on_field.keys(): pt.append('%s ne'%player_name)
         else:
             ps = Stats.points(df, player_name)
             if ps > 0:  pt.append('%s %d'%(player_name, ps))
@@ -548,20 +595,23 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         points = Stats.points(df, player_name, team=Config.OPPO)
         if points > 0: po.append('%s %d'%(player_name,points))
         else:
-            if player_name in game.game_data['opponents_info']:
-                points = game.game_data['opponents_info'][player_name]['points']
-                if points > 0: po.append('%s %d'%(player_name,points))
-                else:          po.append(player_name)
+            if quarter is None:
+                if player_name in game.game_data['opponents_info']:
+                    points = game.game_data['opponents_info'][player_name]['points']
+                    if points > 0: po.append('%s %d'%(player_name,points))
+                    else:          po.append(player_name)
+            else:
+                po.append(player_name)
     
     if g['home']:
-        svg += text(XLEFT, yNote + 8.1*hRigaNote,     game.team_data['name'].upper() + ': ', dim=dimSintesi)
+        svg += text(XLEFT, yNote + 8.1*hRigaNote,   game.team_data['name'].upper() + ': ', dim=dimSintesi)
         svg += text(XLEFT, yNote + 9.6*hRigaNote,   g['opponents'].upper() + ': ',         dim=dimSintesi)
-        svg += text(XMINUTI-0.1, yNote + 8.1*hRigaNote,   ', '.join(pt), dim=dimSintesi)
+        svg += text(XMINUTI-0.1, yNote + 8.1*hRigaNote, ', '.join(pt), dim=dimSintesi)
         svg += text(XMINUTI-0.1, yNote + 9.6*hRigaNote, ', '.join(po), dim=dimSintesi)
     else:
-        svg += text(XLEFT, yNote + 8.1*hRigaNote,     g['opponents'].upper() + ': ',         dim=dimSintesi)
+        svg += text(XLEFT, yNote + 8.1*hRigaNote,   g['opponents'].upper() + ': ',         dim=dimSintesi)
         svg += text(XLEFT, yNote + 9.6*hRigaNote,   game.team_data['name'].upper() + ': ', dim=dimSintesi)
-        svg += text(XMINUTI-0.1, yNote + 8.1*hRigaNote,   ', '.join(po), dim=dimSintesi)
+        svg += text(XMINUTI-0.1, yNote + 8.1*hRigaNote, ', '.join(po), dim=dimSintesi)
         svg += text(XMINUTI-0.1, yNote + 9.6*hRigaNote, ', '.join(pt), dim=dimSintesi)
     
     svg += '</svg>'
@@ -594,7 +644,7 @@ def totalsvg(df, game, players_info, average=False, team_logo_img=None, width=80
     svgwidth  = IMAGE_WIDTH_IN_PIXELS  / 100.0    # 21.30
     svgheight = IMAGE_HEIGHT_IN_PIXELS / 100.0    # 10.90
     
-    preserve = 'xMidYMid meet'    # Center the chart in the parent
+    preserve = 'xMidYMin meet'    # Center the chart in the parent
     svg = '''<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
 viewBox="0 0 %f %f"
 preserveAspectRatio="%s"
@@ -722,22 +772,31 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         home_games = home_win + home_los
         away_games = away_win + away_los
         
-        svg += text(XSQUADRE,     YLUOGO, 'Dati complessivi dopo %d partite giocate:'%(len(df['game_number'].unique())), dim=dimParziali)
-        svg += text(X3P_PERC-0.3, YLUOGO, '%d vinte'%tot_win, dim=dimParziali)
-        svg += text(XTOTTIRI-0.2, YLUOGO, '%d perse'%tot_los, dim=dimParziali)
-        svg += text(X1P-0.9,      YLUOGO, '%.2f%% vittorie'%(100.0*tot_win/tot_games), dim=dimParziali)
-        svg += text(XSQUADRE,     YLUOGO + 1*hRigaTestata, 'N. %d partite giocate in casa:'%len(df[df['home']==True]['game_number'].unique()),       dim=dimParziali)
-        svg += text(X3P_PERC-0.3, YLUOGO + 1*hRigaTestata, '%d vinte'%home_win, dim=dimParziali)
-        svg += text(XTOTTIRI-0.2, YLUOGO + 1*hRigaTestata, '%d perse'%home_los, dim=dimParziali)
-        svg += text(X1P-0.9,      YLUOGO + 1*hRigaTestata, '%.2f%% vittorie'%(100.0*home_win/home_games), dim=dimParziali)
-        svg += text(XSQUADRE,     YLUOGO + 2*hRigaTestata, 'N. %d partite giocate in trasferta:'%len(df[df['home']==False]['game_number'].unique()), dim=dimParziali)
-        svg += text(X3P_PERC-0.3, YLUOGO + 2*hRigaTestata, '%d vinte'%away_win, dim=dimParziali)
-        svg += text(XTOTTIRI-0.2, YLUOGO + 2*hRigaTestata, '%d perse'%away_los, dim=dimParziali)
-        svg += text(X1P-0.9,      YLUOGO + 2*hRigaTestata, '%.2f%% vittorie'%(100.0*away_win/away_games), dim=dimParziali)
+        if tot_games > 0:
+            svg += text(XSQUADRE,     YLUOGO, 'Dati complessivi dopo %d partite giocate:'%(len(df['game_number'].unique())), dim=dimParziali)
+            svg += text(X3P_PERC-0.3, YLUOGO, '%d vinte'%tot_win, dim=dimParziali)
+            svg += text(XTOTTIRI-0.2, YLUOGO, '%d perse'%tot_los, dim=dimParziali)
+            svg += text(X1P-0.9,      YLUOGO, '%.2f%% vittorie'%(100.0*tot_win/tot_games), dim=dimParziali)
+            
+            svg += text(XSQUADRE,     YLUOGO + 1*hRigaTestata, 'N. %d partite giocate in casa:'%len(df[df['home']==True]['game_number'].unique()),       dim=dimParziali)
+            svg += text(X3P_PERC-0.3, YLUOGO + 1*hRigaTestata, '%d vinte'%home_win, dim=dimParziali)
+            svg += text(XTOTTIRI-0.2, YLUOGO + 1*hRigaTestata, '%d perse'%home_los, dim=dimParziali)
+            if home_games > 0:
+                svg += text(X1P-0.9,      YLUOGO + 1*hRigaTestata, '%.2f%% vittorie'%(100.0*home_win/home_games), dim=dimParziali)
+                
+            svg += text(XSQUADRE,     YLUOGO + 2*hRigaTestata, 'N. %d partite giocate in trasferta:'%len(df[df['home']==False]['game_number'].unique()), dim=dimParziali)
+            svg += text(X3P_PERC-0.3, YLUOGO + 2*hRigaTestata, '%d vinte'%away_win, dim=dimParziali)
+            svg += text(XTOTTIRI-0.2, YLUOGO + 2*hRigaTestata, '%d perse'%away_los, dim=dimParziali)
+            
+            if away_games > 0:
+                svg += text(X1P-0.9,      YLUOGO + 2*hRigaTestata, '%.2f%% vittorie'%(100.0*away_win/away_games), dim=dimParziali)
         
         svg += text(XRIGHT, YLUOGO,                game.game_data['season'], align='end')
         svg += text(XRIGHT, YLUOGO+1*hRigaTestata, game.game_data['championship'], align='end')
-        svg += text(XRIGHT, YLUOGO+2*hRigaTestata, 'Dati complessivi', align='end')
+        if average:
+            svg += text(XRIGHT, YLUOGO+2*hRigaTestata, 'Dati complessivi medi', align='end')
+        else:
+            svg += text(XRIGHT, YLUOGO+2*hRigaTestata, 'Dati complessivi totali', align='end')
         
         # Total points scored
         pt = Stats.points(df)
@@ -746,8 +805,9 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         svg += text(XSQUADRE, YSQUADRA1+0.7*hRigaTestata, game.team_data['name'].upper(), dim=dimSquadre, w=700)
         svg += text(XSQUADRE, YSQUADRA2+0.7*hRigaTestata, 'Squadre avversarie',           dim=dimSquadre, w=700)
 
-        svg += text(X1P-1.5, YSQUADRA1+0.7*hRigaTestata, '%.2f'%(pt/tot_games), dim=dimSquadre, w=700)
-        svg += text(X1P-1.5, YSQUADRA2+0.7*hRigaTestata, '%.2f'%(po/tot_games), dim=dimSquadre, w=700)
+        if tot_games > 0:
+            svg += text(X1P-1.5, YSQUADRA1+0.7*hRigaTestata, '%.2f'%(pt/tot_games), dim=dimSquadre, w=700)
+            svg += text(X1P-1.5, YSQUADRA2+0.7*hRigaTestata, '%.2f'%(po/tot_games), dim=dimSquadre, w=700)
         
         svg += text(XASSIST-1.25, YSQUADRA1+0.7*hRigaTestata, '(%d p.segnati)'%pt, dim=dimSquadre, color='#777777')
         svg += text(XASSIST-1.25, YSQUADRA2+0.7*hRigaTestata, '(%d p.subiti)'%po,  dim=dimSquadre, color='#777777')
@@ -765,23 +825,29 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         svg += text(x+4.5*dx, YSQUADRA1+0.3, 'W',      dim=dimParziali, align='middle')
         svg += text(x+5.5*dx, YSQUADRA1+0.3, 'L',      dim=dimParziali, align='middle')
         
-        svg += text(x, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_pt/home_games), dim=dimParziali, align='middle')
-        svg += text(x, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_po/home_games), dim=dimParziali, align='middle')
+        if home_games > 0:
+            svg += text(x, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_pt/home_games), dim=dimParziali, align='middle')
+            svg += text(x, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_po/home_games), dim=dimParziali, align='middle')
 
-        svg += text(x+1*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_win_pt/home_win), dim=dimParziali, align='middle')
-        svg += text(x+1*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_win_po/home_win), dim=dimParziali, align='middle')
+        if home_win > 0:
+            svg += text(x+1*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_win_pt/home_win), dim=dimParziali, align='middle')
+            svg += text(x+1*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_win_po/home_win), dim=dimParziali, align='middle')
         
-        svg += text(x+2*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_los_pt/home_los), dim=dimParziali, align='middle')
-        svg += text(x+2*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_los_po/home_los), dim=dimParziali, align='middle')
+        if home_los > 0:
+            svg += text(x+2*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(home_los_pt/home_los), dim=dimParziali, align='middle')
+            svg += text(x+2*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(home_los_po/home_los), dim=dimParziali, align='middle')
         
-        svg += text(x+3.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_pt/away_games), dim=dimParziali, align='middle')
-        svg += text(x+3.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_po/away_games), dim=dimParziali, align='middle')
+        if away_games > 0:
+            svg += text(x+3.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_pt/away_games), dim=dimParziali, align='middle')
+            svg += text(x+3.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_po/away_games), dim=dimParziali, align='middle')
         
-        svg += text(x+4.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_win_pt/away_win), dim=dimParziali, align='middle')
-        svg += text(x+4.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_win_po/away_win), dim=dimParziali, align='middle')
+        if away_win > 0:
+            svg += text(x+4.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_win_pt/away_win), dim=dimParziali, align='middle')
+            svg += text(x+4.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_win_po/away_win), dim=dimParziali, align='middle')
 
-        svg += text(x+5.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_los_pt/away_los), dim=dimParziali, align='middle')
-        svg += text(x+5.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_los_po/away_los), dim=dimParziali, align='middle')
+        if away_los > 0:
+            svg += text(x+5.5*dx, YSQUADRA2+0.4*hRigaTestata, '%.2f'%(away_los_pt/away_los), dim=dimParziali, align='middle')
+            svg += text(x+5.5*dx, YSQUADRA2+1.4*hRigaTestata, '%.2f'%(away_los_po/away_los), dim=dimParziali, align='middle')
         
         
     # Grid headers
@@ -1284,16 +1350,16 @@ def summary(df, game):
 ###########################################################################################################################################################################
 # Returns the points chart as a Plotly Figure
 ###########################################################################################################################################################################
-def pointsChart(df, game, height_in_pixels=450):
-    pt  = [0]
-    mt  = [0]
-    post= ['top center']
+def pointsChart(df, game, height_in_pixels=450, template='plotly_dark'):
+    pt   = [0]
+    mt   = [0]
+    post = ['top center']
     
-    git = ['']
-    po  = [0]
-    mo  = [0]
-    poso= ['bottom center']
-    gio = ['']
+    git  = ['']
+    po   = [0]
+    mo   = [0]
+    poso = ['bottom center']
+    gio  = ['']
 
     tt = 0
     to = 0
@@ -1371,12 +1437,18 @@ def pointsChart(df, game, height_in_pixels=450):
 
     title = "<span style='font-size:22px; font-weight: 700;'>"
     
+    points_team = Stats.points(game.events_df)
+    points_oppo = Stats.points(game.events_df, team=Config.OPPO)
     if game.game_data['home']:
         title += game.team_data['name'] + ' - ' + game.game_data['opponents']
+        ppp1 = points_team
+        ppp2 = points_oppo
     else:
         title += game.game_data['opponents'] + ' - ' + game.team_data['name']
+        ppp1 = points_oppo
+        ppp2 = points_team        
         
-    title +=  '&nbsp;&nbsp;&nbsp;&nbsp;' + str(game.board.pb1.points) + ' - ' + str(game.board.pb2.points) + '</span>'
+    title +=  '&nbsp;&nbsp;&nbsp;&nbsp;' + str(ppp1) + ' - ' + str(ppp2) + '</span>'
 
     # Write the minutes on the xaxis
     mmax = max(max(mt),max(mo)) / 60.0
@@ -1440,7 +1512,7 @@ def pointsChart(df, game, height_in_pixels=450):
         if len(ppq) > 7: annotations.append(dict(x=xt, y=pmax, text=ppq[7], showarrow=False))
     
     fig.update_layout(title=dict(text=title,y=0.94,x=0.02,xanchor='left',yanchor='top'),
-                      template='plotly_dark',
+                      template=template,
                       height=height_in_pixels,
                       font_family="Arial",
                       font_size=13,
@@ -1646,7 +1718,7 @@ def play_by_play(df, game):
     body = [formatEvent(x) for x in res]
 
     if game.game_data['home']:
-        title = game.team_data['name'] + ' - ' + game.game_data['opponents'] + '&nbsp;&nbsp;&nbsp;' + str(points_team) + ' : ' + str(points_oppo)
+        title = game.team_data['name'] + ' - ' + game.game_data['opponents'] + '&nbsp;&nbsp;&nbsp;' + str(points_team) + ' - ' + str(points_oppo)
     else:
         title = game.game_data['opponents'] + ' - ' + game.team_data['name']
 
@@ -1673,6 +1745,7 @@ def play_by_play(df, game):
     font-weight: 700 !important;
     line-height: 110%% !important;
     font-family: Roboto;
+    color: black;
 }
 
 .maxplusminus {
