@@ -31,7 +31,7 @@ from vois.vuetify import dialogGeneric, selectSingle, tabs
 ###########################################################################################################################################################################
 class SelectGame():
     
-    def __init__(self, output, folder='./data', on_ok=None):
+    def __init__(self, output, folder='./data', on_ok=None, title='Load a Game'):
         self.output = output
         self.on_ok  = on_ok
         
@@ -70,7 +70,7 @@ class SelectGame():
         self.t = tabs.tabs(0, self.phases, contents=self.cards, onchange=self.onChangePhase, row=True)
         self.t.tabswidget.class_ = 'pa-0 ma-0 ml-4'
 
-        self.dlg = dialogGeneric.dialogGeneric(title='Load a Game',
+        self.dlg = dialogGeneric.dialogGeneric(title=title,
                                                text=' ', titleheight=26,
                                                show=True, addclosebuttons=True, width=760,
                                                addokcancelbuttons=True, on_ok=self._on_ok,

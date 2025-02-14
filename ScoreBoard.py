@@ -67,6 +67,7 @@ class ScoreBoard(widgets.VBox):
         self.home_game = True
         
         # Read game info from the input files
+        self.team_file = team_file
         self.game = Game.Game(self, team_file, game_file)
         
         # Store input parameters
