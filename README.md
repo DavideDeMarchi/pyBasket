@@ -1,6 +1,8 @@
 # pyBasket
 Basketball statistics in Python and Voilà
 
+## Output web site produced by pyBasket
+[pyBasket site on daigio.it](https://www.daigio.it/pybasket/)
 
 ## Screenshot
 ![plot](./screenshots/pyBasket_main.png)
