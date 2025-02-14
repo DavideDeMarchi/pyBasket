@@ -90,7 +90,7 @@ def update(output, messages, ftp_server, dotest=False):
             /* Style the horizontal tab */
             .tab {
               overflow: hidden;
-              width: 84%%;
+              width: calc(90%% - 300px);
             }
 
             /* Style the buttons inside the tab */
@@ -103,7 +103,8 @@ def update(output, messages, ftp_server, dotest=False):
               margin-top: 12px; 
               padding: 22px 12px;
               transition: 0.3s;
-              font-size: 24px;
+              font-size: 26px;
+              text-align: center;
             }
 
             /* Change background color of buttons on hover */
@@ -124,11 +125,11 @@ def update(output, messages, ftp_server, dotest=False):
             }
 
             #left {
-                width: 300px;
+                width: 270px;
                 float: left;
             }
             #right {
-                width: 60%%;
+                width: calc(90%% - 300px);
                 float: left;
             }
             td:hover {
@@ -150,10 +151,10 @@ def update(output, messages, ftp_server, dotest=False):
                 width: 100%%;
                 border: none;
                 outline: none;
-                text-align: left;
                 cursor: pointer;
                 transition: 0.3s;
-                font-size: 17px;
+                font-size: 18px;
+                text-align: center;
             }
 
             /* Change background color of buttons on hover */
@@ -197,13 +198,13 @@ def update(output, messages, ftp_server, dotest=False):
                 </div>
 
                 <div id="right">
-                    <h2 id="curgame" style="margin-left: 12px; width: 80%%;">%s</h2>
-                </div>
+                    <h2 id="curgame" style="width: 100%%; height: 50px; margin-top: 6px; line-height: 1.0; font-size: max(25px, min(32px, 1.5vw));">%s</h2>
 
-                <div class="tab">
-                    <button class="tablinks" onclick="openContent(event, 'Partite', 'tabcontent', 'tablinks', '%s')" id="defaultOpen">Partite</button>
-                    <button class="tablinks" onclick="openContent(event, 'Totali', 'tabcontent', 'tablinks', '%s')">Totali</button>
-                    <button class="tablinks" onclick="openContent(event, 'Medie', 'tabcontent', 'tablinks', '%s')">Medie</button>
+                    <div class="tab" style="width: 100%%;">
+                        <button style="width: min(150px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Partite', 'tabcontent', 'tablinks', '%s')" id="defaultOpen">Partite</button>
+                        <button style="width: min(150px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Totali',  'tabcontent', 'tablinks', '%s')">Totali</button>
+                        <button style="width: min(150px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Medie',   'tabcontent', 'tablinks', '%s')">Medie</button>
+                    </div>
                 </div>
             </div>
 
@@ -229,7 +230,7 @@ def update(output, messages, ftp_server, dotest=False):
             document.getElementById("vdefaultOpenMap%d").click();'''
 
 
-    html_sheet_quarterA = '''                <button class="vtabsheet%d" onclick="openContent(event, '%s', 'vtabcontsheet%d', 'vtabsheet%d', '%s')">%s</button>'''
+    html_sheet_quarterA = '''                    <button class="vtabsheet%d" style="height: 100px;" onclick="openContent(event, '%s', 'vtabcontsheet%d', 'vtabsheet%d', '%s')">%s</button>'''
     html_sheet_quarterB = '''
                   <div id="%s" class="vtabcontsheet%d">
                     <embed src="sheets/%d_%d.svg"  width="100%%" height="900px"/>  
@@ -237,59 +238,60 @@ def update(output, messages, ftp_server, dotest=False):
 
     html_sheet = '''
                   <div class="vtab">
-                    <button class="vtabsheet%d" onclick="openContent(event, 'Totale%d', 'vtabcontsheet%d', 'vtabsheet%d', '%s')" id="vdefaultOpenSheet%d">Totale</button>
-    %s
+                    <button class="vtabsheet%d" style="height: 100px; font-weight: 700;" onclick="openContent(event, 'Totale%d', 'vtabcontsheet%d', 'vtabsheet%d', '%s')" id="vdefaultOpenSheet%d">Totale</button>
+%s
                   </div>
 
                   <div id="Totale%d" class="vtabcontsheet%d">
                     <embed src="sheets/%d.svg"  width="100%%" height="900px"/>  
                   </div>
-    %s
+%s
     '''
 
 
-    html_mappe_playerA = '''                <button class="vtabmap%d" style="width: 150px; height: 40px; padding: 4px 8px;" onclick="openContent(event, '%s', 'vtabcontmap%d', 'vtabmap%d', '%s')">%s</button>'''
+    html_mappe_playerA = '''                    <button class="vtabmap%d" style="width: 150px; height: 48px; padding: 4px 8px;" onclick="openContent(event, '%s', 'vtabcontmap%d', 'vtabmap%d', '%s')">%s</button>'''
     html_mappe_playerB = '''
                   <div id="%s" class="vtabcontmap%d">
-                    <img src="maps/%d_%s.png" height="700px" style="margin-left: 10px;">
-                    <img src="players/%s.png" height="700px" style="margin-left: 10px;">
+                    <img src="maps/%d_%s.png" height="700px" style="margin-left: 10px; vertical-align: top;">
+                    <img src="players/%s.png" height="700px" style="margin-left: 10px; vertical-align: top;">
                   </div>'''
 
     html_mappe = '''
                   <div class="vtab" style="width: 150px;">
-                    <button class="vtabmap%d" style="width: 150px; height: 40px; padding: 4px 8px;" onclick="openContent(event, 'Squadra%d', 'vtabcontmap%d', 'vtabmap%d', '%s')" id="vdefaultOpenMap%d">Squadra</button>
-    %s
+                    <button class="vtabmap%d" style="width: 150px; height: 48px; padding: 4px 8px; font-weight: 700;" onclick="openContent(event, 'Squadra%d', 'vtabcontmap%d', 'vtabmap%d', '%s')" id="vdefaultOpenMap%d">Squadra</button>
+%s
                   </div>
 
                   <div id="Squadra%d" class="vtabcontmap%d">
-                     <img src="maps/%d.png" height="700px" style="margin-left: 10px;">
-                     <img src="players/Team.png" height="700px" style="margin-left: 10px;">
+                     <img src="maps/%d.png" height="700px" style="margin-left: 10px; vertical-align: top;">
+                     <img src="players/Team.png" height="400px" style="margin-left: 10px; vertical-align: top;">
                   </div>
-    %s
+%s
     '''
 
 
     html_singlegame = '''
+            <!-- PARTITA %d -->
             <div id="p%d" class="tabcontent">
                 <div class="vtab">
-                  <button class="vtablinks%d" onclick="openContent(event, 'Tabellino%d', 'vtabcontent%d', 'vtablinks%d', '%s')" id="vdefaultOpen%d">Tabellino</button>
-                  <button class="vtablinks%d" onclick="openContent(event, 'Cronaca%d', 'vtabcontent%d', 'vtablinks%d', '%s')">Cronaca</button>
-                  <button class="vtablinks%d" onclick="openContent(event, 'Mappe%d', 'vtabcontent%d', 'vtablinks%d', '%s')">Mappe</button>
-                  <button class="vtablinks%d" onclick="openContent(event, 'Grafico%d', 'vtabcontent%d', 'vtablinks%d', '%s')">Grafico</button>
-                  <button class="vtablinks%d" onclick="openContent(event, 'Sintesi%d', 'vtabcontent%d', 'vtablinks%d', '%s')">Sintesi</button>
-                  <button class="vtablinks%d" onclick="openContent(event, 'Video%d', 'vtabcontent%d', 'vtablinks%d', '%s')">Video</button>
+                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Tabellino%d', 'vtabcontent%d', 'vtablinks%d', '%s')" id="vdefaultOpen%d">Tabellino</button>
+                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Cronaca%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Cronaca</button>
+                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Mappe%d',     'vtabcontent%d', 'vtablinks%d', '%s')">Mappe</button>
+                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Grafico%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Grafico</button>
+                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Sintesi%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Sintesi</button>
+                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Video%d',     'vtabcontent%d', 'vtablinks%d', '%s')">Video</button>
                 </div>
 
                 <div id="Tabellino%d" class="vtabcontent%d">
-    %s
+%s
                 </div>
 
                 <div id="Cronaca%d" class="vtabcontent%d">
-    %s
+%s
                 </div>
 
                 <div id="Mappe%d" class="vtabcontent%d">
-    %s            
+%s            
                 </div>
 
                 <div id="Grafico%d" class="vtabcontent%d">
@@ -297,11 +299,11 @@ def update(output, messages, ftp_server, dotest=False):
                 </div>
 
                 <div id="Sintesi%d" class="vtabcontent%d">
-    %s
+%s
                 </div>
 
                 <div id="Video%d" class="vtabcontent%d">
-                    <video id="video%d" width="100%%" height="900px" controls>
+                    <video id="video%d" width="100%%" controls>
                         <source src="%s" type="video/mp4">
                       Your browser does not support the video tag.
                     </video>
@@ -310,10 +312,11 @@ def update(output, messages, ftp_server, dotest=False):
     '''
 
     html_games = '''
+            <!-- LISTA PARTITE -->
             <div id="Partite" class="tabcontent">
               <h4>
                 <ul>
-                  <table style="font-size: 1.32em;">
+                  <table style="font-size: max(14px, 1.2vw);">
     '''
 
 
@@ -330,13 +333,13 @@ def update(output, messages, ftp_server, dotest=False):
     html_game2 = '''
                     <tr onclick="openContent(event, 'p%d', 'tabcontent', 'tablinks', '%s')">
                         <td colspan="2" width="8%%"></td>
-                        <td colspan="3" width="12%%" valign=top><font size=3>%s</font></td>
-                        <td width="70%%"><font size=3>%s</font></td>
+                        <td colspan="3" width="12%%" valign=top style="font-size: max(10px, 1.0vw);">%s</td>
+                        <td width="70%%" style="font-size: max(10px, 1.0vw);">%s</td>
                         <td width="10%%"></td></tr>
                     <tr onclick="openContent(event, 'p%d', 'tabcontent', 'tablinks', '%s')">
                         <td colspan="2" width="8%%"></td>
-                        <td colspan="3" width="12%%" valign=top><font size=3>%s</font></td>
-                        <td width="70%%"><font size=3>%s</font></td>
+                        <td colspan="3" width="12%%" valign=top style="font-size: max(10px, 1.0vw);">%s</td>
+                        <td width="70%%" style="font-size: max(10px, 1.0vw);">%s</td>
                         <td width="10%%"></td></tr>
                     <tr><td height="10"></td></tr>
     '''
@@ -408,9 +411,17 @@ def update(output, messages, ftp_server, dotest=False):
 
     partite = ''
 
+    
+    # Store css and images
+    store('web/css/layout.css')
+    store('web/images/basket.ico')
+    store('web/images/bg.gif')
+    store('web/images/redbg.gif')
+    store('web/images/logo.png')
 
+    
     # Save players images
-    for player_name in ['Team'] + list(sb.game.team_data['players'].keys()):
+    for player_name in ['Team', 'Unknown'] + list(sb.game.team_data['players'].keys()):
         try:
             img = Image.open('./images/%s.jpg'%player_name)
         except:
@@ -453,24 +464,25 @@ def update(output, messages, ftp_server, dotest=False):
                 outfile.write(svg)
             store('web/sheets/%d.svg'%progressive)
 
-            # Save Box Score for every quarter
+            # Save Box Score for every quarter (only if the game is terminated)
             quartersA = []
             quartersB = []
-            for quarter in range(1,g['status']['quarter']+1):
-                df = sb.game.events_df.copy()
-                svg = BoxScore.svg(df, game=sb.game, width=65.0, quarter=quarter)
-                with open('web/sheets/%d_%d.svg'%(progressive,quarter), 'w') as outfile:
-                    outfile.write(svg)
-                store('web/sheets/%d_%d.svg'%(progressive,quarter))
+            if g['status']['gameover']:
+                for quarter in range(1,g['status']['quarter']+1):
+                    df = sb.game.events_df.copy()
+                    svg = BoxScore.svg(df, game=sb.game, width=65.0, quarter=quarter)
+                    with open('web/sheets/%d_%d.svg'%(progressive,quarter), 'w') as outfile:
+                        outfile.write(svg)
+                    store('web/sheets/%d_%d.svg'%(progressive,quarter))
 
-                qlabel = 'Q%d%d'%(progressive,quarter)
-                if quarter < 5:
-                    qname = 'Q%d'%quarter
-                else:
-                    qname = 'S%d'%(quarter-4)
+                    qlabel = 'Q%d%d'%(progressive,quarter)
+                    if quarter < 5:
+                        qname = 'Q%d'%quarter
+                    else:
+                        qname = 'S%d'%(quarter-4)
 
-                quartersA.append(html_sheet_quarterA%(progressive, qlabel, progressive, progressive, '', qname))
-                quartersB.append(html_sheet_quarterB%(qlabel, progressive, progressive, quarter))
+                    quartersA.append(html_sheet_quarterA%(progressive, qlabel, progressive, progressive, '', qname))
+                    quartersB.append(html_sheet_quarterB%(qlabel, progressive, progressive, quarter))
 
             game_sheet = html_sheet%(progressive,progressive,progressive,progressive, '', progressive, '\n'.join(quartersA), progressive, progressive, progressive, '\n'.join(quartersB) )
 
@@ -482,6 +494,7 @@ def update(output, messages, ftp_server, dotest=False):
                 pngfile.write(bbb)
             store('web/charts/%d.png'%progressive)
 
+            
             # Save Play-By-Play directly in the HTML
             pbp = BoxScore.play_by_play(sb.game.events_df, game=sb.game)
             pbphtml = '<div style="max-width: 100%%; overflow: hidden; background-color: #ffffff;">%s</div>'%(pbp)
@@ -505,17 +518,19 @@ def update(output, messages, ftp_server, dotest=False):
 
                 plabel = 'P%d%s'%(progressive,player_name)
                 playerA.append(html_mappe_playerA%(progressive, plabel, progressive, progressive, '', player_name))
-                playerB.append(html_mappe_playerB%(plabel, progressive, progressive, player_name, player_name))
+                
+                image_name = player_name
+                if player_name not in sb.game.team_data['players']:
+                    image_name = 'Unknown'
+                playerB.append(html_mappe_playerB%(plabel, progressive, progressive, player_name, image_name))
 
             game_mappe = html_mappe%(progressive,progressive,progressive,progressive, '', progressive, '\n'.join(playerA), progressive, progressive, progressive, '\n'.join(playerB) )
 
 
             # Game summary
-            summary = '''
-                    <p style="font-size: 1.4em; font-weight: 600; margin-left: 30px; color: black;">
+            summary = '''                    <p style="font-size: 1.4em; font-weight: 600; margin-left: 30px; color: black;">
                     %s
-                    </p>
-    ''' % (BoxScore.summary(sb.game.events_df, game=sb.game).replace('\n','</br>'))
+                    </p>''' % (BoxScore.summary(sb.game.events_df, game=sb.game).replace('\n','</br>'))
 
 
             # Video file name
@@ -530,6 +545,7 @@ def update(output, messages, ftp_server, dotest=False):
 
 
             htmlfile.write(html_singlegame%(progressive,
+                                            progressive,
                                             progressive,progressive,progressive,progressive,'',progressive,
                                             progressive,progressive,progressive,progressive,'',
                                             progressive,progressive,progressive,progressive,'',
@@ -539,7 +555,7 @@ def update(output, messages, ftp_server, dotest=False):
                                             progressive,progressive,
                                             game_sheet,
                                             progressive,progressive,
-                                            '<iframe src="playbyplay/%d.html" width="100%%" height="900px" style="margin-left: 16px; border:none;"></iframe>'%progressive,
+                                            '                    <iframe src="playbyplay/%d.html" width="100%%" height="900px" style="margin-left: 16px; border:none;"></iframe>'%progressive,
                                             progressive,progressive,
                                             game_mappe,
                                             progressive,progressive,progressive,

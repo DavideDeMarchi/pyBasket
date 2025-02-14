@@ -11,13 +11,13 @@ p { clear: both; line-height: 1.64em; margin: 0 0 15px; }
 .clear { clear: both; }
 #content { width: 90%; margin: 0 auto; }
 	#top { color: #ccc; padding: 6px 20px 0; font-size: .84em; text-align: right; }
-	#logo { float: left; background: url(../images/redbg.gif) repeat-x; padding: 100px 5px 15px; margin: -86px 0 20px; }
+	#logo { float: left; background: url(../images/redbg.gif) repeat-x; padding: 100px 15px 15px; margin: -86px 0 20px; }
 		#logo h1 { text-shadow: 1px 1px 1px #7E0E0E; }
 	#menu { float: right; margin: 23px 0px 0; }
 		#menu li { display: inline; font-size: 1.3em; }
 			#menu li a { float: left; color: #808080; padding: 0 0 5px; margin: 0 0 0 55px; }
 			#menu li a:hover, #menu li.current a, #menu li a:focus { color: #000; border-bottom: 1px solid #ddd; }
-	#pitch { background: url(../images/monitor.gif) no-repeat right top; padding: 10px 10px 0 0; border-bottom: 1px solid #ddd; height: 154px; margin: 0 0 5px; }
+	#pitch { background: url(../images/logo.png) no-repeat right top; padding: 0px 0px 0 0; border-bottom: 1px solid #ddd; height: 138px; margin: 0 0 5px; }
 		#pitch h1 { font-size: 2.6em; color: #000; margin: 0 0 10px; }
 		#pitch h2 { line-height: 1.5em; }
 	.left { float: left; width: 250px; }	
