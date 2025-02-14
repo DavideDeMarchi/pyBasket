@@ -230,7 +230,7 @@ def update(output, messages, ftp_server, dotest=False):
             document.getElementById("vdefaultOpenMap%d").click();'''
 
 
-    html_sheet_quarterA = '''                    <button class="vtabsheet%d" style="height: 100px;" onclick="openContent(event, '%s', 'vtabcontsheet%d', 'vtabsheet%d', '%s')">%s</button>'''
+    html_sheet_quarterA = '''                    <button class="vtabsheet%d" style="height: 90px;" onclick="openContent(event, '%s', 'vtabcontsheet%d', 'vtabsheet%d', '%s')">%s</button>'''
     html_sheet_quarterB = '''
                   <div id="%s" class="vtabcontsheet%d">
                     <embed src="sheets/%d_%d.svg"  width="100%%" height="900px"/>  
@@ -238,7 +238,7 @@ def update(output, messages, ftp_server, dotest=False):
 
     html_sheet = '''
                   <div class="vtab">
-                    <button class="vtabsheet%d" style="height: 100px; font-weight: 700;" onclick="openContent(event, 'Totale%d', 'vtabcontsheet%d', 'vtabsheet%d', '%s')" id="vdefaultOpenSheet%d">Totale</button>
+                    <button class="vtabsheet%d" style="height: 90px; font-weight: 700;" onclick="openContent(event, 'Totale%d', 'vtabcontsheet%d', 'vtabsheet%d', '%s')" id="vdefaultOpenSheet%d">Totale</button>
 %s
                   </div>
 
@@ -249,7 +249,7 @@ def update(output, messages, ftp_server, dotest=False):
     '''
 
 
-    html_mappe_playerA = '''                    <button class="vtabmap%d" style="width: 150px; height: 48px; padding: 4px 8px;" onclick="openContent(event, '%s', 'vtabcontmap%d', 'vtabmap%d', '%s')">%s</button>'''
+    html_mappe_playerA = '''                    <button class="vtabmap%d" style="width: 150px; height: 44px; padding: 4px 8px;" onclick="openContent(event, '%s', 'vtabcontmap%d', 'vtabmap%d', '%s')">%s</button>'''
     html_mappe_playerB = '''
                   <div id="%s" class="vtabcontmap%d">
                     <img src="maps/%d_%s.png" height="700px" style="margin-left: 10px; vertical-align: top;">
@@ -258,7 +258,7 @@ def update(output, messages, ftp_server, dotest=False):
 
     html_mappe = '''
                   <div class="vtab" style="width: 150px;">
-                    <button class="vtabmap%d" style="width: 150px; height: 48px; padding: 4px 8px; font-weight: 700;" onclick="openContent(event, 'Squadra%d', 'vtabcontmap%d', 'vtabmap%d', '%s')" id="vdefaultOpenMap%d">Squadra</button>
+                    <button class="vtabmap%d" style="width: 150px; height: 44px; padding: 4px 8px; font-weight: 700;" onclick="openContent(event, 'Squadra%d', 'vtabcontmap%d', 'vtabmap%d', '%s')" id="vdefaultOpenMap%d">Squadra</button>
 %s
                   </div>
 
@@ -274,12 +274,12 @@ def update(output, messages, ftp_server, dotest=False):
             <!-- PARTITA %d -->
             <div id="p%d" class="tabcontent">
                 <div class="vtab">
-                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Tabellino%d', 'vtabcontent%d', 'vtablinks%d', '%s')" id="vdefaultOpen%d">Tabellino</button>
-                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Cronaca%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Cronaca</button>
-                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Mappe%d',     'vtabcontent%d', 'vtablinks%d', '%s')">Mappe</button>
-                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Grafico%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Grafico</button>
-                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Sintesi%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Sintesi</button>
-                  <button class="vtablinks%d" style="height: 100px;" onclick="openContent(event, 'Video%d',     'vtabcontent%d', 'vtablinks%d', '%s')">Video</button>
+                  <button class="vtablinks%d" style="height: 90px;" onclick="openContent(event, 'Tabellino%d', 'vtabcontent%d', 'vtablinks%d', '%s')" id="vdefaultOpen%d">Tabellino</button>
+                  <button class="vtablinks%d" style="height: 90px;" onclick="openContent(event, 'Cronaca%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Cronaca</button>
+                  <button class="vtablinks%d" style="height: 90px;" onclick="openContent(event, 'Mappe%d',     'vtabcontent%d', 'vtablinks%d', '%s')">Mappe</button>
+                  <button class="vtablinks%d" style="height: 90px;" onclick="openContent(event, 'Grafico%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Grafico</button>
+                  <button class="vtablinks%d" style="height: 90px;" onclick="openContent(event, 'Sintesi%d',   'vtabcontent%d', 'vtablinks%d', '%s')">Sintesi</button>
+                  <button class="vtablinks%d" style="height: 90px;" onclick="openContent(event, 'Video%d',     'vtabcontent%d', 'vtablinks%d', '%s')">Video</button>
                 </div>
 
                 <div id="Tabellino%d" class="vtabcontent%d">
@@ -504,7 +504,7 @@ def update(output, messages, ftp_server, dotest=False):
 
 
             # Mappe di tiro
-            m = ThrowMap.ThrowMap(board=sb, scale=1.0, field_left=True, output=output)
+            m = ThrowMap.ThrowMap(board=sb, scale=0.85, field_left=True, output=output)
             m.updateThrows(sb.game.events_df, player_name=None, background=True)
             m.imgBackground.save('web/maps/%d.png'%progressive, format='png')
             store('web/maps/%d.png'%progressive)
