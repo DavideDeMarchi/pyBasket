@@ -256,8 +256,8 @@ def update(output, messages, ftp_server, dotest=False, test_file=None):
     html_mappe_playerA = '''                    <button class="vtabmap%d" style="width: 150px; height: 44px; padding: 4px 8px;" onclick="openContent(event, '%s', 'vtabcontmap%d', 'vtabmap%d', '%s')">%s</button>'''
     html_mappe_playerB = '''
                   <div id="%s" class="vtabcontmap%d">
-                    <img src="maps/%d_%s.png" height="700px" style="margin-left: 10px; vertical-align: top;">
-                    <img src="players/%s.png" height="700px" style="margin-left: 10px; vertical-align: top;">
+                    <img src="maps/%d_%s.png" height="600px" style="margin-left: 10px; vertical-align: top;">
+                    <img src="players/%s.png" height="600px" style="margin-left: 10px; vertical-align: top;">
                   </div>'''
 
     html_mappe = '''
@@ -267,7 +267,7 @@ def update(output, messages, ftp_server, dotest=False, test_file=None):
                   </div>
 
                   <div id="Squadra%d" class="vtabcontmap%d">
-                     <img src="maps/%d.png" height="700px" style="margin-left: 10px; vertical-align: top;">
+                     <img src="maps/%d.png" height="600px" style="margin-left: 10px; vertical-align: top;">
                      <img src="players/Team.png" height="400px" style="margin-left: 10px; vertical-align: top;">
                   </div>
 %s

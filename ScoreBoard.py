@@ -67,7 +67,6 @@ class ScoreBoard(widgets.VBox):
         # Read game info from the input files
         self.team_file = team_file
         self.game = Game.Game(self, team_file, game_file)
-        self.home_game = self.game.game_data['home']
         
         # Store input parameters
         self._scale = scale
@@ -113,7 +112,7 @@ class ScoreBoard(widgets.VBox):
         self.qcard.children = ['- '*self.quarter]
         
         # Points
-        if self.home_game:
+        if self.game.game_data['home']:
             onclick1 = None
             onclick2 = self.internal_on_opponents_points
         else:
@@ -437,7 +436,7 @@ class ScoreBoard(widgets.VBox):
             oppo_fouls = Stats.count(df, 'FCom')
             
             # Display the total fouls for the two teams
-            if self.home_game:
+            if self.game.game_data['home']:
                 self.fb1.fouls = team_fouls
                 self.fb2.fouls = oppo_fouls
             else:
@@ -474,7 +473,7 @@ class ScoreBoard(widgets.VBox):
             if self.timeouts1 <= 2:
                 self.timeouts1 += 1
                 self.cardtimeout1.children = ['•'*self.timeouts1]
-                if self.home_game:
+                if self.game.game_data['home']:
                     if self.on_team_timeout is not None:
                         self.on_team_timeout()
                 else:
@@ -488,7 +487,7 @@ class ScoreBoard(widgets.VBox):
             if self.timeouts2 <= 2:
                 self.timeouts2 += 1
                 self.cardtimeout2.children = ['•'*self.timeouts2]
-                if self.home_game:
+                if self.game.game_data['home']:
                     if self.on_opponents_timeout is not None:
                         self.on_opponents_timeout()
                 else:
@@ -504,7 +503,7 @@ class ScoreBoard(widgets.VBox):
                 self.game.players_info[player_name]['plusminus'] += num_points
                 self.game.playerDisplayInfo(player_name)
                 
-        if self.home_game:
+        if self.game.game_data['home']:
             self.pb1.points += num_points
         else:
             self.pb2.points += num_points
@@ -512,14 +511,14 @@ class ScoreBoard(widgets.VBox):
             
     # Add one foul to the team
     def add_team_foul(self):
-        if self.home_game:
+        if self.game.game_data['home']:
             self.fb1.fouls += 1
         else:
             self.fb2.fouls += 1
         
     # Add one foul to the opponents
     def add_opponents_foul(self):
-        if self.home_game:
+        if self.game.game_data['home']:
             self.fb2.fouls += 1
         else:
             self.fb1.fouls += 1
@@ -527,7 +526,7 @@ class ScoreBoard(widgets.VBox):
         
     # Remove one foul from the team
     def remove_team_foul(self):
-        if self.home_game:
+        if self.game.game_data['home']:
             self.fb1.fouls -= 1
         else:
             self.fb2.fouls -= 1
@@ -535,7 +534,7 @@ class ScoreBoard(widgets.VBox):
 
     # Remove one foul from the opponents
     def remove_opponents_foul(self):
-        if self.home_game:
+        if self.game.game_data['home']:
             self.fb2.fouls -= 1
         else:
             self.fb1.fouls -= 1
@@ -549,7 +548,7 @@ class ScoreBoard(widgets.VBox):
                 self.on_opponents_points(num_points)
             else:
                 doupdate = False
-                if self.home_game:
+                if self.game.game_data['home']:
                     if self.pb2.points >= -num_points:
                         doupdate = True
                         self.pb2.points += num_points
@@ -582,7 +581,7 @@ class ScoreBoard(widgets.VBox):
                 self.game.players_info[player_name]['plusminus'] -= num_points
                 self.game.playerDisplayInfo(player_name)
                 
-        if self.home_game:
+        if self.game.game_data['home']:
             self.pb2.points += num_points
         else:
             self.pb1.points += num_points
@@ -725,7 +724,6 @@ class ScoreBoard(widgets.VBox):
         self.waitOpen()
 
         self.game.loadGame(game_file)
-        self.home_game = self.game.game_data['home']
         self.game.setBoardStatus()
         self.createControls()
         self.iSaveGame.disabled = False

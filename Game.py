@@ -195,12 +195,10 @@ class Game():
                 
                 
         # Initialize other members of the overall board
-        if 'home' in self.game_data:
-            self.board.home_game = self.game_data['home']
-        else:
-            self.board.home_game = True
+        if 'home' not in self.game_data:
+            self.game_data['home'] = True
             
-        if self.board.home_game:
+        if self.game_data['home']:
             self.board.team1_name = self.team_data['name']
             self.board.team1_abbr = self.team_data['abbreviation']
             self.board.team2_name = self.game_data['opponents']
@@ -283,12 +281,12 @@ class Game():
                 T3ok = Stats.count(dfoppo,'T3ok')
                 pOppoTotal = T1ok + T2ok*2 + T3ok*3
                 
-                if self.board.home_game:
+                if self.game_data['home']:
                     return '%s: %d - %d (%d - %d)'%(name,pTeam,pOppo,pTeamTotal,pOppoTotal)
                 else:
                     return '%s: %d - %d (%d - %d)'%(name,pOppo,pTeam,pOppoTotal,pTeamTotal)
             else:
-                if self.board.home_game:
+                if self.game_data['home']:
                     return '%s: %d - %d'%(name,pTeam,pOppo)
                 else:
                     return '%s: %d - %d'%(name,pOppo,pTeam)
@@ -705,20 +703,24 @@ class Game():
 
     # Add points to an opponent player
     def opponentAddPoints(self, opponent_name, points):
-        self.opponents_info[opponent_name]['points'] += points
+        if opponent_name in self.opponents_info:
+            self.opponents_info[opponent_name]['points'] += points
 
     # Remove points to an opponent player
     def opponentRemovePoints(self, opponent_name, points):
-        self.opponents_info[opponent_name]['points'] -= points
+        if opponent_name in self.opponents_info:
+            self.opponents_info[opponent_name]['points'] -= points
 
 
     # Add a foul to an opponent player
     def opponentAddFoul(self, opponent_name):
-        self.opponents_info[opponent_name]['fouls'] += 1
+        if opponent_name in self.opponents_info:
+            self.opponents_info[opponent_name]['fouls'] += 1
 
     # Remove a foul to an opponent player
     def opponentRemoveFoul(self, opponent_name):
-        self.opponents_info[opponent_name]['fouls'] -= 1
+        if opponent_name in self.opponents_info:
+            self.opponents_info[opponent_name]['fouls'] -= 1
 
 
     # Selection of one of the opponents
@@ -736,14 +738,17 @@ class Game():
 
         bw, bc = self.opponentsList(onclick=doSelect, single_line=False, opponents_list=opponents_list)
 
-        if len(bc) >= 6:
-            w = (len(bc)//2) * (self.board.width/5)
-        else:
-            w = len(bc) * (self.board.width/5)
+        if len(bc) < 0:
+            if len(bc) >= 6:
+                w = (len(bc)//2) * (self.board.width/5)
+            else:
+                w = len(bc) * (self.board.width/5)
 
-        dlg = dialogGeneric.dialogGeneric(title='Select opponent', text='', titleheight=26,
-                                          show=True, addclosebuttons=True, width='calc(%fvw - 4px)'%w,
-                                          fullscreen=False, content=[bw], output=self.board.output)
+            dlg = dialogGeneric.dialogGeneric(title='Select opponent', text='', titleheight=26,
+                                              show=True, addclosebuttons=True, width='calc(%fvw - 4px)'%w,
+                                              fullscreen=False, content=[bw], output=self.board.output)
+        else:
+            onselect('')
     
     ###########################################################################################################################################################################
     # Properties

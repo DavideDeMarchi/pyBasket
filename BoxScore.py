@@ -349,9 +349,10 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     # Starters
     starters = list(df[(df['team']==Config.TEAM)&(df['quarter']==1)&(df['event_name']=='Entr')&(df['seconds']==600.0)]['player'])[-5:]    # Last 5 players entered on the field at the beginning of 1st quarter
     for player_name in starters:
-        pos = game.players_by_number.index(player_name)
-        y = y1 + pos*hRiga
-        svg += text(XSTARTERS, y, 'Q', align='middle', color='white')
+        if player_name in game.players_by_number:
+            pos = game.players_by_number.index(player_name)
+            y = y1 + pos*hRiga
+            svg += text(XSTARTERS, y, 'Q', align='middle', color='white')
         
     # Minuti in campo
     y = y1
