@@ -64,11 +64,10 @@ class ScoreBoard(widgets.VBox):
         self.on_quarter_start     = None
         self.on_quarter_end       = None
         
-        self.home_game = True
-        
         # Read game info from the input files
         self.team_file = team_file
         self.game = Game.Game(self, team_file, game_file)
+        self.home_game = self.game.game_data['home']
         
         # Store input parameters
         self._scale = scale
@@ -121,9 +120,9 @@ class ScoreBoard(widgets.VBox):
             onclick1 = self.internal_on_opponents_points
             onclick2 = None
             
-        self.pb1 = DigitalBoards.PointsBoard(scale=self._scale*1.15, left_align=False, onclick=onclick1)
+        self.pb1   = DigitalBoards.PointsBoard(scale=self._scale*1.15, left_align=False, onclick=onclick1)
         self.colon = DigitalBoards.Colon(scale=self._scale*1.15)
-        self.pb2 = DigitalBoards.PointsBoard(scale=self._scale*1.15, left_align=True, onclick=onclick2)
+        self.pb2   = DigitalBoards.PointsBoard(scale=self._scale*1.15, left_align=True, onclick=onclick2)
         
         # Fouls
         self.fb1 = DigitalBoards.FoulsBoard(scale=self._scale*1.15)
@@ -726,6 +725,7 @@ class ScoreBoard(widgets.VBox):
         self.waitOpen()
 
         self.game.loadGame(game_file)
+        self.home_game = self.game.game_data['home']
         self.game.setBoardStatus()
         self.createControls()
         self.iSaveGame.disabled = False

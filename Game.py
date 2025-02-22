@@ -72,7 +72,7 @@ class Game():
             # Players sorted by number
             self.players_by_number = [x[0] for x in sorted([[x[1]['name'],x[1]['number']] for x in self.players_info.items()], key=lambda x: int(x[1]))]
             self.players_numbers   = [x[1] for x in sorted([[x[1]['name'],x[1]['number']] for x in self.players_info.items()], key=lambda x: int(x[1]))]
-
+            
             # Cached players images
             self.players_images = {}
             for player_name in self.players_by_number:
@@ -153,20 +153,7 @@ class Game():
                 self.game_data["events"] = []
                 
             # Remove unavailable players
-            if 'unavailable_players' in self.game_data:
-                for player_name in self.game_data['unavailable_players']:
-                    
-                    # Players sorted alphabetically by name
-                    if player_name in self.players_by_name:
-                        index = self.players_by_name.index(player_name)
-                        del self.players_by_name[index]
-
-                    # Players sorted by number
-                    if player_name in self.players_by_number:
-                        index = self.players_by_number.index(player_name)
-                        del self.players_by_number[index]
-                        del self.players_numbers[index]
-            else:
+            if 'unavailable_players' not in self.game_data:
                 self.game_data['unavailable_players'] = []
 
         self.opponents_info = self.game_data['opponents_info']
@@ -183,6 +170,7 @@ class Game():
         # Players sorted by number
         self.players_by_number = [x[0] for x in sorted([[x[1]['name'],x[1]['number']] for x in self.players_info.items()], key=lambda x: int(x[1]))]
         self.players_numbers   = [x[1] for x in sorted([[x[1]['name'],x[1]['number']] for x in self.players_info.items()], key=lambda x: int(x[1]))]
+        self.removeUnavailablePlayers()
 
         # Add 'fouls' and 'points' to opponents players (if not already present)
         for name,player in self.opponents_info.items():
@@ -574,6 +562,24 @@ class Game():
                                           show=True, addclosebuttons=addclosebuttons, width='calc(%fvw - 2px)'%w,
                                           fullscreen=False, content=[bw], output=self.board.output)
 
+    
+    # Remove players that cannot be on the field
+    def removeUnavailablePlayers(self):
+        for player_name in self.game_data['unavailable_players']:
+
+            #if player_name in self.players_info:
+            #    del self.players_info[player_name]
+            
+            # Players sorted alphabetically by name
+            if player_name in self.players_by_name:
+                index = self.players_by_name.index(player_name)
+                del self.players_by_name[index]
+
+            # Players sorted by number
+            if player_name in self.players_by_number:
+                index = self.players_by_number.index(player_name)
+                del self.players_by_number[index]
+                del self.players_numbers[index]
         
         
     # Edit the players of the team that are unavailable for the current game and add temporary players
@@ -608,20 +614,7 @@ class Game():
             self.players_by_number = [x[0] for x in sorted([[x[1]['name'],x[1]['number']] for x in self.players_info.items()], key=lambda x: int(x[1]))]
             self.players_numbers   = [x[1] for x in sorted([[x[1]['name'],x[1]['number']] for x in self.players_info.items()], key=lambda x: int(x[1]))]
             
-            # Remove unavailable players
-            for player_name in self.game_data['unavailable_players']:
-
-                # Players sorted alphabetically by name
-                if player_name in self.players_by_name:
-                    index = self.players_by_name.index(player_name)
-                    del self.players_by_name[index]
-
-                # Players sorted by number
-                if player_name in self.players_by_number:
-                    index = self.players_by_number.index(player_name)
-                    del self.players_by_number[index]
-                    del self.players_numbers[index]
-                    
+            self.removeUnavailablePlayers()
             self.saveGame()
             
         spacer = v.Html(tag='div',children=[' '], style_='width: 14px; height: 20px; min-height: 30px;')

@@ -245,8 +245,8 @@ class ThrowMap(widgets.VBox):
 
                 if self.field_left:
                     x1 = (w*2)//3 - 26
-                    x2 = x1 + 32
-                    x3 = x2 + 70
+                    x2 = x1 + 36
+                    x3 = x2 + 74
                 else:
                     x1 = 10
                     x2 = x1 + 40

@@ -166,7 +166,7 @@ def plusminus(player_name=None,   # Name of the Team player (or None for Team to
 def trueshooting(events_df,           # Events DataFrame
                  player_name=None):   # Name of the Team player (or None for Team totals)
     
-    if events_df is None: return 0.0
+    if events_df is None: return -1.0
 
     if player_name is None: df = events_df[(events_df['team']==Config.TEAM)]
     else:                   df = events_df[(events_df['team']==Config.TEAM)&(events_df['player']==player_name)]
@@ -180,9 +180,12 @@ def trueshooting(events_df,           # Events DataFrame
     T1 = T1ok + T1err
     T2 = T2ok + T2err
     T3 = T3ok + T3err
-    if T1+T2+T3 == 0: return 0.0
+    if T1+T2+T3 == 0: return -1.0
     P = T1ok + 2*T2ok + 3*T3ok
-    return 100.0 * (0.5*P / (T2 + T3 + 0.44*T1))
+    if T1 + T2 + T3 == 0:
+        return -1.0
+    else:
+        return 100.0 * (0.5*P / (T2 + T3 + 0.44*T1))
     
     
 ###########################################################################################################################################################################

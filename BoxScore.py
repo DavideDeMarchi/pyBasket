@@ -542,7 +542,7 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     y = y1
     for player_name in game.players_by_number:
         v = Stats.plusminus(player_name, game.players_info)
-        if player_name in seconds_on_field.keys() and v > 0:
+        if player_name in seconds_on_field.keys() and v != 0:
             svg += text(XPLUSMIN, y, str(v), align='middle')
         y += hRiga
     t = Stats.plusminus(players_info=game.players_info)
@@ -552,10 +552,12 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     y = y1
     for player_name in game.players_by_number:
         if player_name in seconds_on_field.keys():
-            svg += text(XTRUE, y, '%.1f'%Stats.trueshooting(df, player_name), align='middle')
+            t = Stats.trueshooting(df, player_name)
+            if t >= 0.0:
+                svg += text(XTRUE, y, '%.1f'%t, align='middle')
         y += hRiga
     t = Stats.trueshooting(df)
-    if t > 0: svg += text(XTRUE, ysum, '%.1f'%t, align='middle', color='white')
+    if t >= 0: svg += text(XTRUE, ysum, '%.1f'%t, align='middle', color='white')
         
     
     # Bottom texts

@@ -46,7 +46,7 @@ from PIL import Image
 ###########################################################################################################################################################################
 # Update the HTML site
 ###########################################################################################################################################################################
-def update(output, messages, ftp_server, dotest=False):
+def update(output, messages, ftp_server, dotest=False, test_file=None):
     
     with messages:
         print('Updating pybasket HTML site:')
@@ -58,7 +58,11 @@ def update(output, messages, ftp_server, dotest=False):
         ftp_server.storbinary('STOR %s'%serverfilepath, file)
         file.close()
 
-    allfiles = glob.glob('./data/*.game')
+    if dotest and os.path.isfile(test_file):
+        allfiles = [test_file]
+    else:
+        allfiles = glob.glob('./data/*.game')
+
     phases = sorted(list(set([os.path.basename(x).split('-')[1] for x in allfiles if '-' in x and '.a-' in x])))
 
     allevents = []
@@ -638,9 +642,6 @@ def update(output, messages, ftp_server, dotest=False):
                 partite += html_game2%(progressive, game_name, t1, p1, progressive, game_name, t2, p2)
 
             progressive += 1
-            
-            if dotest:
-                break
 
 
     htmlfile.write(html_games)
