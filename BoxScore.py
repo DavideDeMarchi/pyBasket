@@ -596,6 +596,12 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
                 
     for player_name in game.opponents_by_number:
         points = Stats.points(df, player_name, team=Config.OPPO)
+        
+        # Recover opponent points from the game if greater than the numbers calculated from the events
+        if player_name in game.game_data['opponents_info']:
+            p = game.game_data['opponents_info'][player_name]['points']
+            if p > points: points = p
+        
         if points > 0: po.append('%s %d'%(player_name,points))
         else:
             if quarter is None:
@@ -1283,6 +1289,12 @@ def summary(df, game):
         
     for player_name in game.opponents_by_number:
         points = Stats.points(df, player_name, team=Config.OPPO)
+        
+        # Recover opponent points from the game if greater than the numbers calculated from the events
+        if player_name in game.game_data['opponents_info']:
+            p = game.game_data['opponents_info'][player_name]['points']
+            if p > points: points = p
+                
         if points > 0: po.append('%s %d'%(player_name,points))
         else:          po.append(player_name)
         

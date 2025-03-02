@@ -13,7 +13,7 @@
     "location": "PALESTRA - Via Molinello - SANT'ANGELO IN VADO",
     "trainer": "",
     "opponents_info": {},
-    "unavailable_players": [],
+    "unavailable_players": ["Dusels", "Matteucci"],
     "status": {
         "quarter": 1,
         "seconds": 600.0,
@@ -25,5 +25,5 @@
         "timeouts1": 0,
         "timeouts2": 0
     },
-    "events": [],
+    "events": []
 }

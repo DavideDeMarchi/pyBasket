@@ -738,7 +738,7 @@ class Game():
 
         bw, bc = self.opponentsList(onclick=doSelect, single_line=False, opponents_list=opponents_list)
 
-        if len(bc) < 0:
+        if len(bc) > 0:
             if len(bc) >= 6:
                 w = (len(bc)//2) * (self.board.width/5)
             else:

@@ -8,12 +8,100 @@
     "home": true,
     "opponents": "GUELFO BASKET",
     "abbreviation": "GUE",
-    "referee1": "",
-    "referee2": "",
+    "referee1": "LIMONE GREGORY di PESARO (PU)",
+    "referee2": "DE CAROLIS ALESSANDRO di FERMO (FM)",
     "location": "PALESTRA - Via Molinello - SANT'ANGELO IN VADO",
-    "trainer": "",
-    "opponents_info": {},
-    "unavailable_players": ["Dusels", "Matteucci"],
+    "trainer": "Agresti",
+    "opponents_info": {
+        "Roli": {
+            "name": "Roli",
+            "number": "4",
+            "year": "2004",
+            "fouls": 0,
+            "points": 0
+        },
+        "Tarozzi": {
+            "name": "Tarozzi",
+            "number": "5",
+            "year": "2004",
+            "fouls": 0,
+            "points": 0
+        },
+        "Curione": {
+            "name": "Curione",
+            "number": "8",
+            "year": "1994",
+            "fouls": 0,
+            "points": 0
+        },
+        "Benedetti": {
+            "name": "Benedetti",
+            "number": "10",
+            "year": "1993",
+            "fouls": 0,
+            "points": 0
+        },
+        "Savino": {
+            "name": "Savino",
+            "number": "11",
+            "year": "2003",
+            "fouls": 0,
+            "points": 0
+        },
+        "Bergami": {
+            "name": "Bergami",
+            "number": "12",
+            "year": "1997",
+            "fouls": 0,
+            "points": 0
+        },
+        "Carlone": {
+            "name": "Carlone",
+            "number": "14",
+            "year": "2005",
+            "fouls": 0,
+            "points": 0
+        },
+        "Martini": {
+            "name": "Martini",
+            "number": "15",
+            "year": "1996",
+            "fouls": 0,
+            "points": 0
+        },
+        "Naldi": {
+            "name": "Naldi",
+            "number": "18",
+            "year": "2001",
+            "fouls": 0,
+            "points": 0
+        },
+        "Castori": {
+            "name": "Castori",
+            "number": "20",
+            "year": "1999",
+            "fouls": 0,
+            "points": 0
+        },
+        "Santini": {
+            "name": "Santini",
+            "number": "21",
+            "year": "1997",
+            "fouls": 0,
+            "points": 0
+        },
+        "Febbo": {
+            "name": "Febbo",
+            "number": "23",
+            "year": "2005",
+            "fouls": 0,
+            "points": 0
+        }
+    },
+    "unavailable_players": [
+        "Dusels",
+        "Matteucci"
+    ],
     "status": {
         "quarter": 1,
         "seconds": 600.0,
@@ -25,5 +113,98 @@
         "timeouts1": 0,
         "timeouts2": 0
     },
-    "events": []
+    "events": [],
+    "players_info": {
+        "Lulaj": {
+            "name": "Lulaj",
+            "number": "1",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Aloi": {
+            "name": "Aloi",
+            "number": "2",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Baldassarri": {
+            "name": "Baldassarri",
+            "number": "4",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Di Francesco": {
+            "name": "Di Francesco",
+            "number": "5",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Colotti": {
+            "name": "Colotti",
+            "number": "8",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Pentucci": {
+            "name": "Pentucci",
+            "number": "9",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Perez Da Rold": {
+            "name": "Perez Da Rold",
+            "number": "10",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Dusels": {
+            "name": "Dusels",
+            "number": "12",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Manna": {
+            "name": "Manna",
+            "number": "13",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Diana": {
+            "name": "Diana",
+            "number": "14",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Matteucci": {
+            "name": "Matteucci",
+            "number": "16",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Jareci": {
+            "name": "Jareci",
+            "number": "16",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Campana": {
+            "name": "Campana",
+            "number": "21",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        },
+        "Marcantognini": {
+            "name": "Marcantognini",
+            "number": "34",
+            "time_on_field": 0.0,
+            "plusminus": 0
+        }
+    },
+    "on_field": [
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
 }

@@ -21,6 +21,7 @@
         "Manna":         {"name": "Manna",         "number": "13"},
         "Diana":         {"name": "Diana",         "number": "14"},
         "Matteucci":     {"name": "Matteucci",     "number": "16"},
+        "Jareci":        {"name": "Jareci",        "number": "16"},
         "Campana":       {"name": "Campana",       "number": "21"},
         "Marcantognini": {"name": "Marcantognini", "number": "34"}
     }
