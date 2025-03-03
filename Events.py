@@ -23,6 +23,7 @@ import pandas as pd
 import json
 from random import randrange
 from IPython.display import HTML as ipyHTML   # !!!
+from cairosvg import svg2png
 import io
 import datetime
 
@@ -220,7 +221,7 @@ class Events(widgets.VBox):
         self.board.tb.stop()
         
         # Download ScoreSheet in HTML format
-        def on_download():
+        def on_download_HTML():
             html = BoxScore.html(self.df, game=self.board.game)
 
             filename = '%s-%s_ScoreSheet'%(self.board.team1_abbr,self.board.team2_abbr)
@@ -232,7 +233,23 @@ class Events(widgets.VBox):
                 download.downloadText(html, fileName='%s.html'%filename)
             download.output.clear_output()
             
-            # TODO: Generate the .html file inside the github repo and then view it like: https://html-preview.github.io/?url=https://github.com/DavideDeMarchi/voici-demo/blob/main/ScoreSheet.html
+            
+        # Download ScoreSheet in PNG format
+        def on_download_PNG():
+            svg = BoxScore.svg(self.df, game=self.board.game, downloadMode=True, width=100)
+            png = svg2png(bytestring=svg, output_width=2200, output_height=1130)
+            buf = io.BytesIO(png)
+            buf.seek(0)
+            b = buf.read()
+
+            filename = '%s-%s_ScoreSheet'%(self.board.team1_abbr,self.board.team2_abbr)
+            if not self.board.tb.gameover:
+                filename += '_Q%d'%self.board.quarter
+
+            download.output.clear_output()
+            with download.output:
+                download.downloadBytes(b, fileName='%s.png'%filename)
+            download.output.clear_output()
             
         
         w = (self.board.width + self.board.infow)*0.99
@@ -243,7 +260,7 @@ class Events(widgets.VBox):
         
         dialogGeneric.dialogGeneric(title='Score Sheet', text='', titleheight=26, dark=False,
                                     show=True, addclosebuttons=True, width='calc(%fvw + 4px)'%w,
-                                    custom_icon='mdi-download', custom_tooltip='Click to download the Score Sheet', custom_icon_onclick=on_download,
+                                    custom_icon='mdi-download', custom_tooltip='Click to download the Score Sheet', custom_icon_onclick=on_download_PNG,
                                     fullscreen=False, content=[HTML(self.svg)], output=self.board.output)
 
         

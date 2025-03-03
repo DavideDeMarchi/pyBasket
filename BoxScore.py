@@ -107,7 +107,7 @@ XTRUE      = 21.28
 ###########################################################################################################################################################################
 # Returns the BoxScore in svg format
 ###########################################################################################################################################################################
-def svg(df, game, team_logo_img=None, width=80, quarter=None):   # Dimensioning in vw/vh
+def svg(df, game, team_logo_img=None, width=80, quarter=None, downloadMode=False):   # Dimensioning in vw/vh
     
     # Read seconds on field from the game if the overall sheet has to be produced
     if quarter is None:
@@ -147,12 +147,21 @@ def svg(df, game, team_logo_img=None, width=80, quarter=None):   # Dimensioning 
     svgwidth  = IMAGE_WIDTH_IN_PIXELS  / 100.0    # 21.30
     svgheight = IMAGE_HEIGHT_IN_PIXELS / 100.0    # 10.90
     
+    
+    # In doanloda mode, do not use vw/vh units!!!
+    if downloadMode:
+        xunits = ''
+        yunits = ''
+    else:
+        xunits = 'vw'
+        yunits = 'vh'
+    
     preserve = 'xMidYMin meet'    # Center the chart in the parent
     svg = '''<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
 viewBox="0 0 %f %f"
 preserveAspectRatio="%s"
-width="%fvw"
-height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
+width="%f%s"
+height="%f%s">''' % (svgwidth,svgheight, preserve, width, xunits, height, yunits)
 
     svg += '''
     <style type="text/css">
@@ -204,7 +213,9 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
         
     # DrawText internal function
     def text(x, y, s, dim=0.28, w=500, align='start', color='black'):
-        return '<text x="%f" y="%f" fill="%s" stroke="none" font-size="%f" font-weight="%d" font-family="%s" text-anchor="%s" alignment-baseline="hanging">%s</text>' % (x, y, color, dim, w, font_name, align, s)
+        if downloadMode: outputdim = dim*0.9
+        else:            outputdim = dim*0.99
+        return '<text x="%f" y="%f" fill="%s" stroke="none" font-size="%f" font-weight="%d" font-family="%s" text-anchor="%s" alignment-baseline="hanging">%s</text>' % (x, y, color, outputdim, w, font_name, align, s)
         
         
     # Top texts
@@ -511,51 +522,105 @@ height="%fvh">''' % (svgwidth,svgheight, preserve, width,height)
     
     # Valutazione di lega
     y = y1
+    maxv = -1000
+    for player_name in game.players_by_number:
+        v = Stats.value(df, player_name)
+        if v > maxv: maxv = v
     for player_name in game.players_by_number:
         v = Stats.value(df, player_name)
         if player_name in seconds_on_field.keys() and v > 0:
-            svg += text(XVAL, y, str(v), align='middle')
+            if v == maxv:
+                color = '#008800'
+                w = 700
+            else:
+                color = 'black'
+                w = 500
+            svg += text(XVAL, y, str(v), align='middle', color=color, w=w)
         y += hRiga
     t = Stats.value(df)
     svg += text(XVAL, ysum, str(t), align='middle', color='white')
         
+        
     # Valutazione OER
     y = y1
+    maxv = -1000
+    for player_name in game.players_by_number:
+        v = Stats.oer(df, player_name)
+        if v > maxv: maxv = v
     for player_name in game.players_by_number:
         v = Stats.oer(df, player_name)
         if player_name in seconds_on_field.keys() and v >0:
-            svg += text(XOER, y, '%.2f'%v, align='middle')
+            if v == maxv:
+                color = '#008800'
+                w = 700
+            else:
+                color = 'black'
+                w = 500
+            svg += text(XOER, y, '%.2f'%v, align='middle', color=color, w=w)
         y += hRiga
     t = Stats.oer(df)
     if t > 0: svg += text(XOER, ysum, '%.2f'%t, align='middle', color='white')
         
+        
     # Valutazione VIR
     y = y1
+    maxv = -1000
+    for player_name in game.players_by_number:
+        v = Stats.vir(df, player_name, game.players_info)
+        if v > maxv: maxv = v
     for player_name in game.players_by_number:
         v = Stats.vir(df, player_name, game.players_info)
         if player_name in seconds_on_field.keys() and v > 0:
-            svg += text(XVIR, y, '%.2f'%v, align='middle')
+            if v == maxv:
+                color = '#008800'
+                w = 700
+            else:
+                color = 'black'
+                w = 500
+            svg += text(XVIR, y, '%.2f'%v, align='middle', color=color, w=w)
         y += hRiga
     t = Stats.vir(df, players_info=game.players_info)
     if t > 0: svg += text(XVIR, ysum, '%.2f'%t, align='middle', color='white')
 
+    
     # Valutazione PlusMinus
     y = y1
+    maxv = -1000
+    for player_name in game.players_by_number:
+        v = Stats.plusminus(player_name, game.players_info)
+        if v > maxv: maxv = v
     for player_name in game.players_by_number:
         v = Stats.plusminus(player_name, game.players_info)
         if player_name in seconds_on_field.keys() and v != 0:
-            svg += text(XPLUSMIN, y, str(v), align='middle')
+            if v == maxv:
+                color = '#008800'
+                w = 700
+            else:
+                color = 'black'
+                w = 500
+            svg += text(XPLUSMIN, y, str(v), align='middle', color=color, w=w)
         y += hRiga
     t = Stats.plusminus(players_info=game.players_info)
     svg += text(XPLUSMIN, ysum, str(t), align='middle', color='white')
         
+        
     # Valutazione TrueShooting
     y = y1
+    maxv = -1000
+    for player_name in game.players_by_number:
+        v = Stats.trueshooting(df, player_name)
+        if v > maxv: maxv = v
     for player_name in game.players_by_number:
         if player_name in seconds_on_field.keys():
             t = Stats.trueshooting(df, player_name)
+            if t == maxv:
+                color = '#008800'
+                w = 700
+            else:
+                color = 'black'
+                w = 500
             if t >= 0.0:
-                svg += text(XTRUE, y, '%.1f'%t, align='middle')
+                svg += text(XTRUE, y, '%.1f'%t, align='middle', color=color, w=w)
         y += hRiga
     t = Stats.trueshooting(df)
     if t >= 0: svg += text(XTRUE, ysum, '%.1f'%t, align='middle', color='white')

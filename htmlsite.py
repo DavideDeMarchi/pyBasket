@@ -46,7 +46,7 @@ from PIL import Image
 ###########################################################################################################################################################################
 # Update the HTML site
 ###########################################################################################################################################################################
-def update(output, messages, ftp_server, dotest=False, test_file=None):
+def update(output, messages, ftp_server, dotest=False, test_file=None, players_to_remove_from_totals=[]):
     
     with messages:
         print('Updating pybasket HTML site:')
@@ -660,6 +660,11 @@ def update(output, messages, ftp_server, dotest=False, test_file=None):
     df = pd.concat(allevents)
     df.reset_index(drop=True, inplace=True)
 
+    # Remove players that do not need to be displayed
+    for p in players_to_remove_from_totals:
+        if p in players_info:
+            del players_info[p]
+    
     # Totali e medie
     svg = BoxScore.totalsvg(df, game=sb.game, average=False, players_info=players_info, width=55.0)
     with open('web/sheets/totali.svg', 'w') as file:
