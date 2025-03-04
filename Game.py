@@ -83,10 +83,15 @@ class Game():
                 iw,ih = img.size
                 img = img.crop((0, 0, iw, iw))
                 self.players_images[player_name] = colors.image2Base64(img)
-            
+
         # Load the game from the game_file
         self.loadGame(game_file)
         
+        # Pre-create 30 cards for playersList and opponentsList calls (5onfield + 12players + 12opponents)
+        w = '100px'
+        self.cards = []
+        for i in range(30):
+            self.cards.append(v.Card(tile=True, color='#222222', children=[], outlined=False, elevation=0, width=w, height=w, class_='noselect d-flex flex-column', style_='overflow: hidden; border-width: 6px; border-color: yellow;'))
         
 
     # Load a game from file
@@ -418,7 +423,7 @@ class Game():
     ###########################################################################################################################################################################
 
     # Return a list of widgets for the players
-    def playersList(self, list_of_players, onclick=None, single_line=True, show_info=True, one_line_if_less_than=6, initial_id=0, w=None):
+    def playersList(self, list_of_players, onclick=None, single_line=True, show_info=True, one_line_if_less_than=6, initial_id=0, w=None, initial_card_index=0):
 
         players_widgets = []
         players_card    = []
@@ -437,7 +442,6 @@ class Game():
         style_text_small = 'color: white; text-shadow: 2px 2px black; background-color: #00000000; font-size: %fvw; line-height: %fvw; font-family: "%s", serif; vertical-align: baseline;'%(self.board.text_height*0.18, 
                                                                                                                                                                                              self.board.theight*0.18,
                                                                                                                                                                                              self.board.font_name)
-        
         for index,player_name in enumerate(list_of_players):
             if player_name is not None and len(player_name) > 0:
                 title   = v.Html(tag='div',children=[player_name], style_='text-align: center; %s'%style_text)
@@ -450,9 +454,18 @@ class Game():
 
             action = v.CardActions(children=[number], class_='justify-center')
 
-            c = v.Card(tile=True, color='#222222', children=[title, v.Spacer(), action], outlined=False, elevation=0, width=w, height=w,
-                       class_='noselect d-flex flex-column', style_='overflow: hidden; border-width: 6px; border-color: yellow;')
+            #c = v.Card(tile=True, color='#222222', children=[title, v.Spacer(), action], outlined=False, elevation=0, width=w, height=w,
+            #           class_='noselect d-flex flex-column', style_='overflow: hidden; border-width: 6px; border-color: yellow;')
 
+            # Re-use pre-created cards
+            c = self.cards[initial_card_index]
+            c.children = [title, v.Spacer(), action]
+            c.width = c.height = w
+            initial_card_index += 1
+            if initial_card_index >= 30:
+                initial_card_index = 0
+            
+            
             if player_name is not None and player_name != '':
                 if player_name in self.players_images:
                     c.img = self.players_images[player_name]
@@ -546,7 +559,7 @@ class Game():
             dlg.close()
             onselect(player_name)
 
-        bw, bc = self.playersList(self.board.bench, onclick=doSelect, single_line=False)
+        bw, bc = self.playersList(self.board.bench, onclick=doSelect, single_line=False, initial_card_index=5)
 
         if len(bc) >= 6:
             if len(bc) % 2 == 1:
@@ -644,7 +657,7 @@ class Game():
     ###########################################################################################################################################################################
 
     # Return a list of widgets for the opponents
-    def opponentsList(self, onclick=None, single_line=True, opponents_list=None):
+    def opponentsList(self, onclick=None, single_line=True, opponents_list=None, initial_card_index=17):
         
         if opponents_list is None:
             opponents_list = self.opponents_by_number
@@ -676,9 +689,17 @@ class Game():
 
             action = v.CardActions(children=[number], class_='justify-center')
 
-            c = v.Card(tile=True, color='#222222', children=[title, v.Spacer(), points, v.Spacer(), fouls, v.Spacer(), action],
-                       outlined=False, elevation=0, width=w, height=w, class_='noselect d-flex flex-column', style_='overflow: hidden; border-width:6px; border-color: yellow;')
+            #c = v.Card(tile=True, color='#222222', children=[title, v.Spacer(), points, v.Spacer(), fouls, v.Spacer(), action],
+            #           outlined=False, elevation=0, width=w, height=w, class_='noselect d-flex flex-column', style_='overflow: hidden; border-width:6px; border-color: yellow;')
 
+            c = self.cards[initial_card_index]
+            c.children = [title, v.Spacer(), points, v.Spacer(), fouls, v.Spacer(), action]
+            c.width = c.height = w
+            c.img = None
+            initial_card_index += 1
+            if initial_card_index >= 30:
+                initial_card_index = 0
+            
             c.id = index
             if onclick is not None:
                 c.on_event('click', onclick)

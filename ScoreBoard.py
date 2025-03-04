@@ -239,7 +239,7 @@ class ScoreBoard(widgets.VBox):
         self.player_selected = None    # Name of the currently selected player
         self.player_index    = -1      # Index of the currently selected player (-1, or 0,1,2,3,4)
         
-        self.onfield, self.players_card = self.game.playersList(self.game.on_field, self.click_on_player)
+        self.onfield, self.players_card = self.game.playersList(self.game.on_field, self.click_on_player, initial_card_index=0)
         
         # Set the status
         self.game.setBoardStatus()
