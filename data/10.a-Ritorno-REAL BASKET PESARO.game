@@ -1,6 +1,6 @@
 {
     "date": "22/03/2025",
-    "time": "20:30",
+    "time": "20:31",
     "season": "Stagione 2024/2025",
     "championship": "Campionato Serie C - Girone M",
     "phase": "Ritorno",
@@ -13,7 +13,10 @@
     "location": "Palestra Baia Flaminia - Via Londra - PESARO",
     "trainer": "",
     "opponents_info": {},
-    "unavailable_players": ["Dusels", "Matteucci"],
+    "unavailable_players": [
+        "Dusels",
+        "Matteucci"
+    ],
     "status": {
         "quarter": 1,
         "seconds": 600.0,
