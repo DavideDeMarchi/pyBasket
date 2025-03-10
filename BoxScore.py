@@ -1430,15 +1430,15 @@ def summary(df, game):
 ###########################################################################################################################################################################
 # Returns the points chart as a Plotly Figure
 ###########################################################################################################################################################################
-def pointsChart(df, game, height_in_pixels=450, template='plotly_dark'):
+def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
     pt   = [0]
     mt   = [0]
-    post = ['top center']
+    post = ['top left']
     
     git  = ['']
     po   = [0]
     mo   = [0]
-    poso = ['bottom center']
+    poso = ['bottom right']
     gio  = ['']
 
     tt = 0
@@ -1462,43 +1462,15 @@ def pointsChart(df, game, height_in_pixels=450, template='plotly_dark'):
             pt.append(tt)
             mt.append(round(total_seconds))
             git.append(row['player'] + ' %dP'%p)
-            if tt > to:
-                if p == 1:
-                    if total_seconds - previous_total_seconds > 40:
-                        post.append('middle right')
-                    else:
-                        post.append('top right')
-                else:
-                    post.append('top center')
-            else:
-                if p == 1:
-                    if total_seconds - previous_total_seconds > 40:
-                        post.append('middle right')
-                    else:
-                        post.append('bottom right')
-                else:
-                    post.append('bottom center')
+            if tt > to: post.append('top left')
+            else:       post.append('bottom right')
         else:
             to += p
             po.append(to)
             mo.append(round(total_seconds))
             gio.append(row['player'] + ' %dP'%p)
-            if to > tt:
-                if p == 1:
-                    if total_seconds - previous_total_seconds > 40:
-                        poso.append('middle left')
-                    else:
-                        poso.append('top left')
-                else:
-                    poso.append('top center')
-            else:
-                if p == 1:
-                    if total_seconds - previous_total_seconds > 40:
-                        poso.append('middle left')
-                    else:
-                        poso.append('bottom left')
-                else:
-                    poso.append('bottom center')
+            if to > tt: poso.append('top left')
+            else:       poso.append('bottom right')
                     
         previous_total_seconds = total_seconds
 
@@ -1508,9 +1480,9 @@ def pointsChart(df, game, height_in_pixels=450, template='plotly_dark'):
     d = datetime.datetime.today()
 
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mt], y=pt, text=[str(x) for x in pt], customdata=git, textposition=post,    
+    fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mt], y=pt, text=[str(x) for x in pt], customdata=git, textposition=post, line_shape="hv",
                              hovertemplate='%{y} - %{customdata} - %{x|%M\':%S\"}', mode='lines+markers+text', name=game.team_data['name'], line=dict(color='green'), marker=dict(color='green')))
-    fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mo], y=po, text=[str(x) for x in po], customdata=gio, textposition=poso,
+    fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mo], y=po, text=[str(x) for x in po], customdata=gio, textposition=poso, line_shape="hv",
                              hovertemplate='%{y} - %{customdata} - %{x|%M\':%S\"}', mode='lines+markers+text', name=game.game_data['opponents'], line=dict(color='red'), marker=dict(color='red')))
     
     fig.for_each_trace(lambda t: t.update(textfont_color=t.marker.color))
@@ -1534,8 +1506,8 @@ def pointsChart(df, game, height_in_pixels=450, template='plotly_dark'):
     mmax = max(max(mt),max(mo)) / 60.0
     dates_array = [datetime.datetime(d.year, d.month, d.day, 0, x, 0) for x in list(range(int(mmax+1.99999999)))]
     
-    dmin = dates_array[0]  - datetime.timedelta(seconds=6)
-    dmax = dates_array[-1] + datetime.timedelta(seconds=6)
+    dmin = dates_array[0]  - datetime.timedelta(seconds=30)
+    dmax = dates_array[-1] + datetime.timedelta(seconds=30)
     
     annotations = []
     

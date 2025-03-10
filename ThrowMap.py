@@ -49,6 +49,7 @@ class ThrowMap(widgets.VBox):
                  scale=1.0,               # Overall scaling
                  color_back='#000000',    # Background color
                  field_left=True,         # Basket is on the left of the screen
+                 small_points=False,      # If true the icons for each shot are smaller
                  output=None):            # Output to display CSS and dialog
     
         super().__init__()
@@ -84,6 +85,10 @@ class ThrowMap(widgets.VBox):
         # Images for scored and missed throws
         self.imgScored = Image.open('./resources/scored.png')
         self.imgMissed = Image.open('./resources/missed.png')
+        
+        if small_points:
+            self.imgScored = self.imgScored.resize((10, 10), Image.Resampling.LANCZOS)
+            self.imgMissed = self.imgMissed.resize((10, 10), Image.Resampling.LANCZOS)
         
         self.createControls()
 
@@ -194,7 +199,7 @@ class ThrowMap(widgets.VBox):
         
     
     # Display a list of throws from a Pandas Dataframe
-    def displayThrows(self, tdf, background=True):
+    def displayThrows(self, tdf, background=True, display_full_stats=True):
         if background:
             back_image = self.imgBackground
         else:
@@ -214,7 +219,7 @@ class ThrowMap(widgets.VBox):
                 back_image.paste(img, (px,py), img)
             
         # Display stats on top
-        if background :
+        if background:
             if self.current_df is not None:
                 
                 def stat(ok, err):
@@ -235,7 +240,12 @@ class ThrowMap(widgets.VBox):
                 draw = ImageDraw.Draw(back_image)
 
                 textcolor = "black"
-                fontsize  = 25
+                if display_full_stats:
+                    fontsize = 25
+                    dy = 30
+                else:
+                    fontsize = 15
+                    dy = 18
 
                 fontBold   = ImageFont.truetype('fonts/Roboto-Bold.ttf',    fontsize)
                 fontNormal = ImageFont.truetype('fonts/Roboto-Regular.ttf', fontsize)
@@ -253,7 +263,6 @@ class ThrowMap(widgets.VBox):
                     x3 = x2 + 74
                     
                 y = 10
-                dy = 30
                 draw.text((x1,y), name, textcolor, font=fontBold)
                 y += 6
                 
@@ -273,34 +282,36 @@ class ThrowMap(widgets.VBox):
                 draw.text((x2,y+3*dy), s,    textcolor, font=fontNormal)
                 draw.text((x3,y+3*dy), p,    textcolor, font=fontNormal)
                 
-                # Display additional stats for the current player
-                if not self.field_left:
-                    x2 = x1
-                    x3 = x1 + 60
-                    
-                y += 8
-                draw.text((x2,y+4*dy), 'P:', textcolor, font=fontNormal)
-                draw.text((x3,y+4*dy), '%d'%Stats.points(self.current_df, self.current_player), textcolor, font=fontNormal)
-                    
-                draw.text((x2,y+5*dy), 'VAL:', textcolor, font=fontNormal)
-                draw.text((x3,y+5*dy), '%d'%Stats.value(self.current_df, self.current_player), textcolor, font=fontNormal)
+                
+                if display_full_stats:
+                    # Display additional stats for the current player
+                    if not self.field_left:
+                        x2 = x1
+                        x3 = x1 + 60
 
-                draw.text((x2,y+6*dy), 'OER:', textcolor, font=fontNormal)
-                draw.text((x3,y+6*dy), '%.2f'%Stats.oer(self.current_df, self.current_player), textcolor, font=fontNormal)
+                    y += 8
+                    draw.text((x2,y+4*dy), 'P:', textcolor, font=fontNormal)
+                    draw.text((x3,y+4*dy), '%d'%Stats.points(self.current_df, self.current_player), textcolor, font=fontNormal)
 
-                draw.text((x2,y+7*dy), 'VIR:', textcolor, font=fontNormal)
-                draw.text((x3,y+7*dy), '%.2f'%Stats.vir(self.current_df, self.current_player, self.game.players_info), textcolor, font=fontNormal)
-                    
-                draw.text((x2,y+8*dy), '+/-:', textcolor, font=fontNormal)
-                draw.text((x3,y+8*dy), '%d'%Stats.plusminus(self.current_player, self.game.players_info), textcolor, font=fontNormal)
-                    
-                draw.text((x2,y+9*dy), 'TS:', textcolor, font=fontNormal)
-                draw.text((x3,y+9*dy), '%.0f%%'%Stats.trueshooting(self.current_df, self.current_player), textcolor, font=fontNormal)
+                    draw.text((x2,y+5*dy), 'VAL:', textcolor, font=fontNormal)
+                    draw.text((x3,y+5*dy), '%d'%Stats.value(self.current_df, self.current_player), textcolor, font=fontNormal)
 
-                if self.current_player is not None and self.current_player in self.game.players_info:
-                    draw.text((x2,y+10*dy), 'Min:', textcolor, font=fontNormal)
-                    seconds = self.game.players_info[self.current_player]['time_on_field']
-                    draw.text((x3,y+10*dy), '%d\'%02d"'%(seconds//60, int(seconds%60)), textcolor, font=fontNormal)
+                    draw.text((x2,y+6*dy), 'OER:', textcolor, font=fontNormal)
+                    draw.text((x3,y+6*dy), '%.2f'%Stats.oer(self.current_df, self.current_player), textcolor, font=fontNormal)
+
+                    draw.text((x2,y+7*dy), 'VIR:', textcolor, font=fontNormal)
+                    draw.text((x3,y+7*dy), '%.2f'%Stats.vir(self.current_df, self.current_player, self.game.players_info), textcolor, font=fontNormal)
+
+                    draw.text((x2,y+8*dy), '+/-:', textcolor, font=fontNormal)
+                    draw.text((x3,y+8*dy), '%d'%Stats.plusminus(self.current_player, self.game.players_info), textcolor, font=fontNormal)
+
+                    draw.text((x2,y+9*dy), 'TS:', textcolor, font=fontNormal)
+                    draw.text((x3,y+9*dy), '%.0f%%'%Stats.trueshooting(self.current_df, self.current_player), textcolor, font=fontNormal)
+
+                    if self.current_player is not None and self.current_player in self.game.players_info:
+                        draw.text((x2,y+10*dy), 'Min:', textcolor, font=fontNormal)
+                        seconds = self.game.players_info[self.current_player]['time_on_field']
+                        draw.text((x3,y+10*dy), '%d\'%02d"'%(seconds//60, int(seconds%60)), textcolor, font=fontNormal)
                     
                     
                 # Display points per quarters
@@ -316,7 +327,7 @@ class ThrowMap(widgets.VBox):
         
         
     # Update of the throw map from the events stored in the Pandas Dataframe
-    def updateThrows(self, df, player_name=None, background=True):
+    def updateThrows(self, df, player_name=None, background=True, display_full_stats=True):
         if df is not None and 'team' in df.columns:
             self.current_player = ''
             self.current_df     = None
@@ -329,7 +340,7 @@ class ThrowMap(widgets.VBox):
                 if background:
                     self.current_player = None
                     self.current_df     = tdf.copy()
-                self.displayThrows(tdf, background=background)
+                self.displayThrows(tdf, background=background, display_full_stats=display_full_stats)
             elif player_name == '':                   # Empty player selected --> no Throws displayed
                 pass
             else:                                     # Normal player selected --> player's trows displayed
@@ -337,7 +348,7 @@ class ThrowMap(widgets.VBox):
                 if background:
                     self.current_player = player_name
                     self.current_df     = tdf.copy()
-                self.displayThrows(tdf, background=background)
+                self.displayThrows(tdf, background=background, display_full_stats=display_full_stats)
 
             if background:
                 self.img.src = colors.image2Base64(self.imgBackground)

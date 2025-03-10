@@ -300,7 +300,7 @@ class Events(widgets.VBox):
         self.board.tb.stop()
         
         def on_download():
-            bbb = self.fig.to_image('png', width=4000, height=1400)
+            bbb = self.fig.to_image('png', width=3000, height=1500)
 
             filename = '%s-%s_PointsChart'%(self.board.team1_abbr,self.board.team2_abbr)
             if not self.board.tb.gameover:
@@ -315,7 +315,7 @@ class Events(widgets.VBox):
         self.waitOpen()
         
         w = (self.board.width + self.board.infow)
-        height_in_pixels = 450
+        height_in_pixels = 600
         
         self.fig = BoxScore.pointsChart(self.df, game=self.board.game, height_in_pixels=height_in_pixels)
         

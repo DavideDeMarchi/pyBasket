@@ -25,6 +25,7 @@ import Game
 import ScoreBoard
 import BoxScore
 import ThrowMap
+import Analytics
 
 import importlib
 importlib.reload(Config)
@@ -33,6 +34,7 @@ importlib.reload(Game)
 importlib.reload(ScoreBoard)
 importlib.reload(BoxScore)
 importlib.reload(ThrowMap)
+importlib.reload(Analytics)
 
 from ipywidgets import widgets, HTML
 
@@ -58,6 +60,9 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
         ftp_server.storbinary('STOR %s'%serverfilepath, file)
         file.close()
 
+    # All events
+    an_df, an_players_info = Analytics.seasonEvents(output)
+        
     if dotest and os.path.isfile(test_file):
         allfiles = [test_file]
     else:
@@ -90,6 +95,8 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
         <title>Statistiche %s - %s - pyBasket</title>
         <style>
             body {font-family: Arial;}
+
+            iframe[seamless] { width: 90%%; height: 820px; border: none; margin-left: 50px; }
 
             /* Style the horizontal tab */
             .tab {
@@ -205,9 +212,10 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
                     <h2 id="curgame" style="width: 100%%; height: 50px; margin-top: 6px; line-height: 1.0; font-size: max(25px, min(32px, 1.5vw));">%s</h2>
 
                     <div class="tab" style="width: 100%%;">
-                        <button style="width: min(150px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Partite', 'tabcontent', 'tablinks', '%s')" id="defaultOpen">Partite</button>
-                        <button style="width: min(150px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Totali',  'tabcontent', 'tablinks', '%s')">Totali</button>
-                        <button style="width: min(150px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Medie',   'tabcontent', 'tablinks', '%s')">Medie</button>
+                        <button style="width: min(110px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Partite', 'tabcontent', 'tablinks', '%s')" id="defaultOpen">Partite</button>
+                        <button style="width: min(110px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Totali',  'tabcontent', 'tablinks', '%s')">Totali</button>
+                        <button style="width: min(110px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Medie',   'tabcontent', 'tablinks', '%s')">Medie</button>
+                        <button style="width: min(110px, 32%%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Analisi', 'tabcontent', 'tablinks', '%s')">Analisi</button>
                     </div>
                 </div>
             </div>
@@ -218,6 +226,13 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
 
             <div id="Medie" class="tabcontent">
                 <embed src="sheets/medie.svg"  width="100%%" height="900px"/>
+            </div>
+            
+            <div id="Analisi" class="tabcontent">
+              <iframe src="chart1.html" seamless></iframe>
+              <iframe src="chart2.html" seamless></iframe>
+              <iframe src="chart3.html" seamless></iframe>
+              <iframe src="chart4.html" seamless></iframe>
             </div>
     '''
 
@@ -411,7 +426,7 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
 
 
     championship_name = sb.game.team_data['championship'] + ' - ' + sb.game.team_data['season']
-    htmlfile.write(html_head%(sb.game.team_data['season'], sb.game.team_data['name'], sss, sb.game.team_data['name'], championship_name, championship_name, championship_name, championship_name))
+    htmlfile.write(html_head%(sb.game.team_data['season'], sb.game.team_data['name'], sss, sb.game.team_data['name'], championship_name, championship_name, championship_name, championship_name, championship_name))
 
     partite = ''
 
@@ -423,7 +438,70 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
     store('web/images/redbg.gif')
     store('web/images/logo.png')
 
+
     
+    # Analytics charts saved in HTML format
+
+    # Palle Perse vs Palle recuperate
+    staty = 'PRec'
+    descry = 'Palle recuperate'
+
+    statx = 'PPer'
+    descrx = 'Palle perse'
+
+    dfx = an_df[an_df['event_name']==statx]
+    dfy = an_df[an_df['event_name']==staty]
+
+    gx = dfx.groupby('player').count()['event']
+    players = list(gx.index)
+    x = list(gx)
+    y = list(dfy.groupby('player').count()['event'])
+
+    fig1 = Analytics.scatterChart(players, x, y, an_players_info, descrx, descry, size_on_time=True, show_bisector=True)
+    fig1.write_html("web/chart1.html")
+    store('web/chart1.html')
+    
+    
+    # Punti realizzati per minuti in campo
+    descrx = 'Punti realizzati'
+    players = sorted(an_df['player'].unique())
+    x = [Stats.points(an_df,p) for p in players]
+
+    descry = 'Minuti in campo'
+    y = [an_players_info[x]['time_on_field']/60.0 for x in players]
+
+    fig2 = Analytics.scatterChart(players, x, y, an_players_info, descrx, descry, size_on_time=True, show_bisector=False)
+    fig2.write_html("web/chart2.html")
+    store('web/chart2.html')
+    
+    
+    # Valutazione Lega vs. True shooting
+    descrx = 'Valutazione di lega media'
+    players = sorted(an_df['player'].unique())
+    x = [Stats.value(an_df,p)/an_players_info[p]['games'] for p in players]
+
+    descry = 'True Shooting %'
+    y = [Stats.trueshooting(an_df,p) for p in players]
+
+    fig3 = Analytics.scatterChart(players, x, y, an_players_info, descrx, descry, size_on_time=True, show_bisector=False, do_average=False)
+    fig3.write_html("web/chart3.html")
+    store('web/chart3.html')
+    
+    
+    # Valutazione +/- vs. True shooting
+    descrx = 'Valutazione plus/minus media'
+    players = sorted(an_df['player'].unique())
+    x = [an_players_info[p]['plusminus']/an_players_info[p]['games'] for p in players]
+
+    descry = 'True Shooting %'
+    y = [Stats.trueshooting(an_df,p) for p in players]
+
+    fig4 = Analytics.scatterChart(players, x, y, an_players_info, descrx, descry, size_on_time=False, show_bisector=False, do_average=False)
+    fig4.write_html("web/chart4.html")
+    store('web/chart4.html')
+
+
+
     # Save players images
     for player_name in ['Team', 'Unknown'] + list(sb.game.team_data['players'].keys()):
         try:
@@ -493,7 +571,7 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
 
             # Save Points Chart in PNG format
             fig = BoxScore.pointsChart(sb.game.events_df, game=sb.game, template='plotly_white')
-            bbb = fig.to_image('png', width=2000, height=700)
+            bbb = fig.to_image('png', width=2000, height=1000)
             with open('web/charts/%d.png'%progressive, 'wb') as pngfile:
                 pngfile.write(bbb)
             store('web/charts/%d.png'%progressive)

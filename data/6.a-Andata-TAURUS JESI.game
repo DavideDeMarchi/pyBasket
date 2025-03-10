@@ -82,14 +82,14 @@
     ],
     "status": {
         "quarter": 4,
-        "seconds": 0,
+        "seconds": 0.0,
         "gameover": true,
-        "timeouts1": 0,
-        "timeouts2": 0,
         "points1": 77,
         "points2": 54,
         "fouls1": 20,
-        "fouls2": 16
+        "fouls2": 16,
+        "timeouts1": 0,
+        "timeouts2": 0
     },
     "on_field": [
         "Manna",
@@ -251,7 +251,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 1,
             "seconds": 567.05195065,
-            "x": 60,
+            "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -442,7 +442,7 @@
             "event_name": "FSub",
             "event_description": "Fallo subito",
             "quarter": 1,
-            "seconds": 414.32961009999997,
+            "seconds": 414.3296101,
             "x": 61.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -454,7 +454,7 @@
             "event_name": "PRec",
             "event_description": "Palla recuperata",
             "quarter": 1,
-            "seconds": 414.32961009999997,
+            "seconds": 414.3296101,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -466,7 +466,7 @@
             "event_name": "Ass",
             "event_description": "Assist",
             "quarter": 1,
-            "seconds": 399.41854920000003,
+            "seconds": 399.4185492,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -502,7 +502,7 @@
             "event_name": "T2ok",
             "event_description": "Tiro da 2 centrato",
             "quarter": 1,
-            "seconds": 371.72341689999996,
+            "seconds": 371.7234169,
             "x": 16.12149533,
             "y": 59.80952381,
             "time": "2025-02-09 17:11:58"
@@ -514,7 +514,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 1,
-            "seconds": 371.72341689999996,
+            "seconds": 371.7234169,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -526,7 +526,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 1,
-            "seconds": 371.72341689999996,
+            "seconds": 371.7234169,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -563,7 +563,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 1,
             "seconds": 323.396916,
-            "x": 60,
+            "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -622,7 +622,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 1,
-            "seconds": 252.25115720000002,
+            "seconds": 252.2511572,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -634,7 +634,7 @@
             "event_name": "Ass",
             "event_description": "Assist",
             "quarter": 1,
-            "seconds": 245.07405999999997,
+            "seconds": 245.07406,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -646,7 +646,7 @@
             "event_name": "T3ok",
             "event_description": "Tiro da 3 centrato",
             "quarter": 1,
-            "seconds": 242.27746760000002,
+            "seconds": 242.2774676,
             "x": 19.62616822,
             "y": 5.333333333,
             "time": "2025-02-09 17:11:58"
@@ -658,8 +658,8 @@
             "event_name": "T3ok",
             "event_description": "Tiro da 3 centrato",
             "quarter": 1,
-            "seconds": 215.71644220000002,
-            "x": 59,
+            "seconds": 215.7164422,
+            "x": 59.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -682,7 +682,7 @@
             "event_name": "FCom",
             "event_description": "Fallo commesso",
             "quarter": 1,
-            "seconds": 187.82751530000002,
+            "seconds": 187.8275153,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -694,7 +694,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 1,
-            "seconds": 187.82751530000002,
+            "seconds": 187.8275153,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -706,7 +706,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 1,
-            "seconds": 187.82751530000002,
+            "seconds": 187.8275153,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -718,7 +718,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 1,
-            "seconds": 187.82751530000002,
+            "seconds": 187.8275153,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -730,7 +730,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 1,
-            "seconds": 187.82751530000002,
+            "seconds": 187.8275153,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -742,8 +742,8 @@
             "event_name": "T1ok",
             "event_description": "Tiro libero centrato",
             "quarter": 1,
-            "seconds": 187.82751530000002,
-            "x": 64,
+            "seconds": 187.8275153,
+            "x": 64.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -754,7 +754,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 1,
-            "seconds": 187.82751530000002,
+            "seconds": 187.8275153,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -766,7 +766,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 1,
-            "seconds": 187.82751530000002,
+            "seconds": 187.8275153,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -778,7 +778,7 @@
             "event_name": "T3err",
             "event_description": "Tiro da 3 sbagliato",
             "quarter": 1,
-            "seconds": 172.13590779999998,
+            "seconds": 172.1359078,
             "x": 46.96261682,
             "y": 9.142857143,
             "time": "2025-02-09 17:11:58"
@@ -803,7 +803,7 @@
             "event_description": "Tiro da 3 centrato",
             "quarter": 1,
             "seconds": 138.8049236,
-            "x": 57,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -826,7 +826,7 @@
             "event_name": "T2ok",
             "event_description": "Tiro da 2 centrato",
             "quarter": 1,
-            "seconds": 117.70745629999999,
+            "seconds": 117.7074563,
             "x": 37.14953271,
             "y": 31.9047619,
             "time": "2025-02-09 17:11:58"
@@ -850,7 +850,7 @@
             "event_name": "T2err",
             "event_description": "Tiro da 2 sbagliato",
             "quarter": 1,
-            "seconds": 90.99223310000002,
+            "seconds": 90.9922331,
             "x": 20.56074766,
             "y": 89.61904762,
             "time": "2025-02-09 17:11:58"
@@ -863,7 +863,7 @@
             "event_description": "Tiro da 3 centrato",
             "quarter": 1,
             "seconds": 67.3154452,
-            "x": 57,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -874,7 +874,7 @@
             "event_name": "T3err",
             "event_description": "Tiro da 3 sbagliato",
             "quarter": 1,
-            "seconds": 36.578390799999966,
+            "seconds": 36.5783908,
             "x": 61.91588785,
             "y": 73.42857143,
             "time": "2025-02-09 17:11:58"
@@ -886,7 +886,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 1,
-            "seconds": 31.174708399999986,
+            "seconds": 31.1747084,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -898,7 +898,7 @@
             "event_name": "FSub",
             "event_description": "Fallo subito",
             "quarter": 1,
-            "seconds": 28.451950200000056,
+            "seconds": 28.4519502,
             "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -910,7 +910,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 1,
-            "seconds": 28.451950200000056,
+            "seconds": 28.4519502,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -922,7 +922,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 1,
-            "seconds": 28.451950200000056,
+            "seconds": 28.4519502,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -934,7 +934,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 1,
-            "seconds": 28.451950200000056,
+            "seconds": 28.4519502,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -946,7 +946,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 1,
-            "seconds": 28.451950200000056,
+            "seconds": 28.4519502,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -958,7 +958,7 @@
             "event_name": "T3err",
             "event_description": "Tiro da 3 sbagliato",
             "quarter": 1,
-            "seconds": 17.446399799999995,
+            "seconds": 17.4463998,
             "x": 57.47663551,
             "y": 76.19047619,
             "time": "2025-02-09 17:11:58"
@@ -1103,7 +1103,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 2,
             "seconds": 580.85345518,
-            "x": 64,
+            "x": 64.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -1210,7 +1210,7 @@
             "event_name": "Ass",
             "event_description": "Assist",
             "quarter": 2,
-            "seconds": 453.53999350000004,
+            "seconds": 453.5399935,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1307,7 +1307,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 2,
             "seconds": 383.3005261,
-            "x": 60,
+            "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -1318,7 +1318,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 2,
-            "seconds": 366.39423880000004,
+            "seconds": 366.3942388,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1330,7 +1330,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 2,
-            "seconds": 366.39423880000004,
+            "seconds": 366.3942388,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1475,7 +1475,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 2,
             "seconds": 252.7018433,
-            "x": 61,
+            "x": 61.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -1486,7 +1486,7 @@
             "event_name": "T2err",
             "event_description": "Tiro da 2 sbagliato",
             "quarter": 2,
-            "seconds": 227.24457660000002,
+            "seconds": 227.2445766,
             "x": 21.02803738,
             "y": 42.95238095,
             "time": "2025-02-09 17:11:58"
@@ -1510,7 +1510,7 @@
             "event_name": "T2ok",
             "event_description": "Tiro da 2 centrato",
             "quarter": 2,
-            "seconds": 202.71727850000002,
+            "seconds": 202.7172785,
             "x": 36.44859813,
             "y": 17.42857143,
             "time": "2025-02-09 17:11:58"
@@ -1522,7 +1522,7 @@
             "event_name": "PRec",
             "event_description": "Palla recuperata",
             "quarter": 2,
-            "seconds": 190.28037360000002,
+            "seconds": 190.2803736,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1534,7 +1534,7 @@
             "event_name": "Ass",
             "event_description": "Assist",
             "quarter": 2,
-            "seconds": 180.35519399999998,
+            "seconds": 180.355194,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1546,7 +1546,7 @@
             "event_name": "T3ok",
             "event_description": "Tiro da 3 centrato",
             "quarter": 2,
-            "seconds": 178.05160690000002,
+            "seconds": 178.0516069,
             "x": 12.96728972,
             "y": 5.523809524,
             "time": "2025-02-09 17:11:58"
@@ -1595,7 +1595,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 2,
             "seconds": 160.3506441,
-            "x": 62,
+            "x": 62.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -1607,7 +1607,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 2,
             "seconds": 160.3506441,
-            "x": 62,
+            "x": 62.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -1642,7 +1642,7 @@
             "event_name": "Ass",
             "event_description": "Assist",
             "quarter": 2,
-            "seconds": 138.99680460000002,
+            "seconds": 138.9968046,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1727,7 +1727,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 2,
             "seconds": 127.9166401,
-            "x": 60,
+            "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -1738,7 +1738,7 @@
             "event_name": "T3err",
             "event_description": "Tiro da 3 sbagliato",
             "quarter": 2,
-            "seconds": 100.86316049999999,
+            "seconds": 100.8631605,
             "x": 64.25233645,
             "y": 7.238095238,
             "time": "2025-02-09 17:11:58"
@@ -1750,7 +1750,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 2,
-            "seconds": 93.70644240000001,
+            "seconds": 93.7064424,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1762,7 +1762,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 2,
-            "seconds": 93.70644240000001,
+            "seconds": 93.7064424,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1774,7 +1774,7 @@
             "event_name": "FSub",
             "event_description": "Fallo subito",
             "quarter": 2,
-            "seconds": 86.09943450000003,
+            "seconds": 86.0994345,
             "x": 58.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1786,7 +1786,7 @@
             "event_name": "T3err",
             "event_description": "Tiro da 3 sbagliato",
             "quarter": 2,
-            "seconds": 72.84546969999997,
+            "seconds": 72.8454697,
             "x": 60.1635514,
             "y": 25.52380952,
             "time": "2025-02-09 17:11:58"
@@ -1798,7 +1798,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 2,
-            "seconds": 48.84462010000004,
+            "seconds": 48.8446201,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1810,7 +1810,7 @@
             "event_name": "FSub",
             "event_description": "Fallo subito",
             "quarter": 2,
-            "seconds": 39.90804200000002,
+            "seconds": 39.908042,
             "x": 56.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -1822,7 +1822,7 @@
             "event_name": "T2err",
             "event_description": "Tiro da 2 sbagliato",
             "quarter": 2,
-            "seconds": 28.826073500000007,
+            "seconds": 28.8260735,
             "x": 11.68224299,
             "y": 66.0,
             "time": "2025-02-09 17:11:58"
@@ -1834,7 +1834,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 2,
-            "seconds": 14.16557469999998,
+            "seconds": 14.1655747,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2111,7 +2111,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 3,
             "seconds": 514.43595982,
-            "x": 59,
+            "x": 59.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2123,7 +2123,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 3,
             "seconds": 514.43595982,
-            "x": 59,
+            "x": 59.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2206,7 +2206,7 @@
             "event_name": "T2err",
             "event_description": "Tiro da 2 sbagliato",
             "quarter": 3,
-            "seconds": 435.88003130000004,
+            "seconds": 435.8800313,
             "x": 18.3411215,
             "y": 59.61904762,
             "time": "2025-02-09 17:11:58"
@@ -2218,7 +2218,7 @@
             "event_name": "ROff",
             "event_description": "Rimbalzo offensivo",
             "quarter": 3,
-            "seconds": 435.88003130000004,
+            "seconds": 435.8800313,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2230,7 +2230,7 @@
             "event_name": "FSub",
             "event_description": "Fallo subito",
             "quarter": 3,
-            "seconds": 435.88003130000004,
+            "seconds": 435.8800313,
             "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2242,7 +2242,7 @@
             "event_name": "T1ok",
             "event_description": "Tiro libero centrato",
             "quarter": 3,
-            "seconds": 435.88003130000004,
+            "seconds": 435.8800313,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2254,7 +2254,7 @@
             "event_name": "T1err",
             "event_description": "Tiro libero sbagliato",
             "quarter": 3,
-            "seconds": 435.88003130000004,
+            "seconds": 435.8800313,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2267,7 +2267,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 3,
             "seconds": 418.3506748,
-            "x": 60,
+            "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2375,7 +2375,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 3,
             "seconds": 375.8049154,
-            "x": 61,
+            "x": 61.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2386,7 +2386,7 @@
             "event_name": "T3ok",
             "event_description": "Tiro da 3 centrato",
             "quarter": 3,
-            "seconds": 352.59015350000004,
+            "seconds": 352.5901535,
             "x": 59.34579439,
             "y": 80.28571429,
             "time": "2025-02-09 17:11:58"
@@ -2399,7 +2399,7 @@
             "event_description": "Tiro da 3 centrato",
             "quarter": 3,
             "seconds": 319.7687818,
-            "x": 57,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2459,7 +2459,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 3,
             "seconds": 280.1782383,
-            "x": 57,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2483,7 +2483,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 3,
             "seconds": 266.5280102,
-            "x": 60,
+            "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2531,7 +2531,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 3,
             "seconds": 254.3510073,
-            "x": 57,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2543,7 +2543,7 @@
             "event_description": "Tiro libero centrato",
             "quarter": 3,
             "seconds": 254.3510073,
-            "x": 57,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2566,7 +2566,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 3,
-            "seconds": 221.88680699999998,
+            "seconds": 221.886807,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2602,7 +2602,7 @@
             "event_name": "FSub",
             "event_description": "Fallo subito",
             "quarter": 3,
-            "seconds": 157.62319029999998,
+            "seconds": 157.6231903,
             "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2614,7 +2614,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 3,
-            "seconds": 157.62319029999998,
+            "seconds": 157.6231903,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2626,7 +2626,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 3,
-            "seconds": 157.62319029999998,
+            "seconds": 157.6231903,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2638,7 +2638,7 @@
             "event_name": "Usci",
             "event_description": "Uscita dal campo",
             "quarter": 3,
-            "seconds": 157.62319029999998,
+            "seconds": 157.6231903,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2650,7 +2650,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 3,
-            "seconds": 157.62319029999998,
+            "seconds": 157.6231903,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2662,7 +2662,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 3,
-            "seconds": 157.62319029999998,
+            "seconds": 157.6231903,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2674,7 +2674,7 @@
             "event_name": "Entr",
             "event_description": "Entrata in campo",
             "quarter": 3,
-            "seconds": 157.62319029999998,
+            "seconds": 157.6231903,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2686,7 +2686,7 @@
             "event_name": "Ass",
             "event_description": "Assist",
             "quarter": 3,
-            "seconds": 146.57357000000002,
+            "seconds": 146.57357,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2710,7 +2710,7 @@
             "event_name": "PRec",
             "event_description": "Palla recuperata",
             "quarter": 3,
-            "seconds": 127.56112489999998,
+            "seconds": 127.5611249,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2722,7 +2722,7 @@
             "event_name": "T3err",
             "event_description": "Tiro da 3 sbagliato",
             "quarter": 3,
-            "seconds": 104.12371919999998,
+            "seconds": 104.1237192,
             "x": 63.55140187,
             "y": 24.57142857,
             "time": "2025-02-09 17:11:58"
@@ -2735,7 +2735,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 3,
             "seconds": 92.7525513,
-            "x": 61,
+            "x": 61.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2746,7 +2746,7 @@
             "event_name": "T2err",
             "event_description": "Tiro da 2 sbagliato",
             "quarter": 3,
-            "seconds": 76.72445949999997,
+            "seconds": 76.7244595,
             "x": 33.64485981,
             "y": 49.04761905,
             "time": "2025-02-09 17:11:58"
@@ -2758,8 +2758,8 @@
             "event_name": "T3ok",
             "event_description": "Tiro da 3 centrato",
             "quarter": 3,
-            "seconds": 66.93827629999998,
-            "x": 60,
+            "seconds": 66.9382763,
+            "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -2770,7 +2770,7 @@
             "event_name": "T2ok",
             "event_description": "Tiro da 2 centrato",
             "quarter": 3,
-            "seconds": 57.77135329999999,
+            "seconds": 57.7713533,
             "x": 20.56074766,
             "y": 35.52380952,
             "time": "2025-02-09 17:11:58"
@@ -2782,7 +2782,7 @@
             "event_name": "FSub",
             "event_description": "Fallo subito",
             "quarter": 3,
-            "seconds": 57.77135329999999,
+            "seconds": 57.7713533,
             "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2794,7 +2794,7 @@
             "event_name": "T1ok",
             "event_description": "Tiro libero centrato",
             "quarter": 3,
-            "seconds": 57.77135329999999,
+            "seconds": 57.7713533,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2806,7 +2806,7 @@
             "event_name": "PRec",
             "event_description": "Palla recuperata",
             "quarter": 3,
-            "seconds": 49.25163029999999,
+            "seconds": 49.2516303,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2818,7 +2818,7 @@
             "event_name": "T2ok",
             "event_description": "Tiro da 2 centrato",
             "quarter": 3,
-            "seconds": 45.04651209999997,
+            "seconds": 45.0465121,
             "x": 15.88785047,
             "y": 49.14285714,
             "time": "2025-02-09 17:11:58"
@@ -2830,7 +2830,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 3,
-            "seconds": 24.52520059999995,
+            "seconds": 24.5252006,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -2842,7 +2842,7 @@
             "event_name": "T3err",
             "event_description": "Tiro da 3 sbagliato",
             "quarter": 3,
-            "seconds": 6.831321200000048,
+            "seconds": 6.8313212,
             "x": 17.1728972,
             "y": 95.52380952,
             "time": "2025-02-09 17:11:58"
@@ -2855,7 +2855,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 3,
             "seconds": 1.0,
-            "x": 57,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -3011,7 +3011,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 4,
             "seconds": 581.84277301,
-            "x": 57,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -3059,7 +3059,7 @@
             "event_description": "Tiro da 3 centrato",
             "quarter": 4,
             "seconds": 539.06125881,
-            "x": 59,
+            "x": 59.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -3286,7 +3286,7 @@
             "event_name": "PPer",
             "event_description": "Palla Persa",
             "quarter": 4,
-            "seconds": 397.41404339999997,
+            "seconds": 397.4140434,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3431,7 +3431,7 @@
             "event_description": "Tiro da 2 centrato",
             "quarter": 4,
             "seconds": 280.8460875,
-            "x": 60,
+            "x": 60.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -3466,7 +3466,7 @@
             "event_name": "FSub",
             "event_description": "Fallo subito",
             "quarter": 4,
-            "seconds": 237.43377930000003,
+            "seconds": 237.4337793,
             "x": 61.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3478,7 +3478,7 @@
             "event_name": "T2ok",
             "event_description": "Tiro da 2 centrato",
             "quarter": 4,
-            "seconds": 225.83658430000003,
+            "seconds": 225.8365843,
             "x": 33.64485981,
             "y": 44.38095238,
             "time": "2025-02-09 17:11:58"
@@ -3502,7 +3502,7 @@
             "event_name": "T2err",
             "event_description": "Tiro da 2 sbagliato",
             "quarter": 4,
-            "seconds": 178.76178140000002,
+            "seconds": 178.7617814,
             "x": 25.23364486,
             "y": 12.85714286,
             "time": "2025-02-09 17:11:58"
@@ -3514,8 +3514,8 @@
             "event_name": "T3ok",
             "event_description": "Tiro da 3 centrato",
             "quarter": 4,
-            "seconds": 168.29741280000002,
-            "x": 59,
+            "seconds": 168.2974128,
+            "x": 59.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -3526,7 +3526,7 @@
             "event_name": "FCom",
             "event_description": "Fallo commesso",
             "quarter": 4,
-            "seconds": 168.29741280000002,
+            "seconds": 168.2974128,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3538,8 +3538,8 @@
             "event_name": "T1ok",
             "event_description": "Tiro libero centrato",
             "quarter": 4,
-            "seconds": 168.29741280000002,
-            "x": 59,
+            "seconds": 168.2974128,
+            "x": 59.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -3550,7 +3550,7 @@
             "event_name": "T2ok",
             "event_description": "Tiro da 2 centrato",
             "quarter": 4,
-            "seconds": 146.12783610000002,
+            "seconds": 146.1278361,
             "x": 24.41588785,
             "y": 31.04761905,
             "time": "2025-02-09 17:11:58"
@@ -3562,7 +3562,7 @@
             "event_name": "FCom",
             "event_description": "Fallo commesso",
             "quarter": 4,
-            "seconds": 120.29806129999997,
+            "seconds": 120.2980613,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3574,8 +3574,8 @@
             "event_name": "T1ok",
             "event_description": "Tiro libero centrato",
             "quarter": 4,
-            "seconds": 120.29806129999997,
-            "x": 57,
+            "seconds": 120.2980613,
+            "x": 57.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
         },
@@ -3586,7 +3586,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 4,
-            "seconds": 118.76882180000001,
+            "seconds": 118.7688218,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3598,7 +3598,7 @@
             "event_name": "T2err",
             "event_description": "Tiro da 2 sbagliato",
             "quarter": 4,
-            "seconds": 97.89251539999998,
+            "seconds": 97.8925154,
             "x": 48.24766355,
             "y": 37.71428571,
             "time": "2025-02-09 17:11:58"
@@ -3610,7 +3610,7 @@
             "event_name": "ROff",
             "event_description": "Rimbalzo offensivo",
             "quarter": 4,
-            "seconds": 93.58517260000002,
+            "seconds": 93.5851726,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3658,7 +3658,7 @@
             "event_name": "ROff",
             "event_description": "Rimbalzo offensivo",
             "quarter": 4,
-            "seconds": 85.12958979999996,
+            "seconds": 85.1295898,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3670,7 +3670,7 @@
             "event_name": "Ass",
             "event_description": "Assist",
             "quarter": 4,
-            "seconds": 73.20218039999997,
+            "seconds": 73.2021804,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3682,7 +3682,7 @@
             "event_name": "T2ok",
             "event_description": "Tiro da 2 centrato",
             "quarter": 4,
-            "seconds": 71.42555879999998,
+            "seconds": 71.4255588,
             "x": 26.1682243,
             "y": 36.66666667,
             "time": "2025-02-09 17:11:58"
@@ -3694,7 +3694,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 4,
-            "seconds": 61.87998100000004,
+            "seconds": 61.879981,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3706,7 +3706,7 @@
             "event_name": "T3err",
             "event_description": "Tiro da 3 sbagliato",
             "quarter": 4,
-            "seconds": 35.939429700000005,
+            "seconds": 35.9394297,
             "x": 8.995327103,
             "y": 96.0,
             "time": "2025-02-09 17:11:58"
@@ -3718,7 +3718,7 @@
             "event_name": "ROff",
             "event_description": "Rimbalzo offensivo",
             "quarter": 4,
-            "seconds": 33.23479120000002,
+            "seconds": 33.2347912,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3730,7 +3730,7 @@
             "event_name": "T2err",
             "event_description": "Tiro da 2 sbagliato",
             "quarter": 4,
-            "seconds": 33.23479120000002,
+            "seconds": 33.2347912,
             "x": 23.48130841,
             "y": 40.28571429,
             "time": "2025-02-09 17:11:58"
@@ -3742,7 +3742,7 @@
             "event_name": "RDif",
             "event_description": "Rimbalzo difensivo",
             "quarter": 4,
-            "seconds": 26.979958399999987,
+            "seconds": 26.9799584,
             "x": 0.0,
             "y": 0.0,
             "time": "2025-02-09 17:11:58"
@@ -3752,73 +3752,73 @@
         "Lulaj": {
             "name": "Lulaj",
             "number": "1",
-            "time_on_field": 9.452246112,
+            "time_on_field": 567.134766771042,
             "plusminus": 4
         },
         "Aloi": {
             "name": "Aloi",
             "number": "2",
-            "time_on_field": 19.57125839,
+            "time_on_field": 1174.2755035056848,
             "plusminus": 4
         },
         "Baldassarri": {
             "name": "Baldassarri",
             "number": "4",
-            "time_on_field": 10.55849759,
+            "time_on_field": 633.5098554570159,
             "plusminus": -8
         },
         "Di Francesco": {
             "name": "Di Francesco",
             "number": "5",
-            "time_on_field": 23.32214469,
+            "time_on_field": 1399.3286815259394,
             "plusminus": 26
         },
         "Colotti": {
             "name": "Colotti",
             "number": "8",
-            "time_on_field": 20.51179769,
+            "time_on_field": 1230.7078615107637,
             "plusminus": 4
         },
         "Pentucci": {
             "name": "Pentucci",
             "number": "9",
-            "time_on_field": 20.598939,
+            "time_on_field": 1235.9363401112344,
             "plusminus": 20
         },
         "Dusels": {
             "name": "Dusels",
             "number": "12",
-            "time_on_field": 21.9671278,
+            "time_on_field": 1318.0276681186224,
             "plusminus": 22
         },
         "Manna": {
             "name": "Manna",
             "number": "13",
-            "time_on_field": 10.0,
+            "time_on_field": 600.000000054,
             "plusminus": 6
         },
         "Diana": {
             "name": "Diana",
             "number": "14",
-            "time_on_field": 17.57698645,
+            "time_on_field": 1054.6191870949156,
             "plusminus": 23
         },
         "Matteucci": {
             "name": "Matteucci",
             "number": "16",
-            "time_on_field": 23.08500102,
+            "time_on_field": 1385.100061324659,
             "plusminus": 14
         },
         "Campana": {
             "name": "Campana",
             "number": "21",
-            "time_on_field": 16.67785531,
+            "time_on_field": 1000.6713186900605,
             "plusminus": -3
         },
         "Marcantognini": {
             "name": "Marcantognini",
             "number": "34",
-            "time_on_field": 6.67814593,
+            "time_on_field": 400.688755836062,
             "plusminus": 3
         }
     }

@@ -12,6 +12,8 @@
         <style>
             body {font-family: Arial;}
 
+            iframe[seamless] { width: 90%; height: 820px; border: none; margin-left: 50px; }
+
             /* Style the horizontal tab */
             .tab {
               overflow: hidden;
@@ -204,9 +206,10 @@
                     <h2 id="curgame" style="width: 100%; height: 50px; margin-top: 6px; line-height: 1.0; font-size: max(25px, min(32px, 1.5vw));">Campionato Serie C - Girone M - 2024/2025</h2>
 
                     <div class="tab" style="width: 100%;">
-                        <button style="width: min(150px, 32%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Partite', 'tabcontent', 'tablinks', 'Campionato Serie C - Girone M - 2024/2025')" id="defaultOpen">Partite</button>
-                        <button style="width: min(150px, 32%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Totali',  'tabcontent', 'tablinks', 'Campionato Serie C - Girone M - 2024/2025')">Totali</button>
-                        <button style="width: min(150px, 32%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Medie',   'tabcontent', 'tablinks', 'Campionato Serie C - Girone M - 2024/2025')">Medie</button>
+                        <button style="width: min(110px, 32%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Partite', 'tabcontent', 'tablinks', 'Campionato Serie C - Girone M - 2024/2025')" id="defaultOpen">Partite</button>
+                        <button style="width: min(110px, 32%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Totali',  'tabcontent', 'tablinks', 'Campionato Serie C - Girone M - 2024/2025')">Totali</button>
+                        <button style="width: min(110px, 32%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Medie',   'tabcontent', 'tablinks', 'Campionato Serie C - Girone M - 2024/2025')">Medie</button>
+                        <button style="width: min(110px, 32%); margin-top: 0px;" class="tablinks" onclick="openContent(event, 'Analisi', 'tabcontent', 'tablinks', 'Campionato Serie C - Girone M - 2024/2025')">Analisi</button>
                     </div>
                 </div>
             </div>
@@ -217,6 +220,13 @@
 
             <div id="Medie" class="tabcontent">
                 <embed src="sheets/medie.svg"  width="100%" height="900px"/>
+            </div>
+            
+            <div id="Analisi" class="tabcontent">
+              <iframe src="chart1.html" seamless></iframe>
+              <iframe src="chart2.html" seamless></iframe>
+              <iframe src="chart3.html" seamless></iframe>
+              <iframe src="chart4.html" seamless></iframe>
             </div>
     
             <!-- PARTITA 1 -->
