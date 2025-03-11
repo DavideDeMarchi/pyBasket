@@ -317,7 +317,7 @@ class Events(widgets.VBox):
         w = (self.board.width + self.board.infow)
         height_in_pixels = 600
         
-        self.fig = BoxScore.pointsChart(self.df, game=self.board.game, height_in_pixels=height_in_pixels)
+        self.fig = BoxScore.pointsChart(self.df, game=self.board.game, height_in_pixels=height_in_pixels, template='plotly_white')
         
         out = widgets.Output(layout=Layout(width='%fvw'%w, height='%dpx'%(height_in_pixels+4)))
         out.add_class('black_background')

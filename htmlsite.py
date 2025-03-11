@@ -96,7 +96,7 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
         <style>
             body {font-family: Arial;}
 
-            iframe[seamless] { width: 90%%; height: 820px; border: none; margin-left: 50px; }
+            iframe[seamless] { width: 96%%; height: 820px; border: none; margin-left: 50px; }
 
             /* Style the horizontal tab */
             .tab {
@@ -230,8 +230,11 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
             
             <div id="Analisi" class="tabcontent">
               <iframe src="chart1.html" seamless></iframe>
+              <div class="line"></div>
               <iframe src="chart2.html" seamless></iframe>
+              <div class="line"></div>
               <iframe src="chart3.html" seamless></iframe>
+              <div class="line"></div>
               <iframe src="chart4.html" seamless></iframe>
             </div>
     '''
@@ -314,7 +317,7 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
                 </div>
 
                 <div id="Grafico%d" class="vtabcontent%d">
-                    <img src="charts/%d.png" width="100%%">
+                    <embed style="border: none;" src="./charts/%d.html" dpi="300" width="100%%" height="1020px" />
                 </div>
 
                 <div id="Sintesi%d" class="vtabcontent%d">
@@ -444,10 +447,10 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
 
     # Palle Perse vs Palle recuperate
     staty = 'PRec'
-    descry = 'Palle recuperate'
+    descry = 'Media palle recuperate'
 
     statx = 'PPer'
-    descrx = 'Palle perse'
+    descrx = 'Media palle perse'
 
     dfx = an_df[an_df['event_name']==statx]
     dfy = an_df[an_df['event_name']==staty]
@@ -463,11 +466,11 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
     
     
     # Punti realizzati per minuti in campo
-    descrx = 'Punti realizzati'
+    descrx = 'Media punti realizzati'
     players = sorted(an_df['player'].unique())
     x = [Stats.points(an_df,p) for p in players]
 
-    descry = 'Minuti in campo'
+    descry = 'Media minuti in campo'
     y = [an_players_info[x]['time_on_field']/60.0 for x in players]
 
     fig2 = Analytics.scatterChart(players, x, y, an_players_info, descrx, descry, size_on_time=True, show_bisector=False)
@@ -569,12 +572,16 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
             game_sheet = html_sheet%(progressive,progressive,progressive,progressive, '', progressive, '\n'.join(quartersA), progressive, progressive, progressive, '\n'.join(quartersB) )
 
 
-            # Save Points Chart in PNG format
-            fig = BoxScore.pointsChart(sb.game.events_df, game=sb.game, template='plotly_white')
+            # Save Points Chart in PNG
+            fig = BoxScore.pointsChart(sb.game.events_df, game=sb.game, height_in_pixels=1000, template='plotly_white')
             bbb = fig.to_image('png', width=2000, height=1000)
             with open('web/charts/%d.png'%progressive, 'wb') as pngfile:
                 pngfile.write(bbb)
             store('web/charts/%d.png'%progressive)
+            
+            # Save Points Chart in HTML format
+            fig.write_html('web/charts/%d.html'%progressive)
+            store('web/charts/%d.html'%progressive)
 
             
             # Save Play-By-Play directly in the HTML

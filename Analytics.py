@@ -135,9 +135,11 @@ def scatterChart(players, x, y, players_info, descrx, descry, size_on_time=True,
     # Players size depends on time on the field
     if size_on_time:
         sizes = [players_info[x]['time_on_field'] for x in players]
+        comment = '(la dimensione dei cerchi è proporzionale al totale dei minuti in campo)'
     # Players size depends on the number of games played
     else:
         sizes = [players_info[x]['games'] for x in players]
+        comment = '(la dimensione dei cerchi è proporzionale al numero di partite effettivamente disputate)'
     
     customdata = ['Partite giocate: %d<br>Minuti medi in campo: %.1f'%(players_info[x]['games'], (players_info[x]['time_on_field'])/(60.0*players_info[x]['games'])) for x in players]
         
@@ -156,6 +158,6 @@ def scatterChart(players, x, y, players_info, descrx, descry, size_on_time=True,
                              hovertemplate='<b>%%{text}</b><br>%s: %%{x:.1f}<br>%s: %%{y:.1f}<br>%%{customdata}'%(descrx,descry)))
 
     fig.update_layout(height=800, template='plotly_white', font_family='Arial', xaxis_title=descrx, yaxis_title=descry, showlegend=False,
-                      margin=dict(l=70, r=20, b=30, t=50),
-                      title=dict(text=descrx + ' vs. ' + descry, font=dict(size=20, weight=700)))
+                      margin=dict(l=70, r=20, b=30, t=70),
+                      title=dict(text='<b>' + descrx + ' vs. ' + descry + '</b><br><span style="font-size: 15px;">' + comment + '</span>', font=dict(size=20, weight=700)))
     return fig
