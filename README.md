@@ -5,18 +5,18 @@ Basketball statistics in Python and Voilà
 [pyBasket site on daigio.it](https://www.daigio.it/pybasket/)
 
 ## Screenshot
-![plot](./screenshots/pyBasket_main.png)
+![plot](./screenshots/pyBasket_main.jpg)
 
 ## Outputs produced by pyBasket
 
 ### Score Sheet
-![plot](./screenshots/pyBasket_scoresheet.png)
+![plot](./screenshots/pyBasket_scoresheet.jpg)
 
 ### Play-By-Play
 ![plot](./screenshots/pyBasket_playbyplay.png)
 
 ### Points Chart
-![plot](./screenshots/pyBasket_pointschart.png)
+![plot](./screenshots/pyBasket_pointschart.jpg)
 
 ### Throws Map
-![plot](./screenshots/pyBasket_throwsmap.png)
+![plot](./screenshots/pyBasket_throwsmap.jpg)

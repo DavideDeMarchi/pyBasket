@@ -1431,6 +1431,12 @@ def summary(df, game):
 # Returns the points chart as a Plotly Figure
 ###########################################################################################################################################################################
 def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
+
+    d = datetime.datetime.today()
+
+    def seconds2datetime(seconds):
+        return datetime.datetime(d.year, d.month, d.day, 0, int(seconds)//60, int(seconds)%60)
+    
     pt   = []
     ptt  = []
     mt   = []
@@ -1445,13 +1451,28 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
 
     tt = 0
     to = 0
+    total_seconds = 0
     previous_total_seconds = 0
     num_change = 0
     diff = 0
     maxover  = 0
     punteggioover = ''
+    secondsover = 0
+    pointsover = 0
     maxunder = 0
     punteggiounder = ''
+    secondsunder = 0
+    pointsunder = 0
+    
+    # Vertical rectangles
+    vrect_x0   = []
+    vrect_x1   = []
+    vrect_col  = []
+    
+    num_seconds_over   = 0.0
+    num_seconds_under  = 0.0
+    num_seconds_parity = 0.0
+    
     for index, row in df[df['event'].isin([0,2,4])].iterrows():
         quarter = row['quarter']
         seconds = row['seconds']
@@ -1462,6 +1483,20 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
             if q<= 4: total_seconds += 600.0
             else:     total_seconds += 300.0
 
+        # If not at first scoring
+        if index > 0:
+            vrect_x0.append(previous_total_seconds)
+            vrect_x1.append(total_seconds)
+            if tt > to:
+                vrect_col.append('green')
+                num_seconds_over += total_seconds - previous_total_seconds
+            elif tt < to:
+                vrect_col.append('red')
+                num_seconds_under += total_seconds - previous_total_seconds
+            else:
+                vrect_col.append('yellow')
+                num_seconds_parity += total_seconds - previous_total_seconds
+            
         if   row['event'] == 0: p = 1
         elif row['event'] == 2: p = 2
         else:                   p = 3
@@ -1491,12 +1526,16 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
                 punteggioover = ' (%d - %d)'%(tt,to)
             else:
                 punteggioover = ' (%d - %d)'%(to,tt)
+            pointsover  = tt
+            secondsover = total_seconds
         if -newdiff > maxunder:
             maxunder = -newdiff
             if game.game_data['home']:
                 punteggiounder = ' (%d - %d)'%(tt,to)
             else:
                 punteggiounder = ' (%d - %d)'%(to,tt)
+            pointsunder  = to
+            secondsunder = total_seconds
             
         if newdiff == 0: newdiff = diff
         #print(tt,to, diff,newdiff)
@@ -1504,10 +1543,30 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
             #print(quarter,seconds, diff,newdiff)
             num_change += 1
         diff = newdiff
-                    
+        
         previous_total_seconds = total_seconds
 
-        
+    # Adding last rectangle
+    if int(total_seconds) % 300 > 0:
+        quarter = max(df['quarter'])
+        total_seconds = 0.0
+        for q in range(1,quarter+1):
+            if q<= 4: total_seconds += 600.0
+            else:     total_seconds += 300.0
+        vrect_x0.append(previous_total_seconds)
+        vrect_x1.append(total_seconds)
+        if tt > to:
+            vrect_col.append('green')
+            num_seconds_over += total_seconds - previous_total_seconds
+        elif tt < to:
+            vrect_col.append('red')
+            num_seconds_under += total_seconds - previous_total_seconds
+        else:
+            vrect_col.append('yellow')
+            num_seconds_parity += total_seconds - previous_total_seconds
+
+    #print(num_seconds_over + num_seconds_under + num_seconds_parity,num_seconds_over,num_seconds_under,num_seconds_parity)
+    
     smaxover = '-'
     if maxover > 0:
         smaxover = '+%d'%maxover + punteggioover
@@ -1519,24 +1578,23 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
     pointsTeam = Stats.points(df)
     pointsOppo = Stats.points(df, team=Config.OPPO)
     
-    d = datetime.datetime.today()
-
-    fig = go.Figure()
-    #fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mt], y=pt, text=[str(x) for x in pt], customdata=git, textposition=post, line_shape="hv",
-    #                         hovertemplate='%{y} - %{customdata} - %{x|%M\':%S\"}', mode='lines+markers+text', name=game.team_data['name'], line=dict(color='green'), marker=dict(color='green')))
-    #fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mo], y=po, text=[str(x) for x in po], customdata=gio, textposition=poso, line_shape="hv",
-    #                         hovertemplate='%{y} - %{customdata} - %{x|%M\':%S\"}', mode='lines+markers+text', name=game.game_data['opponents'], line=dict(color='red'), marker=dict(color='red')))
     
-    fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mt], y=pt, text=[str(x) for x in pt], customdata=git, textposition=post, line_shape="hv",
+    fig = go.Figure()
+    
+    # Vertical colored rects
+    for x0,x1,col in zip(vrect_x0,vrect_x1,vrect_col):
+        fig.add_vrect(x0=seconds2datetime(x0), x1=seconds2datetime(x1), line_width=0, fillcolor=col, opacity=0.1)
+            
+    fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mt], y=pt, text=[str(x) for x in pt], customdata=git, textposition=post, line_shape="hv",
                              hovertemplate='%{y} - %{customdata} - %{x|%M\':%S\"}', mode='lines+markers+text', name=game.team_data['name'], line=dict(color='green'), marker=dict(size=15, color='green')))
     
-    fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mt], y=pt, text=ptt, customdata=git, showlegend=False, textposition="middle center", textfont=dict(family="arial",size=11,color="white"),
+    fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mt], y=pt, text=ptt, customdata=git, showlegend=False, textposition="middle center", textfont=dict(family="arial",size=11,color="white"),
                              hovertemplate='%{y} - %{customdata} - %{x|%M\':%S\"}', mode='text', name='', marker=dict(size=0, color='white')))
     
-    fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mo], y=po, text=[str(x) for x in po], customdata=gio, textposition=poso, line_shape="hv",
+    fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mo], y=po, text=[str(x) for x in po], customdata=gio, textposition=poso, line_shape="hv",
                              hovertemplate='%{y} - %{customdata} - %{x|%M\':%S\"}', mode='lines+markers+text', name=game.game_data['opponents'], line=dict(color='red'), marker=dict(size=15, color='red')))
     
-    fig.add_trace(go.Scatter(x=[datetime.datetime(d.year, d.month, d.day, 0, x//60, x%60) for x in mo], y=po, text=pot, customdata=gio, showlegend=False, textposition="middle center", textfont=dict(family="arial",size=11,color="white"),
+    fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mo], y=po, text=pot, customdata=gio, showlegend=False, textposition="middle center", textfont=dict(family="arial",size=11,color="white"),
                              hovertemplate='%{y} - %{customdata} - %{x|%M\':%S\"}', mode='text', name='', marker=dict(size=0, color='white')))
     
     fig.for_each_trace(lambda t: t.update(textfont_color=t.marker.color))
@@ -1557,70 +1615,88 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
     title +=  '&nbsp;&nbsp;&nbsp;&nbsp;' + str(ppp1) + ' - ' + str(ppp2) + '</span>'
 
     # Write the minutes on the xaxis
-    if len(mt) > 0 and len(mo) > 0:
-        mmax = max(max(mt),max(mo)) / 60.0
-    else:
-        mmax = 0.0
+    mmax = total_seconds/60.0
     dates_array = [datetime.datetime(d.year, d.month, d.day, 0, x, 0) for x in list(range(int(mmax+1.99999999)))]
     
-    dmin = dates_array[0]  - datetime.timedelta(seconds=30)
-    dmax = dates_array[-1] + datetime.timedelta(seconds=30)
+    dmin = dates_array[0] - datetime.timedelta(seconds=30)
+    dmax = dates_array[0] + datetime.timedelta(seconds=total_seconds+30)
     
     annotations = []
     
-    ppq = game.pointsPerQuarter(showTotals=True)
+    ppq = ['<b>'+x+'</b>' for x in game.pointsPerQuarter(showTotals=True)]
     
     line_color = 'rgb(90,90,90)'
     pmax = max(tt,to) + 7
+    
+    # Vertical line at the start of the game
+    x = datetime.datetime(d.year, d.month, d.day, 0, 0, 0)
+    fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
+    
     if mmax >= 10:
         xt = datetime.datetime(d.year, d.month, d.day, 0, 5, 0)
         x  = datetime.datetime(d.year, d.month, d.day, 0, 10, 0)
         fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
-        if len(ppq) > 0: annotations.append(dict(x=xt, y=pmax, text=ppq[0], showarrow=False))
+        if len(ppq) > 0: fig.add_annotation(x=xt, y=pmax, text=ppq[0], showarrow=False)
     
     if mmax >= 20:
         xt = datetime.datetime(d.year, d.month, d.day, 0, 15, 0)
         x  = datetime.datetime(d.year, d.month, d.day, 0, 20, 0)
         fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
-        if len(ppq) > 1: annotations.append(dict(x=xt, y=pmax, text=ppq[1], showarrow=False))
+        if len(ppq) > 1: fig.add_annotation(x=xt, y=pmax, text=ppq[1], showarrow=False)
         
     if mmax >= 30:
         xt = datetime.datetime(d.year, d.month, d.day, 0, 25, 0)
         x  = datetime.datetime(d.year, d.month, d.day, 0, 30, 0)
         fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
-        if len(ppq) > 2: annotations.append(dict(x=xt, y=pmax, text=ppq[2], showarrow=False))
+        if len(ppq) > 2: fig.add_annotation(x=xt, y=pmax, text=ppq[2], showarrow=False)
         
     if mmax >= 40 or game.board.tb.gameover:
         xt = datetime.datetime(d.year, d.month, d.day, 0, 35, 0)
         x  = datetime.datetime(d.year, d.month, d.day, 0, 40, 0)
         fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
-        if len(ppq) > 3: annotations.append(dict(x=xt, y=pmax, text=ppq[3], showarrow=False))
+        if len(ppq) > 3: fig.add_annotation(x=xt, y=pmax, text=ppq[3], showarrow=False)
         
     if mmax >= 45 or game.board.tb.gameover:
         xt = datetime.datetime(d.year, d.month, d.day, 0, 42, 30)
         x  = datetime.datetime(d.year, d.month, d.day, 0, 45, 0)
         fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
-        if len(ppq) > 4: annotations.append(dict(x=xt, y=pmax, text=ppq[4], showarrow=False))
+        if len(ppq) > 4: fig.add_annotation(x=xt, y=pmax, text=ppq[4], showarrow=False)
         
     if mmax >= 50 or game.board.tb.gameover:
         xt = datetime.datetime(d.year, d.month, d.day, 0, 47, 30)
         x  = datetime.datetime(d.year, d.month, d.day, 0, 50, 0)
         fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
-        if len(ppq) > 5: annotations.append(dict(x=xt, y=pmax, text=ppq[5], showarrow=False))
+        if len(ppq) > 5: fig.add_annotation(x=xt, y=pmax, text=ppq[5], showarrow=False)
         
     if mmax >= 55 or game.board.tb.gameover:
         xt = datetime.datetime(d.year, d.month, d.day, 0, 52, 30)
         x  = datetime.datetime(d.year, d.month, d.day, 0, 55, 0)
         fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
-        if len(ppq) > 6: annotations.append(dict(x=xt, y=pmax, text=ppq[6], showarrow=False))
+        if len(ppq) > 6: fig.add_annotation(x=xt, y=pmax, text=ppq[6], showarrow=False)
         
     if mmax >= 60 or game.board.tb.gameover:
         xt = datetime.datetime(d.year, d.month, d.day, 0, 57, 30)
         x  = datetime.datetime(d.year, d.month, d.day, 1,  0, 0)
         fig.add_vline(x=x, line_width=2, line_dash="dash", line_color=line_color)
-        if len(ppq) > 7: annotations.append(dict(x=xt, y=pmax, text=ppq[7], showarrow=False))
+        if len(ppq) > 7: fig.add_annotation(x=xt, y=pmax, text=ppq[7], showarrow=False)
     
-    fig.update_layout(title=dict(text=title+'<br><span style="font-size: 15px;">%d cambi in testa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo vantaggio: %s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo svantaggio: %s.</span>'%(num_change,smaxover,smaxunder),y=0.98,x=0.02,xanchor='left',yanchor='top'),
+    
+    if secondsover > 0:
+        x = int(secondsover)
+        fig.add_annotation(x=seconds2datetime(x), y=pointsover, align='center', yshift=70, xshift=0, text="Massimo<br>vantaggio<br>"+smaxover, showarrow=False)
+    
+    if secondsunder > 0:
+        x = int(secondsunder)
+        fig.add_annotation(x=seconds2datetime(x), y=pointsunder, align='center', yshift=70, xshift=0, text="Massimo<br>svantaggio<br>"+smaxunder, showarrow=False)
+        
+    
+    if total_seconds > 0.0:
+        percentages = 'Percentuale di tempo in vantaggio: %.1f%%    in parità: %.1f%%    in svantaggio: %.1f%%'%(100.0*num_seconds_over/total_seconds, 100.0*num_seconds_parity/total_seconds, 100.0*num_seconds_under/total_seconds)
+    else:
+        percentages = ''
+        
+    fig.update_layout(title=dict(text=title+'<br><span style="font-size: 15px;">%d cambi in testa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo vantaggio: %s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo svantaggio: %s</span><br><span style="font-size: 15px;">%s</span>'%(num_change,smaxover,smaxunder,percentages),
+                                 y=0.98,x=0.02,xanchor='left',yanchor='top'),
                       template=template,
                       height=height_in_pixels,
                       font_family="Arial",
@@ -1628,7 +1704,6 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
                       title_font_family="Arial",
                       xaxis_title='Minuti',
                       yaxis_title='Punti',
-                      annotations=annotations,
                       xaxis=dict(range=[dmin,dmax], tickmode='array', tickvals=dates_array, ticktext=['%d\''%x.minute for x in dates_array]),
                       yaxis=dict(range=[0,pmax+2]),
                       margin=dict(l=26,r=10,b=30,t=80,pad=0),

@@ -300,7 +300,7 @@ class Events(widgets.VBox):
         self.board.tb.stop()
         
         def on_download():
-            bbb = self.fig.to_image('png', width=3000, height=1500)
+            bbb = self.fig.to_image('png', width=2000, height=1000)
 
             filename = '%s-%s_PointsChart'%(self.board.team1_abbr,self.board.team2_abbr)
             if not self.board.tb.gameover:
@@ -319,14 +319,14 @@ class Events(widgets.VBox):
         
         self.fig = BoxScore.pointsChart(self.df, game=self.board.game, height_in_pixels=height_in_pixels, template='plotly_white')
         
-        out = widgets.Output(layout=Layout(width='%fvw'%w, height='%dpx'%(height_in_pixels+4)))
-        out.add_class('black_background')
+        out = widgets.Output(layout=Layout(width='%fvw'%w, height='%dpx'%(height_in_pixels+8)))
+        #out.add_class('black_background')
         with out:
             self.fig.show(config={'displayModeBar': False})
         self.waitClose()
 
         dlg = dialogGeneric.dialogGeneric(title='Points Chart', text='', titleheight=26, dark=False,
-                                          show=True, addclosebuttons=True, width='calc(%fvw + 5px)'%w,
+                                          show=True, addclosebuttons=True, width='calc(%fvw + 2px)'%w,
                                           custom_icon='mdi-download', custom_tooltip='Click to download the Points Chart', custom_icon_onclick=on_download,
                                           fullscreen=False, content=[out], output=self.board.output)
         dlg.dialog.children[0].color = 'black'
