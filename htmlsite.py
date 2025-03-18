@@ -43,6 +43,7 @@ import glob
 import os
 from datetime import datetime
 from PIL import Image
+import pathlib
 
 
 ###########################################################################################################################################################################
@@ -52,6 +53,14 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
     
     with messages:
         print('Updating pybasket HTML site:')
+        
+    # Creation of subfolders of the web folder
+    pathlib.Path('./web/maps').mkdir(parents=True, exist_ok=True)
+    pathlib.Path('./web/players').mkdir(parents=True, exist_ok=True)
+    pathlib.Path('./web/sheets').mkdir(parents=True, exist_ok=True)
+    pathlib.Path('./web/charts').mkdir(parents=True, exist_ok=True)
+    pathlib.Path('./web/playbyplay').mkdir(parents=True, exist_ok=True)
+
         
     # Store a file to the FTP server
     def store(filepath):
@@ -73,6 +82,7 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
     allevents = []
     sb = ScoreBoard.ScoreBoard('./data/Urbania.team', scale=0.4, output=output)
 
+    
     # Conversion to int without errors
     def toint(x):
         try:
@@ -572,12 +582,14 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
             game_sheet = html_sheet%(progressive,progressive,progressive,progressive, '', progressive, '\n'.join(quartersA), progressive, progressive, progressive, '\n'.join(quartersB) )
 
 
-            # Save Points Chart in PNG
+            # Create points chart
             fig = BoxScore.pointsChart(sb.game.events_df, game=sb.game, height_in_pixels=1000, template='plotly_white')
-            bbb = fig.to_image('png', width=2000, height=1000)
-            with open('web/charts/%d.png'%progressive, 'wb') as pngfile:
-                pngfile.write(bbb)
-            store('web/charts/%d.png'%progressive)
+            
+            # Save Points Chart in PNG
+            #bbb = fig.to_image('png', width=2000, height=1000)
+            #with open('web/charts/%d.png'%progressive, 'wb') as pngfile:
+            #    pngfile.write(bbb)
+            #store('web/charts/%d.png'%progressive)
             
             # Save Points Chart in HTML format
             fig.write_html('web/charts/%d.html'%progressive)
