@@ -1702,7 +1702,7 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
         percentages = ''
 
     fig.update_layout(title=dict(text=title+'<br><span style="font-size: 15px;">%d cambi in testa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo vantaggio: %s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo svantaggio: %s</span><br><span style="font-size: 15px;">%s</span>'%(num_change,smaxover,smaxunder,percentages),
-                                 y=0.98,x=0.02,xanchor='left',yanchor='top'),
+                                 y=0.972,x=0.02,xanchor='left',yanchor='top'),
                       #hovermode='x unified',
                       template=template,
                       height=height_in_pixels,
