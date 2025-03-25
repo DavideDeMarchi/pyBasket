@@ -315,7 +315,7 @@ class Events(widgets.VBox):
         self.waitOpen()
         
         w = (self.board.width + self.board.infow)
-        height_in_pixels = 600
+        height_in_pixels = 700
         
         self.fig = BoxScore.pointsChart(self.df, game=self.board.game, height_in_pixels=height_in_pixels, template='plotly_white')
         
