@@ -1435,7 +1435,7 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
     d = datetime.datetime.today()
 
     def seconds2datetime(seconds):
-        return datetime.datetime(d.year, d.month, d.day, 0, int(seconds)//60, int(seconds)%60)
+        return datetime.datetime(d.year, d.month, d.day) + datetime.timedelta(seconds=seconds)
     
     pt   = []
     ptt  = []
@@ -1645,22 +1645,37 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
     for x0,x1,col in zip(vrect_x0,vrect_x1,vrect_col):
         fig.add_vrect(x0=seconds2datetime(x0), x1=seconds2datetime(x1), line_width=0, fillcolor=col, opacity=0.1)
             
+    # Lines for team
     fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mt], y=pt, text=[str(x) for x in pt], customdata=git, textposition=post, line_shape="hv",
                              hovertemplate='<b>%{customdata[0]}</b> - %{customdata[1]} - %{x|%M\':%S\"}', mode='lines+markers+text', name=game.team_data['name'], line=dict(color='green'), marker=dict(size=15, color='green')))
     
-    fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mt], y=[x-0.08 for x in pt], text=ptt, customdata=git, showlegend=False, textposition="middle center", textfont=dict(family="arial",size=11,color="white"),
+    # Text (1,2,3) for team
+    fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mt], y=pt, text=ptt, customdata=git, showlegend=False, textposition="middle center", textfont=dict(family="arial",size=11,color="white"),
                              hoverinfo='none', mode='text', name='', marker=dict(size=0, color='white')))
     
+    # Lines for opponents
     fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mo], y=po, text=[str(x) for x in po], customdata=gio, textposition=poso, line_shape="hv",
                              hovertemplate='<b>%{customdata[0]}</b> - %{customdata[1]} - %{x|%M\':%S\"}', mode='lines+markers+text', name=game.game_data['opponents'], line=dict(color='red'), marker=dict(size=15, color='red')))
     
-    fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mo], y=[x-0.08 for x in po], text=pot, customdata=gio, showlegend=False, textposition="middle center", textfont=dict(family="arial",size=11,color="white"),
+    # Text (1,2,3) for opponents
+    fig.add_trace(go.Scatter(x=[seconds2datetime(x) for x in mo], y=po, text=pot, customdata=gio, showlegend=False, textposition="middle center", textfont=dict(family="arial",size=11,color="white"),
                              hoverinfo='none', mode='text', name='', marker=dict(size=0, color='white')))
     
+    pup = ''
+    peq = ''
+    pdn = ''
+    if total_seconds > 0.0:
+        pup = '%.1f%%'%(100.0*num_seconds_over/total_seconds)
+        peq = '%.1f%%'%(100.0*num_seconds_parity/total_seconds)
+        pdn = '%.1f%%'%(100.0*num_seconds_under/total_seconds)
+        percentages = 'Percentuale di tempo in vantaggio: %s    in parità: %s    in svantaggio: %s'%(pup,peq,pdn)
+    else:
+        percentages = ''
+
     # Add traces for legend
-    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=20, color='green',  symbol='square', opacity=0.1), legendgroup='Vantaggio',  showlegend=True, name='Vantaggio'))
-    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=20, color='yellow', symbol='square', opacity=0.1), legendgroup='Parità',     showlegend=True, name='Parità'))
-    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=20, color='red',    symbol='square', opacity=0.1), legendgroup='Svantaggio', showlegend=True, name='Svantaggio'))
+    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=20, color='green',  symbol='square', opacity=0.1), legendgroup='Vantaggio',  showlegend=True, name='Vantaggio (%s)'%pup))
+    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=20, color='yellow', symbol='square', opacity=0.1), legendgroup='Parità',     showlegend=True, name='Parità (%s)'%peq))
+    fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=20, color='red',    symbol='square', opacity=0.1), legendgroup='Svantaggio', showlegend=True, name='Svantaggio (%s)'%pdn))
 
 
     fig.for_each_trace(lambda t: t.update(textfont_color=t.marker.color))
@@ -1686,22 +1701,67 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
     dmin = dates_array[0] - datetime.timedelta(seconds=30)
     dmax = dates_array[0] + datetime.timedelta(seconds=total_seconds+30)
     
-    
     if secondsover > 0:
         x = int(secondsover)
-        fig.add_annotation(x=seconds2datetime(x), y=pointsover, align='center', yshift=70, xshift=0, text="Massimo<br>vantaggio<br>"+smaxover, showarrow=False)
-    
+        dtx = seconds2datetime(x)
+        fig.add_annotation(x=dtx, y=pointsover, align='center', yshift=70, xshift=0, text="Massimo<br>vantaggio<br>"+smaxover, showarrow=False)
+        fig.add_shape(type="line", x0=dtx, y0=pointsover+4, x1=dtx, y1=pointsover-maxover, line=dict(color="#000000", width=0.5, dash="dot"))
+              
     if secondsunder > 0:
         x = int(secondsunder)
-        fig.add_annotation(x=seconds2datetime(x), y=pointsunder, align='center', yshift=70, xshift=0, text="Massimo<br>svantaggio<br>"+smaxunder, showarrow=False)
+        dtx = seconds2datetime(x)
+        fig.add_annotation(x=dtx, y=pointsunder, align='center', yshift=70, xshift=0, text="Massimo<br>svantaggio<br>"+smaxunder, showarrow=False)
+        fig.add_shape(type="line", x0=dtx, y0=pointsunder+4, x1=dtx, y1=pointsunder-maxunder, line=dict(color="#000000", width=0.5, dash="dot"))
         
-    
-    if total_seconds > 0.0:
-        percentages = 'Percentuale di tempo in vantaggio: %.1f%%    in parità: %.1f%%    in svantaggio: %.1f%%'%(100.0*num_seconds_over/total_seconds, 100.0*num_seconds_parity/total_seconds, 100.0*num_seconds_under/total_seconds)
-    else:
-        percentages = ''
+        
+    # Graphical recap of quarters
+    if total_seconds >= 20*60:
+        ppq = game.pointsPerQuarter(showTotals=True)
+        ds = 76
+        x0 = seconds2datetime(60)
+        x1 = x0 + datetime.timedelta(seconds=ds*len(ppq))
+        y0 = max(tt,to)
+        y1 = y0 - 14.5
+        y = y0 - 9
+        fig.add_shape(type="rect", x0=x0, x1=x1, y0=y0, y1=y1, line=dict(color="#000000", width=0.5), fillcolor="white")
+        fig.add_shape(type="line", x0=x0+datetime.timedelta(seconds=ds/16), x1=x1-datetime.timedelta(seconds=ds/16), y0=y, y1=y, line=dict(color="#000000", width=0.5))
+        x = x0 + datetime.timedelta(seconds=ds/2)
+        diffs = []
+        for q in ppq:
+            if '(' in q: t = q.split('(')[0]
+            else:        t = q
+            n1 = int(t.split(': ')[1].split(' - ')[0])
+            n2 = int(t.split(': ')[1].split(' - ')[1])
+            if game.game_data['home']: d = n1 - n2
+            else:                      d = n2 - n1
+            diffs.append(d)
+            
+            fig.add_annotation(x=x, y=y0-2, text=t.replace(': ','<br>').replace(' ',''), showarrow=False, font=dict(size=10))
+            
+            x += datetime.timedelta(seconds=ds)
+            
+        diffmax = max([abs(x) for x in diffs])
+        x = x0 + datetime.timedelta(seconds=ds/2)
+        w = datetime.timedelta(seconds=ds*0.8)
+        for d in diffs:            
+            if d > 0:
+                fillcolor = 'green'
+                t = '+' + str(d)
+            else:
+                fillcolor = 'red'
+                t = str(d)
+            
+            fig.add_shape(type="rect", x0=x-w/2, x1=x+w/2, y0=y, y1=y+d*5/diffmax, line=dict(color="#000000", width=0), fillcolor=fillcolor)
+            if d != 0:
+                if abs(d) > 0.25*diffmax:
+                    fig.add_annotation(x=x, y=y+d*2/diffmax, text=t, showarrow=False, font=dict(size=11,color="#ffffff"))
+                else:
+                    fig.add_annotation(x=x, y=y+d*4/diffmax+(1.1*d/abs(d)), text=t, showarrow=False, font=dict(size=11,color="#000000"))
+            x += datetime.timedelta(seconds=ds)
+            
 
-    fig.update_layout(title=dict(text=title+'<br><span style="font-size: 15px;">%d cambi in testa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo vantaggio: %s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo svantaggio: %s</span><br><span style="font-size: 15px;">%s</span>'%(num_change,smaxover,smaxunder,percentages),
+    r2 = '%d cambi in testa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo vantaggio: %s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Massimo svantaggio: %s'%(num_change,smaxover,smaxunder)
+    fig.update_layout(title=dict(text=title+'<br><span style="font-size: 15px;">%s</span><br><span style="font-size: 15px;">%s</span>'%(r2,percentages),
                                  y=0.972,x=0.02,xanchor='left',yanchor='top'),
                       #hovermode='x unified',
                       template=template,
@@ -1713,8 +1773,8 @@ def pointsChart(df, game, height_in_pixels=600, template='plotly_dark'):
                       yaxis_title='Punti',
                       xaxis=dict(range=[dmin,dmax], tickmode='array', tickvals=dates_array, ticktext=['%d\''%x.minute for x in dates_array]),
                       yaxis=dict(range=[0,pmax+2]),
-                      margin=dict(l=26,r=10,b=30,t=80,pad=0),
-                      legend=dict(orientation="h", yanchor="top", y=1.05, xanchor="right", x=1.0))
+                      margin=dict(l=26,r=10,b=30,t=86,pad=0),
+                      legend=dict(orientation="v", yanchor="top", y=0.28, xanchor="left", x=0.755, bordercolor="#000000", borderwidth=0.5))
 
     return fig
 
