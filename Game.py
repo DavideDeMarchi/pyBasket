@@ -140,7 +140,7 @@ class Game():
                 
             if "players_info" not in self.game_data:
                 self.game_data["players_info"] = self.team_data['players']
-                
+
             if "status" not in self.game_data:
                 self.game_data["status"] = {
                     "quarter": 1,

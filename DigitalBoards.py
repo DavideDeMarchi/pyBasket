@@ -205,8 +205,8 @@ class TimeBoard(widgets.HBox):
                     if self.onstarted is not None:
                         self.onstarted()
                     
-                self.start()
-                self.playpause.icon = 'mdi-pause'
+                if self.start():
+                    self.playpause.icon = 'mdi-pause'
             else:
                 self.stop()
                 self.playpause.icon = 'mdi-play'
@@ -216,9 +216,9 @@ class TimeBoard(widgets.HBox):
     def onterminate(self):
         if self.onterminated is not None:
             self.isTerminated = True
-            self.playpause.icon = 'mdi-play'
             self.terminate.disabled = True
             self.onterminated()
+            self.playpause.icon = 'mdi-play'
         
         
     ###########################################################################################################################################################################
@@ -230,9 +230,14 @@ class TimeBoard(widgets.HBox):
         if not self.timer_stop:
             self.stop()
             
-        self.timer_stop = False
-        self.timer = threading.Thread(target=self.timerfunc)
-        self.timer.start()
+        if self.seconds <= 0:
+            self.onterminate()
+            return False
+        else:
+            self.timer_stop = False
+            self.timer = threading.Thread(target=self.timerfunc)
+            self.timer.start()
+            return True
         
         
     # Stop the timer
@@ -277,10 +282,15 @@ class TimeBoard(widgets.HBox):
             if self.onupdate is not None:
                 self.onupdate(seconds_elapsed)
             
+            # Stop timer when reaches 0 seconds
             if self.seconds <= 0:
                 self.playpause.disabled = True
                 self.terminate.disabled = False
                 self.timer_stop = True
+               
+                # Saves the game!
+                if self.onstopped:
+                    self.onstopped()                
 
             if self.timer_stop:
                 break

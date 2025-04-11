@@ -1825,7 +1825,7 @@ def play_by_play(df, game):
         player_name = row['player']
         team        = row['team']
 
-        if not (event_name=='Entr' or seconds==qstartsecs[qindex]):
+        if not ((event_name=='Entr' and seconds==qstartsecs[qindex]) or (event_name=='Usci' and seconds==qstartsecs[qindex]) or (event_name=='Usci' and seconds==0.0)):
             if quarter > last_quarter:
                 last_quarter = quarter
                 res.append({'quarter': '',       # Empty line
@@ -1837,7 +1837,7 @@ def play_by_play(df, game):
                             'pcolor':  ''
                            })
                 res.append({'quarter': qstr,     # First line for the quarter
-                            'time':    time,
+                            'time':    '00\':00"',
                             'text':    'Inizio ' + qstr,
                             'color':   'black',
                             'weight': 700,
@@ -1845,7 +1845,7 @@ def play_by_play(df, game):
                             'pcolor':  ''
                            })
                 res.append({'quarter': qstr,     # Starters players for the quarter
-                            'time':    time,
+                            'time':    '00\':00"',
                             'text':    'Quintetto: ' + ', '.join(starters[qindex]),
                             'color':   'black',
                             'weight': 700,
@@ -1957,6 +1957,17 @@ def play_by_play(df, game):
                         'pcolor':  pcolor
                        })
 
+    # Empty line at the end
+    res.append({'quarter': '',
+                'time':    '',
+                'text':    '',
+                'color':   '',
+                'weight': 700,
+                'points':  '',
+                'pcolor':  ''
+               })
+
+        
     def formatEvent(item):
         return '''
         <tr>
