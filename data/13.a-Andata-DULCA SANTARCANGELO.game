@@ -4051,19 +4051,19 @@
         "Lulaj": {
             "name": "Lulaj",
             "number": "1",
-            "time_on_field": 1732.4427738000004,
+            "time_on_field": 1732.4427738000002,
             "plusminus": -7
         },
         "Aloi": {
             "name": "Aloi",
             "number": "2",
-            "time_on_field": 1787.7309186000002,
+            "time_on_field": 1787.7309186,
             "plusminus": -12
         },
         "Baldassarri": {
             "name": "Baldassarri",
             "number": "4",
-            "time_on_field": 960.1862508000002,
+            "time_on_field": 960.1862508,
             "plusminus": -12
         },
         "Di Francesco": {
@@ -4075,37 +4075,37 @@
         "Colotti": {
             "name": "Colotti",
             "number": "8",
-            "time_on_field": 1787.3553798000003,
+            "time_on_field": 1787.3553798,
             "plusminus": -8
         },
         "Pentucci": {
             "name": "Pentucci",
             "number": "9",
-            "time_on_field": 1917.4541952000002,
+            "time_on_field": 1917.4541952,
             "plusminus": -3
         },
         "Manna": {
             "name": "Manna",
             "number": "13",
-            "time_on_field": 678.2009202,
+            "time_on_field": 678.2009201999999,
             "plusminus": 4
         },
         "Diana": {
             "name": "Diana",
             "number": "14",
-            "time_on_field": 1694.4583380000001,
+            "time_on_field": 1694.458338,
             "plusminus": -17
         },
         "Campana": {
             "name": "Campana",
             "number": "21",
-            "time_on_field": 805.6398078000001,
+            "time_on_field": 805.6398078,
             "plusminus": 4
         },
         "Marcantognini": {
             "name": "Marcantognini",
             "number": "34",
-            "time_on_field": 636.5314158,
+            "time_on_field": 636.5314157999999,
             "plusminus": 6
         }
     }
