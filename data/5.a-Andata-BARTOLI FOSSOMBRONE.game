@@ -4325,73 +4325,73 @@
         "Lulaj": {
             "name": "Lulaj",
             "number": "1",
-            "time_on_field": 520.5826718791765,
+            "time_on_field": 520.5826718791767,
             "plusminus": -4
         },
         "Aloi": {
             "name": "Aloi",
             "number": "2",
-            "time_on_field": 1673.5356935330592,
+            "time_on_field": 1673.5356935330597,
             "plusminus": -14
         },
         "Baldassarri": {
             "name": "Baldassarri",
             "number": "4",
-            "time_on_field": 997.9273607600828,
+            "time_on_field": 997.9273607600832,
             "plusminus": -12
         },
         "Di Francesco": {
             "name": "Di Francesco",
             "number": "5",
-            "time_on_field": 1748.3111357300675,
+            "time_on_field": 1748.3111357300681,
             "plusminus": -15
         },
         "Colotti": {
             "name": "Colotti",
             "number": "8",
-            "time_on_field": 1237.6980377504917,
+            "time_on_field": 1237.6980377504922,
             "plusminus": -8
         },
         "Pentucci": {
             "name": "Pentucci",
             "number": "9",
-            "time_on_field": 1243.1939525502721,
+            "time_on_field": 1243.1939525502726,
             "plusminus": -21
         },
         "Dusels": {
             "name": "Dusels",
             "number": "12",
-            "time_on_field": 1689.8432543324066,
+            "time_on_field": 1689.843254332407,
             "plusminus": -9
         },
         "Manna": {
             "name": "Manna",
             "number": "13",
-            "time_on_field": 58.03294643767868,
+            "time_on_field": 58.0329464376787,
             "plusminus": 0
         },
         "Diana": {
             "name": "Diana",
             "number": "14",
-            "time_on_field": 1107.3553919557055,
+            "time_on_field": 1107.355391955706,
             "plusminus": -5
         },
         "Matteucci": {
             "name": "Matteucci",
             "number": "16",
-            "time_on_field": 626.5264961749389,
+            "time_on_field": 626.5264961749391,
             "plusminus": -2
         },
         "Campana": {
             "name": "Campana",
             "number": "21",
-            "time_on_field": 648.395832574064,
+            "time_on_field": 648.3958325740642,
             "plusminus": -5
         },
         "Marcantognini": {
             "name": "Marcantognini",
             "number": "34",
-            "time_on_field": 448.59722632205614,
+            "time_on_field": 448.5972263220563,
             "plusminus": -5
         }
     }

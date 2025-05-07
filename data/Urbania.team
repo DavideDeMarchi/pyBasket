@@ -24,5 +24,7 @@
         "Jareci":        {"name": "Jareci",        "number": "16"},
         "Campana":       {"name": "Campana",       "number": "21"},
         "Marcantognini": {"name": "Marcantognini", "number": "34"}
-    }
+    },
+    
+    "phases": ["Andata", "Ritorno", "Playoff"]
 }
