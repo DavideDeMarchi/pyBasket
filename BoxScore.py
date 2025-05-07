@@ -549,7 +549,7 @@ height="%f%s">''' % (svgwidth,svgheight, preserve, width, xunits, height, yunits
         if v > maxv: maxv = v
     for player_name in game.players_by_number:
         v = Stats.oer(df, player_name)
-        if player_name in seconds_on_field.keys() and v >0:
+        if player_name in seconds_on_field.keys() and v != 0:
             if v == maxv:
                 color = '#008800'
                 w = 700
@@ -570,7 +570,7 @@ height="%f%s">''' % (svgwidth,svgheight, preserve, width, xunits, height, yunits
         if v > maxv: maxv = v
     for player_name in game.players_by_number:
         v = Stats.vir(df, player_name, game.players_info)
-        if player_name in seconds_on_field.keys() and v > 0:
+        if player_name in seconds_on_field.keys() and v != 0:
             if v == maxv:
                 color = '#008800'
                 w = 700
