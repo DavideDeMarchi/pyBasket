@@ -21,6 +21,7 @@ from ipywidgets import widgets, HTML, Layout
 import ipyvuetify as v
 import glob
 import os
+import json
 
 # vois imports
 from vois.vuetify import dialogGeneric, selectSingle, tabs
@@ -44,8 +45,20 @@ class SelectGame():
             
         spacer = v.Html(tag='div', style_='width: 20px; height: 50px;', children=[''])
         
-        allfiles = glob.glob('./data/*.game')
-        self.phases = sorted(list(set([os.path.basename(x).split('-')[1] for x in allfiles if '-' in x and '.a-' in x])))
+        allfiles = glob.glob('%s/*.game'%folder)
+        
+        # Try to read phases from the team file
+        teamfiles = glob.glob('%s/*.team'%folder)
+        self.phases = []
+        if len(teamfiles) > 0:
+            team_file = teamfiles[0]
+            with open(team_file) as f:
+                team_data = json.load(f)
+                if 'phases' in team_data:
+                    self.phases = team_data['phases']
+        
+        if len(self.phases) == 0:
+            self.phases = sorted(list(set([os.path.basename(x).split('-')[1] for x in allfiles if '-' in x and '.a-' in x])))
         
         self.cards = []
         self.sels  = []

@@ -41,12 +41,13 @@ import plotly.graph_objects as go
 import pandas as pd
 import glob
 import os
+import json
 
 
 ###########################################################################################################################################################################
 # Returns the Pandas DataFrame containing all the events of the team players for the entire season and the players_info dictionary
 ###########################################################################################################################################################################
-def seasonEvents(output):
+def seasonEvents(output, folder='./data'):
 
     # Conversion to int without errors
     def toint(x):
@@ -55,11 +56,27 @@ def seasonEvents(output):
         except:
             return 999999
     
-    allfiles = glob.glob('./data/*.game')
-    phases = sorted(list(set([os.path.basename(x).split('-')[1] for x in allfiles if '-' in x and '.a-' in x])))
+    allfiles = glob.glob('%s/*.game'%folder)
     
     allevents = []
-    sb = ScoreBoard.ScoreBoard('./data/Urbania.team', scale=0.4, output=output)
+    
+    # Try to read phases from the team file
+    teamfiles = glob.glob('%s/*.team'%folder)
+    phases = []
+    if len(teamfiles) == 0:
+        print('No .team file found in %s folder'%folder)
+        return
+              
+    team_file = teamfiles[0]
+    with open(team_file) as f:
+        team_data = json.load(f)
+        if 'phases' in team_data:
+            phases = team_data['phases']
+
+    if len(phases) == 0:
+        phases = sorted(list(set([os.path.basename(x).split('-')[1] for x in allfiles if '-' in x and '.a-' in x])))
+    
+    sb = ScoreBoard.ScoreBoard(team_file, scale=0.4, output=output)
 
     players_info = {}
     

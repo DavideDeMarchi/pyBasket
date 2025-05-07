@@ -77,11 +77,14 @@ def update(output, messages, ftp_server, dotest=False, test_file=None, players_t
     else:
         allfiles = glob.glob('./data/*.game')
 
-    phases = sorted(list(set([os.path.basename(x).split('-')[1] for x in allfiles if '-' in x and '.a-' in x])))
-
     allevents = []
     sb = ScoreBoard.ScoreBoard('./data/Urbania.team', scale=0.4, output=output)
 
+    if 'phases' in sb.game.team_data:
+        phases = sb.game.team_data['phases']
+    else:
+        phases = sorted(list(set([os.path.basename(x).split('-')[1] for x in allfiles if '-' in x and '.a-' in x])))
+        
     
     # Conversion to int without errors
     def toint(x):
