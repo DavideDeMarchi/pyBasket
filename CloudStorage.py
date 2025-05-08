@@ -25,6 +25,8 @@ from pcloud.api import AuthenticationError
 import zipfile
 import io
 import json
+import uuid
+import os
 
 
 ###########################################################################################################################################################################
@@ -42,6 +44,7 @@ class CloudStorage():
         self.gamefiles_ids   = []
         self.teamfile_name   = ''
         self.teamfile_id     = 0
+    
     
     # Connect to a pCloud instance
     def connect(self):
@@ -119,20 +122,72 @@ class CloudStorage():
         return data
     
     
-    # Read data for a game
-    def getGame(self, gamefilename):
+    # Read data for a game: returns a dictionary
+    def readGame(self, gamefilename):
         if gamefilename in self.gamefiles_names:
             pos = self.gamefiles_names.index(gamefilename)
             game = self.read(fileid=self.gamefiles_ids[pos], filename=gamefilename)
             return game
+        
+        if self.pc is None:
+            print('Not connected!')
+        else:
+            print('Game %s not found'%gamefilename)
 
         
-    # Read team data
-    def getTeam(self):
+    # Read team data: returns a dictionary
+    def readTeam(self):
         if len(self.teamfile_name) > 0:
             team = self.read(fileid=self.teamfile_id, filename=self.teamfile_name)
             return team
         
-
+        if self.pc is None:
+            print('Not connected!')
+        else:
+            print('Team file %s not found'%self.teamfile_name)
         
 
+    # Write data for a game
+    def writeGame(self, gamefilename, gamedata):
+        if self.pc is None:
+            print('Not connected!')
+        elif gamefilename not in self.gamefiles_names:
+            print('Game %s not in games list'%gamefilename)
+        else:
+            #filepath = '/tmp/' + uuid.uuid4().hex + '.txt'
+            filepath = '/tmp/' + gamefilename
+
+            try:
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(gamedata, f, ensure_ascii=False, indent=4)
+
+                self.pc.uploadfile(files=[filepath], path=self.folderpath, nopartial='1')
+                
+            except:
+                print('Error in writeGame')
+        
+            if os.path.isfile(filepath):
+                os.unlink(filepath)
+
+                
+    # Write data for the team
+    def writeTeam(self, teamdata):
+        if self.pc is None:
+            print('Not connected!')
+        elif len(self.teamfile_name) == 0:
+            print('Team file not read! Need to open a folder to have it.')
+        else:
+            #filepath = '/tmp/' + uuid.uuid4().hex + '.txt'
+            filepath = '/tmp/' + self.teamfile_name
+
+            try:
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(teamdata, f, ensure_ascii=False, indent=4)
+
+                self.pc.uploadfile(files=[filepath], path=self.folderpath, nopartial='1')
+                
+            except:
+                print('Error in writeTeam')
+        
+            if os.path.isfile(filepath):
+                os.unlink(filepath)
