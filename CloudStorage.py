@@ -22,6 +22,10 @@ from vois.vuetify import settings, dialogMessage, dialogGeneric
 from pcloud import PyCloud
 from pcloud.api import AuthenticationError
 
+import zipfile
+import io
+import json
+
 
 ###########################################################################################################################################################################
 # CloudStorage
@@ -33,36 +37,58 @@ class CloudStorage():
         self.output = output
         self.pc = None
         self.folderpath = '/'
-        self.gamefiles = []
-        self.teamfile = ''
+        
+        self.gamefiles_names = []
+        self.gamefiles_ids   = []
+        self.teamfile_name   = ''
+        self.teamfile_id     = 0
     
     # Connect to a pCloud instance
     def connect(self):
-        
-        def on_ok():
-            try:
-                self.pc = PyCloud('davide.demarchi@yahoo.it', tfp.v_model, endpoint="eapi")
-            except AuthenticationError as e:
-                errorcode = str(e)
-                dlg = dialogMessage.dialogMessage(title='Error',
-                                                  titleheight=30,
-                                                  text='Cannot connect to pCloud storage server!\n\nError: %s'%errorcode,
-                                                  addclosebuttons=True,
-                                                  show=True, width=450, output=self.output)
+    
+        try:
+            with open("CloudStorage.pass","r") as f:
+                password = f.read().replace('\n','')
+                
+                try:
+                    self.pc = PyCloud('davide.demarchi@yahoo.it', password, endpoint="eapi")
+                except AuthenticationError as e:
+                    errorcode = str(e)
+                    dlg = dialogMessage.dialogMessage(title='Error',
+                                                      titleheight=30,
+                                                      text='Cannot connect to pCloud storage server!\n\nError: %s'%errorcode,
+                                                      addclosebuttons=True,
+                                                      show=True, width=450, output=self.output)
+        except:
+    
+            def on_ok():
+                try:
+                    self.pc = PyCloud('davide.demarchi@yahoo.it', tfp.v_model, endpoint="eapi")
+                except AuthenticationError as e:
+                    errorcode = str(e)
+                    dlg = dialogMessage.dialogMessage(title='Error',
+                                                      titleheight=30,
+                                                      text='Cannot connect to pCloud storage server!\n\nError: %s'%errorcode,
+                                                      addclosebuttons=True,
+                                                      show=True, width=450, output=self.output)
 
-        tfp = v.TextField(v_model='', autofocus=True, type='password', label='Insert password', color=settings.color_first, dense=False, class_="pa-0 ma-0 ml-8 mr-8")
-        dlg = dialogGeneric.dialogGeneric(title='pCloud Storage access',
-                                          text=' ', titleheight=30,
-                                          show=True, addclosebuttons=True, width=460,
-                                          addokcancelbuttons=True, on_ok=on_ok,
-                                          fullscreen=False, content=[tfp], output=self.output)
+            tfp = v.TextField(v_model='', autofocus=True, type='password', label='Insert password', color=settings.color_first, dense=False, class_="pa-0 ma-0 ml-8 mr-8")
+            dlg = dialogGeneric.dialogGeneric(title='pCloud Storage access',
+                                              text=' ', titleheight=30,
+                                              show=True, addclosebuttons=True, width=460,
+                                              addokcancelbuttons=True, on_ok=on_ok,
+                                              fullscreen=False, content=[tfp], output=self.output)
         
         
     
     # Open a folder on the cloud storage
     def open(self, folderpath):
         self.folderpath = '/'
-        self.gamefiles = []
+        
+        self.gamefiles_names = []
+        self.gamefiles_ids   = []
+        self.teamfile_name   = ''
+        self.teamfile_id     = 0
         
         if self.pc is None:
             print('Not connected!')
@@ -75,9 +101,38 @@ class CloudStorage():
                 contents = metadata['contents']
                 self.folderpath = folderpath
                 for c in contents:
-                    if not c['isfolder'] and 'name' in c and c['name'][-5:] == '.game':
-                        self.gamefiles.append(c['name'])
-                    elif not c['isfolder'] and 'name' in c and c['name'][-5:] == '.team':
-                        self.teamfile = c['name']
+                    if not c['isfolder'] and 'name' in c and 'id' in c and c['name'][-5:] == '.game':
+                        self.gamefiles_names.append(c['name'])
+                        self.gamefiles_ids.append(int(c['id'][1:]))
+                    elif not c['isfolder'] and 'name' in c and 'id' in c and c['name'][-5:] == '.team':
+                        self.teamfile_name = c['name']
+                        self.teamfile_id   = int(c['id'][1:])
+        
+        
+
+    # Read a file from the cloud storage
+    def read(self, fileid, filename):
+        buffer = self.pc.getzip(fileids=[fileid])
+        z = zipfile.ZipFile(io.BytesIO(buffer))
+        foo = z.read(filename)
+        data = json.loads( foo.decode() )
+        return data
+    
+    
+    # Read data for a game
+    def getGame(self, gamefilename):
+        if gamefilename in self.gamefiles_names:
+            pos = self.gamefiles_names.index(gamefilename)
+            game = self.read(fileid=self.gamefiles_ids[pos], filename=gamefilename)
+            return game
+
+        
+    # Read team data
+    def getTeam(self):
+        if len(self.teamfile_name) > 0:
+            team = self.read(fileid=self.teamfile_id, filename=self.teamfile_name)
+            return team
+        
+
         
 
